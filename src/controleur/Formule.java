@@ -6,7 +6,7 @@ public class Formule {
         return position + (vitesse * temps + 0.5 * acceleration * Math.pow(temps, 2));
     }
 
-    public static double rebondissement(Vecteur balle, Vecteur structure) {
+    /*public static double rebondissement(Vecteur balle, Vecteur structure) {
         return 0;
-    }
+    }*/
 }
