@@ -1,5 +1,9 @@
 package controleur;
 
+import javafx.geometry.Point3D;
+import modele.Balle;
+import modele.Vecteur;
+
 public class Formule {
 
     public static double MRUA(double position, double vitesse, double acceleration, double temps) {
@@ -9,4 +13,6 @@ public class Formule {
     public static double rebondissement(Vecteur balle, Vecteur structure) {
         return 0;
     }
+
+    //public static Point3D forcegravitationnel(Balle balle){ return balle.getMasse * 9.8;}
 }
