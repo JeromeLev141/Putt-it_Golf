@@ -6,7 +6,7 @@ public class Balle {
 
     private Point3D position;
     private final double masse = 45; //(en gramme)
-    private final double rayon = 0.025; //(en centimetre)
+    private final double rayon = 0.025; //(en metre)
 
     Balle (Point3D position) {
         this.position = position;

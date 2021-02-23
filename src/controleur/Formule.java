@@ -1,5 +1,4 @@
 package controleur;
-
 import javafx.geometry.Point3D;
 import modele.Balle;
 import modele.Vecteur;
@@ -14,5 +13,5 @@ public class Formule {
         return 0;
     }
 
-    //public static Point3D forcegravitationnel(Balle balle){ return balle.getMasse * 9.8;}
+    public static double forcegravitationnel(Balle balle){ return (balle.getMasse() * 9.8);}
 }
