@@ -6,10 +6,10 @@ import java.util.Vector;
 
 public class Vecteur {
 
-    Point3D possition;
-    Point3D vecteurForce;
-    Point3D vecteurVitesse;
-    Point3D vecteurAcceleration;
+    private Point3D possition;
+    private Point3D vecteurForce;
+    private Point3D vecteurVitesse;
+    private Point3D vecteurAcceleration;
 
     public Vecteur(int[] positionBalle){
         possition = new Point3D(positionBalle[0],positionBalle[1],positionBalle[2]);
