@@ -5,6 +5,8 @@ import javafx.geometry.Point3D;
 public class Balle {
 
     private Point3D position;
+    private final double masse = 45; //(en gramme)
+    private final double rayon = 0.025; //(en centimetre)
 
     Balle (Point3D position) {
         this.position = position;
@@ -13,4 +15,6 @@ public class Balle {
     public Point3D getPosition() { return position; }
 
     public void setPosition(Point3D position) { this.position = position; }
+
+    public double getMasse() { return masse; }
 }
