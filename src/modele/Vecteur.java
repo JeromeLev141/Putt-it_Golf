@@ -240,4 +240,8 @@ public class Vecteur {
     public double getAngleXZ() {
         return angleXZ;
     }
+
+    public void setAngleXZ(double angleXZ) {
+        this.angleXZ = angleXZ;
+    }
 }
