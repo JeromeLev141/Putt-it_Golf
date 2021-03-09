@@ -19,8 +19,8 @@ public class Main_jeremi{
         System.out.println(vecteur.getForceX());
         System.out.println(vecteur.getVecteurForceResultant()[0] + "-" + vecteur.getVecteurForceResultant()[1] + "-" + vecteur.getVecteurForceResultant()[2]);
 
-        Forme forme = new Forme(new Point3D(0,0,0),10,0,10, 0);
-        Espace3D plateforme = new Espace3D();
-        plateforme.addForme(forme);
+        Forme forme = new Forme(new Point3D(0,0,0),10,0,10, 0, 0);
+        //Espace3D plateforme = new Espace3D();
+        //plateforme.addForme(forme);
     }
 }

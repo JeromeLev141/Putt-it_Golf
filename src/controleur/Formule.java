@@ -10,7 +10,7 @@ public class Formule {
     }
 
     public static double rebondissement(Vecteur balle, Vecteur structure) {
-        return 0;
+        balle.getVecteurForceResultant();
     }
 
     public static double forcegravitationnel(){ return 0.045 * 9.8;}
