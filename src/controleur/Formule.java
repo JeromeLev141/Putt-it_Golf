@@ -13,5 +13,5 @@ public class Formule {
         return 0;
     }
 
-    public static double forcegravitationnel(Balle balle){ return balle.getMasse() * 9.8;}
+    public static double forcegravitationnel(){ return 0.045 * 9.8;}
 }

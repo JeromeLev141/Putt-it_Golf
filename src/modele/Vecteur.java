@@ -1,9 +1,24 @@
 package modele;
 
+import controleur.Formule;
+import javafx.geometry.Point3D;
+
 import java.util.Vector;
 
 public class Vecteur {
+    /*
+    private Point3D position;
+    private Point3D force;
+    private Point3D vitesse;
+    private Point3D acceleration;
 
+    public Vecteur(Point3D positionBalle){
+        position = positionBalle;
+        force = new Point3D(0,0,0);
+        vitesse = new Point3D(0,0,0);
+        acceleration = new Point3D(0, Formule.forcegravitationnel(),0);
+    }
+    */
     private double[] possition;
     private double[] vecteurForceResultant;
     private Vector<Double> forceX,forceY,forceZ;
@@ -25,7 +40,11 @@ public class Vecteur {
         vitesseZ = new Vector<>();
         accelerationX = new Vector<>();
         accelerationY = new Vector<>();
+        accelerationY.add(9.8);
         accelerationZ = new Vector<>();
+        refreshVitesse();
+        refreshForce();
+        refreshAcceleration();
     }
 
     private void refreshForce(){
@@ -165,5 +184,41 @@ public class Vecteur {
 
     public double[] getVecteurAccelerationResultant() {
         return vecteurAccelerationResultant;
+    }
+
+    public Vector<Double> getForceX() {
+        return forceX;
+    }
+
+    public Vector<Double> getForceY() {
+        return forceY;
+    }
+
+    public Vector<Double> getForceZ() {
+        return forceZ;
+    }
+
+    public Vector<Double> getVitesseX() {
+        return vitesseX;
+    }
+
+    public Vector<Double> getVitesseY() {
+        return vitesseY;
+    }
+
+    public Vector<Double> getVitesseZ() {
+        return vitesseZ;
+    }
+
+    public Vector<Double> getAccelerationX() {
+        return accelerationX;
+    }
+
+    public Vector<Double> getAccelerationY() {
+        return accelerationY;
+    }
+
+    public Vector<Double> getAccelerationZ() {
+        return accelerationZ;
     }
 }
