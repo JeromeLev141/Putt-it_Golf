@@ -14,13 +14,21 @@ public class Main_jeremi{
         vecteur.addforceX(-7);
         vecteur.addforceX(6);
         vecteur.addforceY(10);
+        System.out.println(vecteur.getAngleXZ());
+        vecteur.addVitesseX(-5);
+        System.out.println(vecteur.getAngleXZ());
+        vecteur.addVitesseZ(-5);
+        System.out.println(vecteur.getVecteurVitesseResultant()[0] + "-" + vecteur.getVecteurVitesseResultant()[1] + "-" + vecteur.getVecteurVitesseResultant()[2]);
+        System.out.println(vecteur.getAngleXZ());
         System.out.println(vecteur.getVecteurForceResultant()[0] + "-" + vecteur.getVecteurForceResultant()[1] + "-" + vecteur.getVecteurForceResultant()[2]);
         vecteur.setForceX(position1,-2);
         System.out.println(vecteur.getForceX());
         System.out.println(vecteur.getVecteurForceResultant()[0] + "-" + vecteur.getVecteurForceResultant()[1] + "-" + vecteur.getVecteurForceResultant()[2]);
 
-        Forme forme = new Forme(new Point3D(0,0,0),10,0,10, 0);
-        Espace3D plateforme = new Espace3D();
+        Forme forme = new Forme(new Point3D(0,0,0),10,0,10, 0,0);
+        /*Espace3D plateforme = new Espace3D();
         plateforme.addForme(forme);
+
+         */
     }
 }

@@ -26,12 +26,14 @@ public class Vecteur {
     private Vector<Double> vitesseX,vitesseY,vitesseZ;
     private double[] vecteurAccelerationResultant;
     private Vector<Double> accelerationX,accelerationY,accelerationZ;
+    private double angleXZ;
 
     public Vecteur(double[] positionBalle){
         possition = positionBalle;
         vecteurForceResultant = new double[]{0,0,0};
         vecteurVitesseResultant = new double[]{0,0,0};
         vecteurAccelerationResultant = new double[]{0,0,0};
+        angleXZ = 0;
         forceX = new Vector<>();
         forceY = new Vector<>();
         forceZ = new Vector<>();
@@ -47,6 +49,18 @@ public class Vecteur {
         refreshAcceleration();
     }
 
+    private void refreshAngleXZ(){
+
+        angleXZ = Math.toDegrees(Math.atan(Math.toRadians(vecteurVitesseResultant[2])/Math.toRadians(vecteurVitesseResultant[0])));
+
+        if (vecteurVitesseResultant[0] < 0)
+            angleXZ += 180;
+
+        if (vecteurVitesseResultant[0] > 0 && vecteurVitesseResultant[2] < 0)
+            angleXZ += 360;
+
+    }
+
     private void refreshForce(){
         vecteurForceResultant[0] = forceX.stream().mapToDouble(Double ::doubleValue).sum();
         vecteurForceResultant[1] = forceY.stream().mapToDouble(Double ::doubleValue).sum();
@@ -57,6 +71,7 @@ public class Vecteur {
         vecteurVitesseResultant[0] = vitesseX.stream().mapToDouble(Double ::doubleValue).sum();
         vecteurVitesseResultant[1] = vitesseY.stream().mapToDouble(Double ::doubleValue).sum();
         vecteurVitesseResultant[2] = vitesseZ.stream().mapToDouble(Double ::doubleValue).sum();
+        refreshAngleXZ();
     }
 
     private void refreshAcceleration(){
@@ -220,5 +235,9 @@ public class Vecteur {
 
     public Vector<Double> getAccelerationZ() {
         return accelerationZ;
+    }
+
+    public double getAngleXZ() {
+        return angleXZ;
     }
 }
