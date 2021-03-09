@@ -10,7 +10,8 @@ import java.util.List;
 public class Plateforme {
 
     public static String getNiveau1() {
-        return new String("xooox\n" +
+        return new String(
+                "xooox\n" +
                 "xooox\n" +
                 "xoooxxxxxxx\n" +
                 "xooooooooox\n" +
