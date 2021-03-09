@@ -15,7 +15,8 @@ public class Plateforme {
     private final Sol gazon = new Sol(false, 2);
 
     public static String getNiveau1() {
-        return new String("xooox\n" +
+        return new String(
+                "xooox\n" +
                 "xooox\n" +
                 "xoooxxxxxxx\n" +
                 "xooooooooox\n" +
