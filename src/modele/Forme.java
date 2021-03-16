@@ -9,12 +9,14 @@ public class Forme {
     private Point3D positionEspace;
     private double angleXZ;
     private double angleXY;
+    private Sol typeSol;
 
-    public Forme(Point3D position1,double x, double y, double z,double angleXY,double angleXZ){
+    public Forme(Point3D position1,double x, double y, double z,double angleXY,double angleXZ,int Sol){
         positionEspace = position1;
         prisme = new Box(x,y,z);
         this.angleXY = angleXY;
         this.angleXZ = angleXZ;
+        typeSol = new Sol(4);
     }
 
     public Box getPrisme() {
@@ -31,5 +33,9 @@ public class Forme {
 
     public double getAngleXZ() {
         return angleXZ;
+    }
+
+    public Sol getTypeSol() {
+        return typeSol;
     }
 }
