@@ -25,7 +25,8 @@ public class Espace3D {
 
     private boolean detectColisionSol(){
         for (Forme sol:plateformeSol) {
-            double distance = sol.getPositionEspace().distance(positionBalle)
+            double distance = sol.getPositionEspace().distance(positionBalle);
         }
+        return false;
     }
 }
