@@ -23,9 +23,10 @@ public class ScoreChecker {
             String entree = new String(Files.readAllBytes(file.toPath()));
             entree = entree.replace("\n", ",").replace("\r", "");
 
+
             String[] token = entree.split(",");
             List<String> scores = new ArrayList<>(Arrays.asList(token));
-            scores = scores.stream().sorted().collect(Collectors.toList());
+            scores.sort(Comparator.comparing((String sc) -> sc.substring(0, 2)));
             Collections.reverse(scores);
 
             String[] top5 = new String[5];
@@ -34,7 +35,7 @@ public class ScoreChecker {
                     top5[i] = scores.get(i);
                 else
                     top5[i] = "0 - vide";
-                
+
             System.out.println(Arrays.toString(top5));
 
         } catch (IOException e) {
