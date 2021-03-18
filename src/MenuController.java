@@ -1,11 +1,14 @@
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Controller {
+public class MenuController {
 
     @FXML
     private BorderPane bdp;
@@ -18,6 +21,14 @@ public class Controller {
     @FXML
     private Node node4;
 
+    private boolean sonOn = true;
+    private boolean musicOn = true;
+
+    public void transfert(boolean sonOn, boolean musicOn) {
+        this.sonOn = sonOn;
+        this.musicOn = musicOn;
+    }
+
     @FXML
     private void jouer() { System.out.println("jouer");}
 
@@ -26,31 +37,19 @@ public class Controller {
 
     @FXML
     private void option() throws IOException {
-        bdp.setCenter(FXMLLoader.load(getClass().getResource("SceneOption.fxml")));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneOption.fxml"));
+        Parent option = loader.load();
+
+        OptionController optionController = loader.getController();
+        optionController.transfert(sonOn, musicOn);
+
+        Scene scene = new Scene(option, 800, 600);
+        Stage stage = (Stage) node1.getScene().getWindow();
+        stage.setScene(scene);
     }
 
     @FXML
     private void quitter() { System.exit(0);}
-
-    @FXML
-    private void sonStatut() {
-        if (node1.getStyle().contains("-fx-graphic: url(/images/volume.png);"))
-            node1.setStyle( node1.getStyle().replace("-fx-graphic: url(/images/volume.png);",
-                    "-fx-graphic:  url(/images/volumeferme.png);"));
-        else
-            node1.setStyle( node1.getStyle().replace("-fx-graphic:  url(/images/volumeferme.png);",
-                    "-fx-graphic: url(/images/volume.png);"));
-    }
-
-    @FXML
-    private void musicStatut() {
-        if (node2.getStyle().contains("-fx-graphic: url(/images/music.png);"))
-            node2.setStyle( node2.getStyle().replace("-fx-graphic: url(/images/music.png);",
-                    "-fx-graphic:  url(/images/musicferme.png);"));
-        else
-            node2.setStyle( node2.getStyle().replace("-fx-graphic:  url(/images/musicferme.png);",
-                    "-fx-graphic: url(/images/music.png);"));
-    }
 
     @FXML
     private void hover1() { hover(node1);}
