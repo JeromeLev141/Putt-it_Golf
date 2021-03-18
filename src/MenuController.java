@@ -38,7 +38,7 @@ public class MenuController {
     private void jouer() { System.out.println("jouer");}
 
     @FXML
-    private void scoreboard() { System.out.println("score");}
+    private void scoreboard() { ScoreChecker.topScores(); }
 
     @FXML
     private void option() throws IOException {
