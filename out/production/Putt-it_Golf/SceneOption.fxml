@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-image: url(/images/back.gif);" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <children>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+         <children>
+            <Button accessibleRole="TEXT" focusTraversable="false" mnemonicParsing="false" prefHeight="50.0" prefWidth="400.0" style="-fx-background-insets: 1; -fx-background-color: white; -fx-border-color: black; -fx-border-radius: 4; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 ); -fx-border-width: 5;" text="Options">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="OCR A Extended" size="40.0" />
+               </font>
+            </Button>
+            <VBox alignment="CENTER" spacing="50.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
+                     <children>
+                        <ToggleButton fx:id="node1" contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#sonStatut" onMouseEntered="#hover1" onMouseExited="#hoverFin1" style="-fx-graphic: url(/images/volume.png); -fx-background-insets: 1; -fx-border-color: black; -fx-border-radius: 4; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 ); -fx-background-color: white;" />
+                        <ToggleButton fx:id="node2" contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#musicStatut" onMouseEntered="#hover2" onMouseExited="#hoverFin2" style="-fx-background-insets: 1; -fx-border-color: black; -fx-border-radius: 4; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 ); -fx-background-color: white; -fx-graphic: url(/images/music.png);" />
+                     </children>
+                  </HBox>
+                  <Slider fx:id="node3" focusTraversable="false" minorTickCount="5" onMouseEntered="#hover3" onMouseExited="#hoverFin3" style="-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 ); -fx-background-color: white; -fx-border-color: black; -fx-background-insets: 1; -fx-border-radius: 4;" value="50.0">
+                     <VBox.margin>
+                        <Insets left="200.0" right="200.0" />
+                     </VBox.margin>
+                  </Slider>
+                  <ColorPicker fx:id="node4" focusTraversable="false" onMouseEntered="#hover4" onMouseExited="#hoverFin4" style="-fx-background-insets: 1; -fx-background-color: white; -fx-border-radius: 4; -fx-border-color: black; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );" />
+               </children>
+            </VBox>
+         </children>
+         <StackPane.margin>
+            <Insets bottom="50.0" />
+         </StackPane.margin>
+      </VBox>
+   </children>
+</StackPane>
