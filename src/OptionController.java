@@ -3,6 +3,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Slider;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,10 +25,15 @@ public class OptionController {
 
     private boolean sonOn = true;
     private boolean musicOn = true;
+    private double distance = 50;
+    private Color couleur = Color.WHITE;
 
-    public void transfert(boolean sonOn, boolean musicOn) {
+    public void transfert(boolean sonOn, boolean musicOn, Color couleur, double distance) {
       this.sonOn = sonOn;
       this.musicOn = musicOn;
+      this.distance = distance;
+      this.couleur = couleur;
+
       if (!this.sonOn){
           node1.setStyle( node1.getStyle().replace("-fx-graphic: url(/images/volume.png);",
                   "-fx-graphic:  url(/images/volumeferme.png);"));
@@ -34,6 +42,10 @@ public class OptionController {
           node2.setStyle( node2.getStyle().replace("-fx-graphic: url(/images/music.png);",
                   "-fx-graphic:  url(/images/musicferme.png);"));
       }
+      Slider sld = (Slider) node3;
+      sld.setValue(distance);
+      ColorPicker cp =  (ColorPicker) node4;
+      cp.setValue(couleur);
     }
 
     @FXML
@@ -42,7 +54,7 @@ public class OptionController {
         Parent option = loader.load();
 
         MenuController menuController = loader.getController();
-        menuController.transfert(sonOn, musicOn);
+        menuController.transfert(sonOn, musicOn, couleur, distance);
 
         Scene scene = new Scene(option, 800, 600);
         Stage stage = (Stage) node1.getScene().getWindow();
@@ -75,6 +87,18 @@ public class OptionController {
                     "-fx-graphic: url(/images/music.png);"));
             musicOn = true;
         }
+    }
+
+    @FXML
+    private void distanceCamera() {
+        Slider sld = (Slider) node3;
+        distance = sld.getValue();
+    }
+
+    @FXML
+    private void CouleurChoisi() {
+        ColorPicker cp =  (ColorPicker) node4;
+        couleur = cp.getValue();
     }
 
     @FXML

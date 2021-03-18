@@ -30,12 +30,12 @@
                         <ToggleButton fx:id="node2" contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#musicStatut" onMouseEntered="#hover2" onMouseExited="#hoverFin2" style="-fx-background-insets: 1; -fx-border-color: black; -fx-border-radius: 4; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 ); -fx-background-color: white; -fx-graphic: url(/images/music.png);" />
                      </children>
                   </HBox>
-                  <Slider fx:id="node3" focusTraversable="false" minorTickCount="5" onMouseEntered="#hover3" onMouseExited="#hoverFin3" style="-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 ); -fx-background-color: white; -fx-border-color: black; -fx-background-insets: 1; -fx-border-radius: 4;" value="50.0">
+                  <Slider fx:id="node3" focusTraversable="false" minorTickCount="5" onMouseClicked="#distanceCamera" onMouseDragged="#distanceCamera" onMouseEntered="#hover3" onMouseExited="#hoverFin3" style="-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 ); -fx-background-color: white; -fx-border-color: black; -fx-background-insets: 1; -fx-border-radius: 4;" value="50.0">
                      <VBox.margin>
                         <Insets left="200.0" right="200.0" />
                      </VBox.margin>
                   </Slider>
-                  <ColorPicker fx:id="node4" focusTraversable="false" onMouseEntered="#hover4" onMouseExited="#hoverFin4" style="-fx-background-insets: 1; -fx-background-color: white; -fx-border-radius: 4; -fx-border-color: black; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );" />
+                  <ColorPicker fx:id="node4" focusTraversable="false" onAction="#CouleurChoisi" onMouseEntered="#hover4" onMouseExited="#hoverFin4" style="-fx-background-insets: 1; -fx-background-color: white; -fx-border-radius: 4; -fx-border-color: black; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );" />
                </children>
             </VBox>
          </children>

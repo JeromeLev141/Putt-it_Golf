@@ -4,6 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,10 +24,14 @@ public class MenuController {
 
     private boolean sonOn = true;
     private boolean musicOn = true;
+    private double distance = 50;
+    private Color couleur = Color.WHITE;
 
-    public void transfert(boolean sonOn, boolean musicOn) {
+    public void transfert(boolean sonOn, boolean musicOn, Color couleur, double distance) {
         this.sonOn = sonOn;
         this.musicOn = musicOn;
+        this.distance = distance;
+        this.couleur = couleur;
     }
 
     @FXML
@@ -41,7 +46,7 @@ public class MenuController {
         Parent option = loader.load();
 
         OptionController optionController = loader.getController();
-        optionController.transfert(sonOn, musicOn);
+        optionController.transfert(sonOn, musicOn, couleur, distance);
 
         Scene scene = new Scene(option, 800, 600);
         Stage stage = (Stage) node1.getScene().getWindow();
