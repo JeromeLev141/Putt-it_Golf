@@ -34,7 +34,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -43,9 +42,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<BorderPane fx:id="bdp" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <center>
-      <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-image: url(images/back.gif);" BorderPane.alignment="CENTER">
+      <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-image: url(/images/back.gif);" BorderPane.alignment="CENTER">
          <children>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
                <children>
@@ -59,19 +58,19 @@
                   </Button>
                   <VBox alignment="CENTER" spacing="10.0">
                      <children>
-                        <Button fx:id="bouton1" focusTraversable="false" mnemonicParsing="false" onAction="#jouer" onMouseEntered="#hover1" onMouseExited="#hoverFin1" prefHeight="30.0" prefWidth="200.0" style="-fx-background-insets: 1; -fx-border-color: black; -fx-border-radius: 4; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 ); -fx-background-color: white;" text="Jouer" textAlignment="RIGHT">
+                        <Button fx:id="node1" focusTraversable="false" mnemonicParsing="false" onAction="#jouer" onMouseEntered="#hover1" onMouseExited="#hoverFin1" prefHeight="30.0" prefWidth="200.0" style="-fx-background-insets: 1; -fx-border-color: black; -fx-border-radius: 4; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 ); -fx-background-color: white;" text="Jouer" textAlignment="RIGHT">
                            <font>
                               <Font name="OCR A Extended" size="12.0" />
                            </font></Button>
-                        <Button fx:id="bouton2" focusTraversable="false" mnemonicParsing="false" onAction="#scoreboard" onMouseEntered="#hover2" onMouseExited="#hoverFin2" prefHeight="30.0" prefWidth="200.0" style="-fx-background-insets: 1; -fx-border-color: black; -fx-border-radius: 4; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 ); -fx-background-color: white;" text="Scoreboard">
+                        <Button fx:id="node2" focusTraversable="false" mnemonicParsing="false" onAction="#scoreboard" onMouseEntered="#hover2" onMouseExited="#hoverFin2" prefHeight="30.0" prefWidth="200.0" style="-fx-background-insets: 1; -fx-border-color: black; -fx-border-radius: 4; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 ); -fx-background-color: white;" text="Scoreboard">
                            <font>
                               <Font name="OCR A Extended" size="12.0" />
                            </font></Button>
-                        <Button fx:id="bouton3" focusTraversable="false" mnemonicParsing="false" onAction="#option" onMouseEntered="#hover3" onMouseExited="#hoverFin3" prefHeight="30.0" prefWidth="200.0" style="-fx-background-insets: 1; -fx-border-color: black; -fx-border-radius: 4; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 ); -fx-background-color: white;" text="Option">
+                        <Button fx:id="node3" focusTraversable="false" mnemonicParsing="false" onAction="#option" onMouseEntered="#hover3" onMouseExited="#hoverFin3" prefHeight="30.0" prefWidth="200.0" style="-fx-background-insets: 1; -fx-border-color: black; -fx-border-radius: 4; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 ); -fx-background-color: white;" text="Option">
                            <font>
                               <Font name="OCR A Extended" size="12.0" />
                            </font></Button>
-                        <Button fx:id="bouton4" focusTraversable="false" mnemonicParsing="false" onAction="#quitter" onMouseEntered="#hover4" onMouseExited="#hoverFin4" prefHeight="30.0" prefWidth="200.0" style="-fx-background-insets: 1; -fx-border-color: black; -fx-border-radius: 4; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 ); -fx-background-color: white;" text="Quitter">
+                        <Button fx:id="node4" focusTraversable="false" mnemonicParsing="false" onAction="#quitter" onMouseEntered="#hover4" onMouseExited="#hoverFin4" prefHeight="30.0" prefWidth="200.0" style="-fx-background-insets: 1; -fx-border-color: black; -fx-border-radius: 4; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 ); -fx-background-color: white;" text="Quitter">
                            <font>
                               <Font name="OCR A Extended" size="12.0" />
                            </font></Button>
@@ -83,25 +82,22 @@
                </StackPane.margin>
             </VBox>
             <ImageView fitHeight="33.0" fitWidth="28.0" translateX="85.0" translateY="-120.0">
-               <image>
-                  <Image url="images/ball2.png" />
-               </image>
                <effect>
                   <DropShadow height="10.0" radius="4.5" width="10.0" />
                </effect>
+               <image>
+                  <Image url="@images/ball.png" />
+               </image>
             </ImageView>
             <ImageView fitHeight="57.0" fitWidth="61.0" translateX="180.0" translateY="-120.0">
-               <image>
-                  <Image url="images/logo.png" />
-               </image>
                <effect>
                   <DropShadow height="10.0" radius="4.5" width="10.0" />
                </effect>
+               <image>
+                  <Image url="@images/logo.png" />
+               </image>
             </ImageView>
          </children>
       </StackPane>
    </center>
-   <top>
-    <MenuBar BorderPane.alignment="CENTER" />
-   </top>
 </BorderPane>
