@@ -38,7 +38,17 @@ public class MenuController {
     private void jouer() { System.out.println("jouer");}
 
     @FXML
-    private void scoreboard() { ScoreChecker.topScores(); }
+    private void scoreboard() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneScore.fxml"));
+        Parent scoreboard = loader.load();
+
+        ScoreController scoreController = loader.getController();
+        scoreController.transfert(sonOn, musicOn, couleur, distance);
+
+        Scene scene = new Scene(scoreboard, 800, 600);
+        Stage stage = (Stage) node1.getScene().getWindow();
+        stage.setScene(scene);
+    }
 
     @FXML
     private void option() throws IOException {

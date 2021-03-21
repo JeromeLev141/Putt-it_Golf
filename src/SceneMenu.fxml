@@ -81,7 +81,7 @@
                   <Insets bottom="50.0" />
                </StackPane.margin>
             </VBox>
-            <ImageView fitHeight="33.0" fitWidth="28.0" translateX="85.0" translateY="-120.0">
+            <ImageView fitHeight="30.0" fitWidth="30.0" translateX="85.0" translateY="-120.0">
                <effect>
                   <DropShadow height="10.0" radius="4.5" width="10.0" />
                </effect>
@@ -89,7 +89,7 @@
                   <Image url="@images/ball.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="57.0" fitWidth="61.0" translateX="180.0" translateY="-120.0">
+            <ImageView fitHeight="50.0" fitWidth="50.0" translateX="175.0" translateY="-120.0">
                <effect>
                   <DropShadow height="10.0" radius="4.5" width="10.0" />
                </effect>
