@@ -35,7 +35,10 @@ public class MenuController {
     }
 
     @FXML
-    private void jouer() { System.out.println("jouer");}
+    private void jouer() throws Exception {
+        Test3d test = new Test3d();
+        test.jouer((Stage) node1.getScene().getWindow());
+    }
 
     @FXML
     private void scoreboard() throws IOException {
