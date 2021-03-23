@@ -4,7 +4,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,22 +21,22 @@ public class MenuController {
     @FXML
     private Node node4;
 
-    private boolean sonOn = true;
-    private boolean musicOn = true;
-    private double distance = 50;
-    private Color couleur = Color.WHITE;
+    private Jeux jeux = new Jeux();
 
-    public void transfert(boolean sonOn, boolean musicOn, Color couleur, double distance) {
-        this.sonOn = sonOn;
-        this.musicOn = musicOn;
-        this.distance = distance;
-        this.couleur = couleur;
+    public void transfert(Jeux jeux) {
+        this.jeux = jeux;
     }
 
     @FXML
     private void jouer() throws Exception {
-        Test3d test = new Test3d();
-        test.jouer((Stage) node1.getScene().getWindow());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneJeux.fxml"));
+        Parent jouer = loader.load();
+
+        JeuxController jeuxController = loader.getController();
+
+        Stage stage = (Stage) node1.getScene().getWindow();
+
+        jeuxController.transfert(jeux, stage);
     }
 
     @FXML
@@ -46,7 +45,7 @@ public class MenuController {
         Parent scoreboard = loader.load();
 
         ScoreController scoreController = loader.getController();
-        scoreController.transfert(sonOn, musicOn, couleur, distance);
+        scoreController.transfert(jeux);
 
         Scene scene = new Scene(scoreboard, 800, 600);
         Stage stage = (Stage) node1.getScene().getWindow();
@@ -59,7 +58,7 @@ public class MenuController {
         Parent option = loader.load();
 
         OptionController optionController = loader.getController();
-        optionController.transfert(sonOn, musicOn, couleur, distance);
+        optionController.transfert(jeux);
 
         Scene scene = new Scene(option, 800, 600);
         Stage stage = (Stage) node1.getScene().getWindow();

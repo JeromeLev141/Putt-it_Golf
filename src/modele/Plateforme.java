@@ -1,12 +1,5 @@
 package modele;
 
-import javafx.scene.shape.Box;
-import javafx.scene.shape.Polygon;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Plateforme {
 
     private final Sol eau = new Sol(true, 0);
@@ -15,13 +8,12 @@ public class Plateforme {
     private final Sol gazon = new Sol(false, 2);
 
     public static String getNiveau1() {
-        return new String(
-                "xooox\n" +
+        return "xooox\n" +
                 "xooox\n" +
                 "xoooxxxxxxx\n" +
                 "xooooooooox\n" +
                 "xooooooooox\n" +
                 "xooooooooox\n" +
-                "xxxxxxxxxxx");
+                "xxxxxxxxxxx";
     }
 }

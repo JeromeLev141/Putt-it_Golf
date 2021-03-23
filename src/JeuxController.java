@@ -3,29 +3,34 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ScoreController {
+public class JeuxController {
 
     @FXML
     private Node node1;
-    @FXML
-    private ListView<String> node2;
 
     private Jeux jeux;
 
-    public void transfert(Jeux jeux) {
+    public void transfert(Jeux jeux, Stage stage) {
         this.jeux = jeux;
 
-        node2.setItems(ScoreChecker.topScores());
+        StackPane stp = new StackPane();
+        stp.getChildren().add(jeux.jouer(stage));
+        stp.getChildren().add(node1);
+
+        stage.setScene(new Scene(stp));
     }
 
     @FXML
     private void retour() throws IOException {
+        jeux.musicStop();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneMenu.fxml"));
         Parent option = loader.load();
 

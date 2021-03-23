@@ -1,12 +1,10 @@
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Point3D;
 import javafx.scene.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -17,66 +15,68 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import modele.Balle;
+import modele.Plateforme;
 
 import java.io.File;
 
-public class Test3d {
+public class Jeux {
 
-    private static final float WIDTH = 800;
-    private static final float HEIGHT = 600;
+    private boolean sonOn;
+    private boolean musicOn;
+    private double distance;
+    private Color couleur;
 
-    private double anchorX, anchorY;
-    private double anchorAngleX = 0;
-    private double anchorAngleY = 0;
-    private final DoubleProperty angleX = new SimpleDoubleProperty(0);
-    private final DoubleProperty angleY = new SimpleDoubleProperty(0);
+    private MediaPlayer son;
+    private MediaPlayer music;
     private double tourne;
-    MediaPlayer son;
 
-    public void jouer(Stage primaryStage) throws Exception{
+    public Jeux() {
+        sonOn = true;
+        musicOn = true;
+        distance = 50;
+        couleur = Color.WHITE;
 
-        Sphere balle = new Sphere(8);
-        PhongMaterial material = new PhongMaterial();
-        material.setDiffuseMap(new Image("images/texture.png"));
-        material.setDiffuseColor(Color.WHITE);
-        balle.setMaterial(material);
-        balle.setTranslateY(-40);
-        balle.setRotationAxis(Rotate.X_AXIS);
-
-        Media hit = new Media(new File("src/Puzzle-Dreams.mp3").toURI().toString());
-        son = new MediaPlayer(hit);
-        son.setVolume(0.2);
-        son.setOnEndOfMedia(new Runnable() {
+        Media hit = new Media(new File("src/ressources/Puzzle-Dreams.mp3").toURI().toString());
+        music = new MediaPlayer(hit);
+        music.setVolume(0.2);
+        music.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
                 son.seek(Duration.ZERO);
             }
         });
-        son.play();
+    }
 
-        String map = new String("xooox\n" +
-                "xooox\n" +
-                "xoooxxxxxxx\n" +
-                "xooooooooox\n" +
-                "xooooooooox\n" +
-                "xooooooooox\n" +
-                "xxxxxxxxxxx");
+    public SubScene jouer(Stage stage) {
+        music.setMute(!musicOn);
 
-        Group niveau = new Group(prepareMap(map), debut());
+        Balle balle = new Balle(8);
+        PhongMaterial material = new PhongMaterial();
+        material.setDiffuseMap(new Image("ressources/images/texture.png"));
+        material.setDiffuseColor(couleur);
+        balle.setMaterial(material);
+        balle.setTranslateY(-40);
+        balle.setRotationAxis(Rotate.X_AXIS);
+
+        Group niveau = new Group(prepareMap(Plateforme.getNiveau1()), debut());
         niveau.getChildren().add(balle);
 
         Camera camera = new PerspectiveCamera();
-        Scene scene = new Scene(niveau, WIDTH, HEIGHT, true);
-        scene.setFill(Color.SILVER);
+        SubScene scene = new SubScene(niveau, 800, 600,true, SceneAntialiasing.BALANCED);
+        //scene.setFill(Color.SILVER);
         scene.setCamera(camera);
 
-        niveau.translateXProperty().set(WIDTH / 2);
-        niveau.translateYProperty().set(HEIGHT / 2);
+        niveau.translateXProperty().set(400);
+        niveau.translateYProperty().set(300);
         niveau.getChildren().add(backround(balle));
 
-        camera.setTranslateX(camera.getTranslateX() + 100);
-        camera.setTranslateY(camera.getTranslateY() - 100);
-        camera.getTransforms().addAll(new Rotate(-45, Rotate.Y_AXIS), new Rotate(-70, Rotate.X_AXIS), new Rotate(15, Rotate.Z_AXIS));
+        camera.setTranslateX(camera.getTranslateX() + 150 - distance);
+        camera.setTranslateY(camera.getTranslateY() - 150 + distance);
+        camera.getTransforms().addAll(new Rotate(-45, Rotate.Y_AXIS),
+                new Rotate(-70, Rotate.X_AXIS), new Rotate(15, Rotate.Z_AXIS));
+        camera.translateXProperty().bind(balle.translateXProperty());
+        camera.translateZProperty().bind(balle.translateZProperty());
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
@@ -85,7 +85,7 @@ public class Test3d {
             }
         };
 
-        primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
+        stage.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
             switch (keyEvent.getCode()) {
                 case W :
                     balle.setTranslateZ(balle.getTranslateZ() + 4);
@@ -141,16 +141,19 @@ public class Test3d {
                     break;
             }
         });
-        primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, keyEvent -> timer.stop());
+        stage.addEventHandler(KeyEvent.KEY_RELEASED, keyEvent -> timer.stop());
 
-        camera.translateXProperty().bind(balle.translateXProperty());
-        camera.translateZProperty().bind(balle.translateZProperty());
+        music.play();
 
-        primaryStage.setScene(scene);
+        return scene;
+    }
+
+    public void musicStop() {
+        music.stop();
     }
 
     private ImageView backround(Sphere balle) {
-        Image image = new Image("images/backblurred.png");
+        Image image = new Image("ressources/images/backblurred.png");
         ImageView iv = new ImageView(image);
         iv.setFitHeight(2400);
         iv.setFitWidth(2600);
@@ -182,16 +185,16 @@ public class Test3d {
                 Box bloc = (Box) prepareBox(x, z);
                 bloc.setHeight(128);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
-                mat.setDiffuseMap(new Image("images/patern.png"));
+                mat.setDiffuseMap(new Image("ressources/images/patern.png"));
                 mat.setDiffuseColor(Color.DARKGREY);
                 bloc.setMaterial(mat);
                 group.getChildren().add(bloc);
                 x++;
-        }
+            }
             else if (description.charAt(i) == 'v') {
                 Box bloc = (Box) prepareBox(x, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
-                mat.setDiffuseMap(new Image("images/patern.png"));
+                mat.setDiffuseMap(new Image("ressources/images/patern.png"));
                 mat.setDiffuseColor(Color.LIGHTGOLDENRODYELLOW);
                 bloc.setMaterial(mat);
                 group.getChildren().add(bloc);
@@ -213,7 +216,7 @@ public class Test3d {
 
     private Node prepareBox(int x, int z) {
         PhongMaterial material = new PhongMaterial();
-        material.setDiffuseMap(new Image("images/patern.png"));
+        material.setDiffuseMap(new Image("ressources/images/patern.png"));
         Box box = new Box(64, 64, 64);
         box.setMaterial(material);
         box.setTranslateX(x * 64);
@@ -230,4 +233,20 @@ public class Test3d {
         };
         timer.start();
     }*/
+
+    public boolean isSonOn() { return sonOn; }
+
+    public void setSonOn(boolean sonOn) { this.sonOn = sonOn; }
+
+    public boolean isMusicOn() { return musicOn; }
+
+    public void setMusicOn(boolean musicOn) { this.musicOn = musicOn; }
+
+    public double getDistance() { return distance; }
+
+    public void setDistance(double distance) { this.distance = distance; }
+
+    public Color getCouleur() { return couleur; }
+
+    public void setCouleur(Color couleur) { this.couleur = couleur; }
 }

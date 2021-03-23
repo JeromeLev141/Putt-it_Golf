@@ -23,29 +23,23 @@ public class OptionController {
     @FXML
     private Node node5;
 
-    private boolean sonOn = true;
-    private boolean musicOn = true;
-    private double distance = 50;
-    private Color couleur = Color.WHITE;
+    private Jeux jeux;
 
-    public void transfert(boolean sonOn, boolean musicOn, Color couleur, double distance) {
-      this.sonOn = sonOn;
-      this.musicOn = musicOn;
-      this.distance = distance;
-      this.couleur = couleur;
+    public void transfert(Jeux jeux) {
+        this.jeux = jeux;
 
-      if (!this.sonOn){
-          node1.setStyle( node1.getStyle().replace("-fx-graphic: url(/images/volume.png);",
-                  "-fx-graphic:  url(/images/volumeferme.png);"));
+      if (!jeux.isSonOn()){
+          node1.setStyle( node1.getStyle().replace("-fx-graphic: url(/ressources/images/volume.png);",
+                  "-fx-graphic:  url(/ressources/images/volumeferme.png);"));
       }
-      if (!this.musicOn){
-          node2.setStyle( node2.getStyle().replace("-fx-graphic: url(/images/music.png);",
-                  "-fx-graphic:  url(/images/musicferme.png);"));
+      if (!jeux.isMusicOn()){
+          node2.setStyle( node2.getStyle().replace("-fx-graphic: url(/ressources/images/music.png);",
+                  "-fx-graphic:  url(/ressources/images/musicferme.png);"));
       }
       Slider sld = (Slider) node3;
-      sld.setValue(distance);
+      sld.setValue(jeux.getDistance());
       ColorPicker cp =  (ColorPicker) node4;
-      cp.setValue(couleur);
+      cp.setValue(jeux.getCouleur());
     }
 
     @FXML
@@ -54,7 +48,7 @@ public class OptionController {
         Parent option = loader.load();
 
         MenuController menuController = loader.getController();
-        menuController.transfert(sonOn, musicOn, couleur, distance);
+        menuController.transfert(jeux);
 
         Scene scene = new Scene(option, 800, 600);
         Stage stage = (Stage) node1.getScene().getWindow();
@@ -63,42 +57,42 @@ public class OptionController {
 
     @FXML
     private void sonStatut() {
-        if (sonOn) {
-            node1.setStyle( node1.getStyle().replace("-fx-graphic: url(/images/volume.png);",
-                    "-fx-graphic:  url(/images/volumeferme.png);"));
-            sonOn = false;
+        if (jeux.isSonOn()) {
+            node1.setStyle( node1.getStyle().replace("-fx-graphic: url(/ressources/images/volume.png);",
+                    "-fx-graphic:  url(/ressources/images/volumeferme.png);"));
+            jeux.setSonOn(false);
         }
         else {
-            node1.setStyle( node1.getStyle().replace("-fx-graphic:  url(/images/volumeferme.png);",
-                    "-fx-graphic: url(/images/volume.png);"));
-            sonOn = true;
+            node1.setStyle( node1.getStyle().replace("-fx-graphic:  url(/ressources/images/volumeferme.png);",
+                    "-fx-graphic: url(/ressources/images/volume.png);"));
+            jeux.setSonOn(true);
         }
     }
 
     @FXML
     private void musicStatut() {
-        if (musicOn) {
-            node2.setStyle( node2.getStyle().replace("-fx-graphic: url(/images/music.png);",
-                    "-fx-graphic:  url(/images/musicferme.png);"));
-            musicOn = false;
+        if (jeux.isMusicOn()) {
+            node2.setStyle( node2.getStyle().replace("-fx-graphic: url(/ressources/images/music.png);",
+                    "-fx-graphic:  url(/ressources/images/musicferme.png);"));
+            jeux.setMusicOn(false);
         }
         else {
-            node2.setStyle( node2.getStyle().replace("-fx-graphic:  url(/images/musicferme.png);",
-                    "-fx-graphic: url(/images/music.png);"));
-            musicOn = true;
+            node2.setStyle( node2.getStyle().replace("-fx-graphic:  url(/ressources/images/musicferme.png);",
+                    "-fx-graphic: url(/ressources/images/music.png);"));
+            jeux.setMusicOn(true);
         }
     }
 
     @FXML
     private void distanceCamera() {
         Slider sld = (Slider) node3;
-        distance = sld.getValue();
+        jeux.setDistance(sld.getValue());
     }
 
     @FXML
     private void CouleurChoisi() {
         ColorPicker cp =  (ColorPicker) node4;
-        couleur = cp.getValue();
+        jeux.setCouleur(cp.getValue());
     }
 
     @FXML

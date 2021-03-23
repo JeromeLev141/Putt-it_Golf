@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-image: url(/images/backblurred.png);" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ScoreController">
+<StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-image: url(/ressources/images/backblurred.png);" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ScoreController">
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
          <children>
@@ -29,7 +29,7 @@
             <Insets bottom="50.0" />
          </StackPane.margin>
       </VBox>
-      <Button fx:id="node1" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#retour" onMouseEntered="#hover1" onMouseExited="#hoverFin1" style="-fx-graphic: url(/images/retour.png); -fx-background-insets: 1; -fx-border-color: black; -fx-background-color: white; -fx-border-radius: 4; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );" StackPane.alignment="TOP_LEFT">
+      <Button fx:id="node1" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#retour" onMouseEntered="#hover1" onMouseExited="#hoverFin1" style="-fx-graphic: url(/ressources/images/retour.png); -fx-background-insets: 1; -fx-border-color: black; -fx-background-color: white; -fx-border-radius: 4; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );" StackPane.alignment="TOP_LEFT">
          <StackPane.margin>
             <Insets left="50.0" top="50.0" />
          </StackPane.margin>
