@@ -3,9 +3,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -14,16 +12,14 @@ public class JeuxController {
 
     @FXML
     private Node node1;
+    @FXML
+    private StackPane stp;
 
     private Jeux jeux;
 
     public void transfert(Jeux jeux, Stage stage) {
         this.jeux = jeux;
-
-        StackPane stp = new StackPane();
-        stp.getChildren().add(jeux.jouer(stage));
-        stp.getChildren().add(node1);
-
+        stp.getChildren().add(0, jeux.jouer(stage));
         stage.setScene(new Scene(stp));
     }
 
