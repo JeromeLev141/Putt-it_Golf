@@ -13,7 +13,7 @@ public class ControleurJeux {
 
     public ControleurJeux(){
 
-        espace = new Espace3D(balle.getPosition());
+        //espace = new Espace3D(balle.getPosition());
         //espace.addForme();
 
     }

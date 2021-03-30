@@ -1,6 +1,8 @@
 import javafx.geometry.Point3D;
 import modele.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 public class Main_jeremi{
@@ -26,9 +28,12 @@ public class Main_jeremi{
         System.out.println(vecteur.getForceX());
         System.out.println(vecteur.getVecteurForceResultant()[0] + "-" + vecteur.getVecteurForceResultant()[1] + "-" + vecteur.getVecteurForceResultant()[2]);
 
-        Forme forme = new Forme(new Point3D(-5,0,-5),10,0,10, 0,0,4);
-        Espace3D plateforme = new Espace3D(new Point3D(0,0,0));
-        plateforme.addForme(forme);
+        FormeCordonneSommet forme = new FormeCordonneSommet(new Point3D(5,-0.5,10),10,1,20, 15,41,4);
+        List<FormeCordonneSommet> liste = new ArrayList<>();
+        liste.add(forme);
+        Espace3D plateforme = new Espace3D(new Point3D(5,0.0039,10),liste,null);// position parfait 0.29
+
+        System.out.println("La balle est dans la forme à la position : " + plateforme.detectColisionDansQuelleFormeSol().getTypeSol().getFrottement());
 
     }
 }

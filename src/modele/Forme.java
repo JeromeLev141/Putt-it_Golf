@@ -11,7 +11,7 @@ public class Forme {
     private double angleXY;
     private Sol typeSol;
 
-    public Forme(Point3D position1,double x, double y, double z,double angleXY,double angleXZ,int Sol){
+    public Forme(Point3D position1,double x, double y, double z,double angleXY,double angleXZ,int sol){
         positionEspace = position1;
         prisme = new Box(x,y,z);
         this.angleXY = angleXY;
