@@ -1,22 +1,30 @@
 package modele;
 
-import javafx.scene.shape.Box;
-import javafx.scene.shape.Polygon;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Plateforme {
 
     public static String getNiveau1() {
-        return new String(
-                "xooox\n" +
+        return "xooox\n" +
                 "xooox\n" +
                 "xoooxxxxxxx\n" +
                 "xooooooooox\n" +
                 "xooooooooox\n" +
                 "xooooooooox\n" +
-                "xxxxxxxxxxx");
+                "xxxxxxxxxxx";
+    }
+
+    public static String getNiveau2() {
+        return "xooox\n" +
+                "xo ox\n" +
+                "xooox\n" +
+                "xooox\n" +
+                "x o x\n" +
+                "xooox\n" +
+                "xooox\n" +
+                "xo ox\n" +
+                "xooox\n" +
+                "xooox\n" +
+                "xooox\n" +
+                "xooox\n" +
+                "xxxxx\n";
     }
 }

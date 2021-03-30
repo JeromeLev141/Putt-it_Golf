@@ -1,17 +1,17 @@
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import vue.Menu;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        BorderPane bdp = new BorderPane();
-        Menu.menuPrincipale(bdp);
-        Scene scene = new Scene(bdp, 800, 600);
+        Parent menu = FXMLLoader.load(getClass().getResource("SceneMenu.fxml"));
+        Scene scene = new Scene(menu, 800, 600);
 
+        primaryStage.setResizable(false);
         primaryStage.setTitle("Putt-it Golf");
         primaryStage.setScene(scene);
         primaryStage.show();
