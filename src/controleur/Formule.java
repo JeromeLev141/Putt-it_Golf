@@ -32,4 +32,6 @@ public class Formule {
     }
 
     public static double forcegravitationnel(){ return 0.045 * 9.8;}
+
+    //public static double
 }

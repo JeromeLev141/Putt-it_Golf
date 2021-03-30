@@ -1,5 +1,8 @@
 package modele;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Sol {
 
     private boolean traversable;
@@ -10,11 +13,27 @@ public class Sol {
         this.frottement = frottement;
     }
 
-    public boolean isTraversable() { return traversable; }
+    public Sol(int type){
+        if (type == 1) {/*eau*/
+            traversable = true;
+            frottement = 0;
+        }
+        else if (type == 2) {/*beton*/
+            traversable = false;
+            frottement = 0.9;
+        }
+        else if (type == 3) {/*bois*/
+            traversable = false;
+            frottement = 0.5;
+        }
+        else if (type == 4) {/*gazon*/
+            traversable = false;
+            frottement = 2;
+        }
+    }
 
-    public void setTraversable(boolean traversable) { this.traversable = traversable; }
+    public boolean isTraversable() { return traversable; }
 
     public double getFrottement() { return frottement; }
 
-    public void setFrottement(double frottement) { this.frottement = frottement; }
 }
