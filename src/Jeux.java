@@ -31,6 +31,9 @@ public class Jeux {
     private MediaPlayer music;
     private double tourne;
 
+    private SubScene scene;
+    private Balle balle;
+
     public Jeux() {
         sonOn = true;
         musicOn = true;
@@ -43,7 +46,7 @@ public class Jeux {
         music.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
-                son.seek(Duration.ZERO);
+                music.seek(Duration.ZERO);
             }
         });
     }
@@ -51,7 +54,7 @@ public class Jeux {
     public SubScene jouer(Stage stage) {
         music.setMute(!musicOn);
 
-        Balle balle = new Balle(8);
+        balle = new Balle(8);
         PhongMaterial material = new PhongMaterial();
         material.setDiffuseMap(new Image("ressources/images/texture.png"));
         material.setDiffuseColor(couleur);
@@ -63,8 +66,7 @@ public class Jeux {
         niveau.getChildren().add(balle);
 
         Camera camera = new PerspectiveCamera();
-        SubScene scene = new SubScene(niveau, 800, 600,true, SceneAntialiasing.BALANCED);
-        //scene.setFill(Color.SILVER);
+        scene = new SubScene(niveau, 800, 600,true, SceneAntialiasing.BALANCED);
         scene.setCamera(camera);
 
         niveau.translateXProperty().set(400);
@@ -148,12 +150,45 @@ public class Jeux {
         return scene;
     }
 
+    public void sonEntre() {
+        Media entre = new Media(new File("src/ressources/sons/entre.mp3").toURI().toString());
+        son = new MediaPlayer(entre);
+        son.setVolume(0.2);
+        son.setMute(!sonOn);
+        son.play();
+    }
+
+    public void sonRetour() {
+        Media retour = new Media(new File("src/ressources/sons/retour.mp3").toURI().toString());
+        son = new MediaPlayer(retour);
+        son.setVolume(0.2);
+        son.setMute(!sonOn);
+        son.play();
+    }
+
     public void musicStop() {
         music.stop();
     }
 
+    public void niveauSuivant() {
+        Group niveau = new Group(prepareMap(Plateforme.getNiveau2()), debut());
+        niveau.getChildren().add(balle);
+        niveau.translateXProperty().set(400);
+        niveau.translateYProperty().set(300);
+        niveau.getChildren().add(backround(balle));
+
+        resetBalle();
+        scene.setRoot(niveau);
+    }
+
+    private void resetBalle() {
+        balle.translateXProperty().set(0);
+        balle.translateZProperty().set(0);
+        balle.translateYProperty().set(-40);
+    }
+
     private ImageView backround(Sphere balle) {
-        Image image = new Image("ressources/images/backblurred.png");
+        Image image = new Image("ressources/images/nuages.png");
         ImageView iv = new ImageView(image);
         iv.setFitHeight(2400);
         iv.setFitWidth(2600);
@@ -196,6 +231,17 @@ public class Jeux {
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/patern.png"));
                 mat.setDiffuseColor(Color.LIGHTGOLDENRODYELLOW);
+                bloc.setMaterial(mat);
+                group.getChildren().add(bloc);
+                x++;
+            }
+            else {
+                Box bloc = (Box) prepareBox(x, z);
+                bloc.setTranslateY(32);
+                bloc.setHeight(32);
+                PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
+                mat.setDiffuseMap(new Image("ressources/images/patern.png"));
+                mat.setDiffuseColor(Color.LIGHTBLUE);
                 bloc.setMaterial(mat);
                 group.getChildren().add(bloc);
                 x++;

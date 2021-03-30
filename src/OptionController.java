@@ -44,6 +44,8 @@ public class OptionController {
 
     @FXML
     private void retour() throws IOException {
+        jeux.sonRetour();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneMenu.fxml"));
         Parent option = loader.load();
 
@@ -57,6 +59,8 @@ public class OptionController {
 
     @FXML
     private void sonStatut() {
+        jeux.sonEntre();
+
         if (jeux.isSonOn()) {
             node1.setStyle( node1.getStyle().replace("-fx-graphic: url(/ressources/images/volume.png);",
                     "-fx-graphic:  url(/ressources/images/volumeferme.png);"));
@@ -71,6 +75,8 @@ public class OptionController {
 
     @FXML
     private void musicStatut() {
+        jeux.sonEntre();
+
         if (jeux.isMusicOn()) {
             node2.setStyle( node2.getStyle().replace("-fx-graphic: url(/ressources/images/music.png);",
                     "-fx-graphic:  url(/ressources/images/musicferme.png);"));
@@ -91,6 +97,8 @@ public class OptionController {
 
     @FXML
     private void CouleurChoisi() {
+        jeux.sonEntre();
+
         ColorPicker cp =  (ColorPicker) node4;
         jeux.setCouleur(cp.getValue());
     }

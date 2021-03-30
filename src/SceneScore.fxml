@@ -19,7 +19,7 @@
                   <Font name="OCR A Extended" size="40.0" />
                </font>
             </Button>
-            <ListView fx:id="node2" fixedCellSize="60.0" focusTraversable="false" prefHeight="300.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black; -fx-background-insets: 1; -fx-border-radius: 4; -fx-border-width: 5; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );">
+            <ListView fx:id="node2" fixedCellSize="60.0" focusTraversable="false" prefHeight="300.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black; -fx-background-insets: 2; -fx-border-radius: 4; -fx-border-width: 5; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );">
                <VBox.margin>
                   <Insets left="100.0" right="100.0" />
                </VBox.margin>

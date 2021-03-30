@@ -33,7 +33,7 @@
                   </HBox>
                   <HBox alignment="CENTER" spacing="50.0">
                      <children>
-                        <Label text="Caméra">
+                        <Label style="-fx-border-color: black; -fx-background-color: white; -fx-border-radius: 4; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 ); -fx-background-insets: 2; -fx-border-width: 2;" text="Caméra">
                            <font>
                               <Font name="OCR A Extended" size="24.0" />
                            </font>
@@ -43,13 +43,10 @@
                   </HBox>
                   <HBox alignment="CENTER" spacing="120.0">
                      <children>
-                        <Label text="Balle">
+                        <Label style="-fx-border-color: black; -fx-background-color: white; -fx-border-radius: 4; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 ); -fx-background-insets: 2; -fx-border-width: 2;" text="Balle">
                            <font>
                               <Font name="OCR A Extended" size="24.0" />
                            </font>
-                           <padding>
-                              <Insets left="-80.0" />
-                           </padding>
                         </Label>
                         <ColorPicker fx:id="node4" focusTraversable="false" onAction="#CouleurChoisi" onMouseEntered="#hover4" onMouseExited="#hoverFin4" style="-fx-background-insets: 1; -fx-background-color: white; -fx-border-radius: 4; -fx-border-color: black; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );" />
                      </children>

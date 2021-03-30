@@ -13,6 +13,8 @@ public class JeuxController {
     @FXML
     private Node node1;
     @FXML
+    private Node node2;
+    @FXML
     private StackPane stp;
 
     private Jeux jeux;
@@ -39,10 +41,19 @@ public class JeuxController {
     }
 
     @FXML
+    private void suivant() { jeux.niveauSuivant(); }
+
+    @FXML
     private void hover1() { hover(node1);}
 
     @FXML
     private void hoverFin1() { hoverFin(node1);}
+
+    @FXML
+    private void hover2() { hover(node2);}
+
+    @FXML
+    private void hoverFin2() { hoverFin(node2);}
 
     @FXML
     private void hover(Node node) { node.setStyle(node.getStyle() + "-fx-border-width: 3px;"); }

@@ -29,6 +29,8 @@ public class MenuController {
 
     @FXML
     private void jouer() throws Exception {
+        jeux.sonEntre();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneJeux.fxml"));
         Parent jouer = loader.load();
 
@@ -41,6 +43,8 @@ public class MenuController {
 
     @FXML
     private void scoreboard() throws IOException {
+        jeux.sonEntre();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneScore.fxml"));
         Parent scoreboard = loader.load();
 
@@ -54,6 +58,8 @@ public class MenuController {
 
     @FXML
     private void option() throws IOException {
+        jeux.sonEntre();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneOption.fxml"));
         Parent option = loader.load();
 
@@ -66,7 +72,10 @@ public class MenuController {
     }
 
     @FXML
-    private void quitter() { System.exit(0);}
+    private void quitter() {
+        jeux.sonEntre();
+        System.exit(0);
+    }
 
     @FXML
     private void hover1() { hover(node1);}
