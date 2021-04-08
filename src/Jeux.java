@@ -1,3 +1,4 @@
+import controleur.Formule;
 import javafx.animation.AnimationTimer;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
@@ -18,10 +19,11 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import modele.Balle;
-import modele.Plateforme;
+import modele.*;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Jeux {
 
@@ -43,11 +45,20 @@ public class Jeux {
     private double force;
     private double angle;
 
+    private Vecteur vecteur;
+    private List<FormeCordonneSommet> mur;
+    private List<FormeCordonneSommet> sol;
+    private Espace3D espace3D;
+
     public Jeux() {
         sonOn = true;
         musicOn = true;
         distance = 50;
         couleur = Color.WHITE;
+
+        vecteur = null;
+        mur = null;
+        sol = null;
 
         Media hit = new Media(new File("src/ressources/Puzzle-Dreams.mp3").toURI().toString());
         music = new MediaPlayer(hit);
@@ -282,9 +293,14 @@ public class Jeux {
     private Group prepareMap(String description) {
         int x = -2;
         int z = 2;
+
+        sol = new ArrayList<>();
+        mur = new ArrayList<>();
+
         Group group = new Group();
         for (int i = 0; i < description.length(); i ++) {
             if (description.charAt(i) == 'o') {
+                prepareMapForme(sol,x,0,z,0,0,4,64,64,64);
                 Node bloc = prepareBox(x, z);
                 group.getChildren().add(bloc);
                 x++;
@@ -294,6 +310,7 @@ public class Jeux {
                 x = -2;
             }
             else if (description.charAt(i) == 'x') {
+                prepareMapForme(sol,x,0,z,0,0,4,64,64,64);
                 Box bloc = (Box) prepareBox(x, z);
                 bloc.setHeight(128);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
@@ -304,6 +321,7 @@ public class Jeux {
                 x++;
             }
             else if (description.charAt(i) == 'v') {
+                prepareMapForme(sol,x,0,z,0,0,4,64,64,64);
                 Box bloc = (Box) prepareBox(x, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/patern.png"));
@@ -313,6 +331,7 @@ public class Jeux {
                 x++;
             }
             else {
+                prepareMapForme(sol,x,0,z,0,0,4,64,32,64);
                 Box bloc = (Box) prepareBox(x, z);
                 bloc.setTranslateY(32);
                 bloc.setHeight(32);
@@ -372,4 +391,55 @@ public class Jeux {
     public Color getCouleur() { return couleur; }
 
     public void setCouleur(Color couleur) { this.couleur = couleur; }
+
+    private void prepareMapForme(List<FormeCordonneSommet> liste,int x,int y,int z,int angleXZ, int angleXY,int sol,int widgh, int heigh, int depth){
+
+        FormeCordonneSommet box = new FormeCordonneSommet(new Point3D(x * 64,y,z * 64), widgh, heigh, depth, angleXZ,angleXY,sol );
+        liste.add(box);
+    }
+
+    private void bougerBalleEspaceTemps(double[] vitesseinitial) {
+        this.vecteur = new Vecteur(this.balle.getPosition());
+        this.espace3D = new Espace3D(this.balle.getPosition(), this.sol, this.mur);
+        int fgPosition = this.vecteur.creeSection();
+        int fnPosition = this.vecteur.creeSection();
+
+        for(int x = 0; x < vitesseinitial.length; ++x) {
+            this.vecteur.setVecteurVitesseResultant(x, vitesseinitial[x]);
+        }
+
+        double forceFrottement = 0.0D;
+
+        do {
+            Forme formeSol = this.espace3D.detectColisionDansQuelleFormeSol();
+            double[] fg = Formule.forcegravitationnel(formeSol);
+            this.vecteur.setForceX(fgPosition, fg[0]);
+            this.vecteur.setForceY(fgPosition, fg[1]);
+            this.vecteur.setForceZ(fgPosition, fg[2]);
+            if (formeSol != null && !formeSol.getTypeSol().isTraversable()) {
+                this.vecteur.setForceY(fnPosition, (Double)this.vecteur.getForceY().get(fgPosition) * -1.0D);
+                if (this.vecteur.getVecteurVitesseResultant()[0] >= 0.01D && this.vecteur.getVecteurVitesseResultant()[0] <= 0.01D && this.vecteur.getVecteurVitesseResultant()[2] >= 0.01D && this.vecteur.getVecteurVitesseResultant()[2] <= 0.01D) {
+                    forceFrottement = 0.0D;
+                    this.vecteur.setForceX(fnPosition, forceFrottement);
+                    this.vecteur.setForceZ(fnPosition, forceFrottement);
+                } else {
+                    forceFrottement = Formule.forceDeFrottement(formeSol.getTypeSol().getFrottement(), (Double)this.vecteur.getForceY().get(fnPosition));
+                    this.vecteur.setForceX(fnPosition, forceFrottement * Math.cos(Math.toRadians(this.vecteur.getAngleXZ() + 180.0D)));
+                    this.vecteur.setForceZ(fnPosition, forceFrottement * Math.sin(Math.toRadians(this.vecteur.getAngleXZ() + 180.0D)));
+                }
+            } else {
+                forceFrottement = 0.0D;
+                this.vecteur.setForceX(fnPosition, forceFrottement);
+                this.vecteur.setForceZ(fnPosition, forceFrottement);
+            }
+
+            this.vecteur.refreshVecteurAccelerationResultant();
+
+            for(int x = 0; x < 3; ++x) {
+                this.vecteur.getPossition()[x] = Formule.MRUA(this.vecteur.getPossition()[x], this.vecteur.getVecteurVitesseResultant()[x], this.vecteur.getVecteurAccelerationResultant()[x], 0.1D);
+                this.vecteur.getVecteurVitesseResultant()[x] = Formule.MRUA_Vf(this.vecteur.getVecteurVitesseResultant()[x], this.vecteur.getVecteurAccelerationResultant()[x], 0.1D);
+            }
+        } while(this.vecteur.getVecteurAccelerationResultant()[0] >= 0.01D && this.vecteur.getVecteurAccelerationResultant()[0] <= 0.01D && this.vecteur.getVecteurAccelerationResultant()[1] >= 0.0D && this.vecteur.getVecteurAccelerationResultant()[1] <= 0.0D && this.vecteur.getVecteurAccelerationResultant()[2] >= 0.01D && this.vecteur.getVecteurAccelerationResultant()[2] <= 0.01D);
+
+    }
 }
