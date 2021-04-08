@@ -1,4 +1,6 @@
 import javafx.animation.AnimationTimer;
+import javafx.animation.RotateTransition;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.*;
@@ -34,9 +36,12 @@ public class Jeux {
 
     private SubScene scene;
     private Balle balle;
+    private VBox fleche;
 
     private double xDebut;
     private double yDebut;
+    private double force;
+    private double angle;
 
     public Jeux() {
         sonOn = true;
@@ -153,12 +158,14 @@ public class Jeux {
                 10.0, 20.0);
         pointe.setFill(Color.RED);
 
-        VBox fleche = new VBox(corps, pointe);
+        fleche = new VBox(corps, pointe);
         fleche.getTransforms().add(new Rotate(90, Rotate.X_AXIS));
 
         niveau.getChildren().add(fleche);
 
         stage.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
+            fleche.setVisible(true);
+
             fleche.setTranslateX(balle.getTranslateX());
             fleche.setTranslateY(balle.getTranslateY());
             fleche.setTranslateZ(balle.getTranslateZ());
@@ -170,20 +177,31 @@ public class Jeux {
         });
 
         stage.addEventHandler(MouseEvent.MOUSE_DRAGGED, mouseEvent -> {
-            double angle = Math.atan((mouseEvent.getSceneX() - xDebut) / (mouseEvent.getSceneY() - yDebut)) * 180 / Math.PI + 20;
-           if ((mouseEvent.getSceneX() - xDebut) < 0 && (mouseEvent.getSceneY() - yDebut) < 0)
+            angle = Math.atan((mouseEvent.getSceneX() - xDebut) / (mouseEvent.getSceneY() - yDebut)) * 180 / Math.PI + 20;
+           if ((mouseEvent.getSceneX() - xDebut) < 0 && (mouseEvent.getSceneY() - yDebut) < 0) {
                 fleche.getTransforms().set(1, new Rotate(-180 + angle, Rotate.Z_AXIS));
-           else if ((mouseEvent.getSceneX() - xDebut) > 0 && (mouseEvent.getSceneY() - yDebut) < 0)
+                angle -= 180;
+           }
+           else if ((mouseEvent.getSceneX() - xDebut) > 0 && (mouseEvent.getSceneY() - yDebut) < 0) {
                fleche.getTransforms().set(1, new Rotate(180 + angle, Rotate.Z_AXIS));
+               angle += 180;
+           }
            else
                fleche.getTransforms().set(1, new Rotate(angle, Rotate.Z_AXIS));
 
-           double force = Math.sqrt(Math.pow(mouseEvent.getSceneX() - xDebut, 2) + Math.pow(mouseEvent.getSceneY() - yDebut, 2)) / 2;
+           force = Math.sqrt(Math.pow(mouseEvent.getSceneX() - xDebut, 2) + Math.pow(mouseEvent.getSceneY() - yDebut, 2)) / 2;
            if (force < 100)
                corps.setHeight(force);
         });
 
         stage.addEventHandler(MouseEvent.MOUSE_RELEASED, mouseEvent -> {
+            fleche.setVisible(false);
+
+            if (force > 100)
+                force = 100;
+
+            frapper(-force * Math.sin(Math.toRadians(angle)), force * Math.cos(Math.toRadians(angle)));
+
             fleche.getTransforms().clear();
             fleche.getTransforms().add(new Rotate(90, Rotate.X_AXIS));
             corps.setHeight(0);
@@ -192,6 +210,21 @@ public class Jeux {
         music.play();
 
         return scene;
+    }
+
+    public void frapper(double x, double z) {
+        balle.setRotationAxis(new Point3D(-z, 0, x));
+
+        TranslateTransition avancer = new TranslateTransition(Duration.seconds(1), balle);
+        avancer.setByX(x);
+        avancer.setByZ(z);
+
+        RotateTransition rouler = new RotateTransition(Duration.seconds(1), balle);
+        rouler.setByAngle((force / (2 * Math.PI * 8)) * 360);
+
+        rouler.play();
+        avancer.play();
+        avancer.setOnFinished(event -> rouler.stop());
     }
 
     public void sonEntre() {
@@ -216,7 +249,7 @@ public class Jeux {
 
     public void niveauSuivant() {
         Group niveau = new Group(prepareMap(Plateforme.getNiveau2()), debut());
-        niveau.getChildren().add(balle);
+        niveau.getChildren().addAll(balle, fleche);
         niveau.translateXProperty().set(400);
         niveau.translateYProperty().set(300);
         niveau.getChildren().add(backround(balle));
