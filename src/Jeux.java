@@ -1,16 +1,17 @@
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Point3D;
+import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.StackPane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Box;
-import javafx.scene.shape.Sphere;
+import javafx.scene.shape.*;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
@@ -34,6 +35,9 @@ public class Jeux {
     private SubScene scene;
     private Balle balle;
 
+    private double xDebut;
+    private double yDebut;
+
     public Jeux() {
         sonOn = true;
         musicOn = true;
@@ -43,12 +47,7 @@ public class Jeux {
         Media hit = new Media(new File("src/ressources/Puzzle-Dreams.mp3").toURI().toString());
         music = new MediaPlayer(hit);
         music.setVolume(0.2);
-        music.setOnEndOfMedia(new Runnable() {
-            @Override
-            public void run() {
-                music.seek(Duration.ZERO);
-            }
-        });
+        music.setOnEndOfMedia(() -> music.seek(Duration.ZERO));
     }
 
     public SubScene jouer(Stage stage) {
@@ -144,6 +143,51 @@ public class Jeux {
             }
         });
         stage.addEventHandler(KeyEvent.KEY_RELEASED, keyEvent -> timer.stop());
+
+        Rectangle corps = new Rectangle(4, 20);
+        corps.setFill(Color.RED);
+        Polygon pointe = new Polygon();
+        pointe.setTranslateX(-3);
+        pointe.getPoints().addAll(5.0, 10.0,
+                15.0, 10.0,
+                10.0, 20.0);
+        pointe.setFill(Color.RED);
+
+        VBox fleche = new VBox(corps, pointe);
+        fleche.getTransforms().add(new Rotate(90, Rotate.X_AXIS));
+
+        niveau.getChildren().add(fleche);
+
+        stage.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
+            fleche.setTranslateX(balle.getTranslateX());
+            fleche.setTranslateY(balle.getTranslateY());
+            fleche.setTranslateZ(balle.getTranslateZ());
+
+            xDebut = mouseEvent.getSceneX();
+            yDebut = mouseEvent.getSceneY();
+
+            fleche.getTransforms().add(new Rotate(0,Rotate.X_AXIS));
+        });
+
+        stage.addEventHandler(MouseEvent.MOUSE_DRAGGED, mouseEvent -> {
+            double angle = Math.atan((mouseEvent.getSceneX() - xDebut) / (mouseEvent.getSceneY() - yDebut)) * 180 / Math.PI + 20;
+           if ((mouseEvent.getSceneX() - xDebut) < 0 && (mouseEvent.getSceneY() - yDebut) < 0)
+                fleche.getTransforms().set(1, new Rotate(-180 + angle, Rotate.Z_AXIS));
+           else if ((mouseEvent.getSceneX() - xDebut) > 0 && (mouseEvent.getSceneY() - yDebut) < 0)
+               fleche.getTransforms().set(1, new Rotate(180 + angle, Rotate.Z_AXIS));
+           else
+               fleche.getTransforms().set(1, new Rotate(angle, Rotate.Z_AXIS));
+
+           double force = Math.sqrt(Math.pow(mouseEvent.getSceneX() - xDebut, 2) + Math.pow(mouseEvent.getSceneY() - yDebut, 2)) / 2;
+           if (force < 100)
+               corps.setHeight(force);
+        });
+
+        stage.addEventHandler(MouseEvent.MOUSE_RELEASED, mouseEvent -> {
+            fleche.getTransforms().clear();
+            fleche.getTransforms().add(new Rotate(90, Rotate.X_AXIS));
+            corps.setHeight(0);
+        });
 
         music.play();
 
