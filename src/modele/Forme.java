@@ -3,25 +3,21 @@ package modele;
 import javafx.geometry.Point3D;
 import javafx.scene.shape.Box;
 
-public class Forme {
+public class Forme extends Box{
 
-    private Box prisme;
     private Point3D positionEspace;
     private double angleXZ;
     private double angleXY;
     private Sol typeSol;
 
-    public Forme(Point3D position1,double x, double y, double z,double angleXY,double angleXZ,int sol){
+    public Forme(Point3D position1,double x,double y,double z,double angleXY,double angleXZ,int sol){
+        super(x,y,z);
         positionEspace = position1;
-        prisme = new Box(x,y,z);
         this.angleXY = angleXY;
         this.angleXZ = angleXZ;
         typeSol = new Sol(4);
     }
 
-    public Box getPrisme() {
-        return prisme;
-    }
 
     public Point3D getPositionEspace() {
         return positionEspace;

@@ -23,9 +23,9 @@ public class FormeCordonneSommet extends Forme {
         double formeY = getPositionEspace().getY();
         double formeZ = getPositionEspace().getZ();
 
-        double width = getPrisme().getWidth()/2;
-        double height = getPrisme().getHeight()/2;
-        double depth = getPrisme().getDepth()/2;
+        double width = getWidth()/2;
+        double height = getHeight()/2;
+        double depth = getDepth()/2;
 
         Point3D numero1 = trouverPointFormeAngle3D(formeX - width,formeY + height,formeZ - depth);
         Point3D numero2 = trouverPointFormeAngle3D(formeX + width,formeY + height,formeZ - depth);

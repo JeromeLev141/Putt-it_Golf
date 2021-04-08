@@ -88,14 +88,14 @@ public class Espace3D {
     }
 
     public FormeCordonneSommet detectionColisionDansQuelleFormeMur(){
-        Point2D position1 = new Point2D(positionBalle.getX() + 0.025,positionBalle.getZ());
-        Point2D position2 = new Point2D(positionBalle.getX() + 0.0125,positionBalle.getZ() - 0.0125);
-        Point2D position3 = new Point2D(positionBalle.getX(),positionBalle.getZ() - 0.025);
-        Point2D position4 = new Point2D(positionBalle.getX() - 0.0125,positionBalle.getZ() - 0.0125);
-        Point2D position5 = new Point2D(positionBalle.getX() - 0.025,positionBalle.getZ());
-        Point2D position6 = new Point2D(positionBalle.getX() - 0.0125,positionBalle.getZ() + 0.0125);
-        Point2D position7 = new Point2D(positionBalle.getX() ,positionBalle.getZ() + 0.025);
-        Point2D position8 = new Point2D(positionBalle.getX() + 0.0125,positionBalle.getZ() + 0.0125);
+        Point2D position1 = new Point2D(positionBalle.getX() + 8,positionBalle.getZ());
+        Point2D position2 = new Point2D(positionBalle.getX() + 4,positionBalle.getZ() - 4);
+        Point2D position3 = new Point2D(positionBalle.getX(),positionBalle.getZ() - 8);
+        Point2D position4 = new Point2D(positionBalle.getX() - 4,positionBalle.getZ() - 4);
+        Point2D position5 = new Point2D(positionBalle.getX() - 8,positionBalle.getZ());
+        Point2D position6 = new Point2D(positionBalle.getX() - 4,positionBalle.getZ() + 4);
+        Point2D position7 = new Point2D(positionBalle.getX() ,positionBalle.getZ() + 8);
+        Point2D position8 = new Point2D(positionBalle.getX() + 4,positionBalle.getZ() + 4);
         Point2D [] tableau = new Point2D[]{position1,position2,position3,position4,position5,position6,position7,position8};
 
         for (FormeCordonneSommet mur : plateformeMur)
@@ -120,10 +120,10 @@ public class Espace3D {
 
             if (sol.getAngleXZTableau()[0].angle(positionBalleXZ,sol.getAngleXZTableau()[1]) <= 90 && sol.getAngleXZTableau()[0].angle(positionBalleXZ,sol.getAngleXZTableau()[3]) <= 90)
                 if (sol.getAngleXZTableau()[2].angle(positionBalleXZ,sol.getAngleXZTableau()[1]) <= 90 && sol.getAngleXZTableau()[2].angle(positionBalleXZ,sol.getAngleXZTableau()[3]) <= 90){
-                    if (sol.getAngleXY() == 0 && (positionBalle.getY() - sol.getSommets()[0].getY()) <= 0.025)
+                    if (sol.getAngleXY() == 0 && (positionBalle.getY() - sol.getSommets()[0].getY()) <= 8)
                         return  sol;
-                    Point2D pointXZ = FormeCordonneSommet.trouverPointFormeAngleXZ(sol, positionBalleXZ.getX(), positionBalleXZ.getY() - 0.025, (360 - sol.getAngleXZ()));
-                    Point2D pointXY = new Point2D(pointXZ.getX(),positionBalle.getY() - 0.025);
+                    Point2D pointXZ = FormeCordonneSommet.trouverPointFormeAngleXZ(sol, positionBalleXZ.getX(), positionBalleXZ.getY() - 8, (360 - sol.getAngleXZ()));
+                    Point2D pointXY = new Point2D(pointXZ.getX(),positionBalle.getY() - 8);
 
 
                     System.out.println(sol.getAngleXYTableau()[0]);

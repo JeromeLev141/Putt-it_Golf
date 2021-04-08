@@ -7,7 +7,7 @@ import java.util.Vector;
 
 public class Main_jeremi{
     public static void main(String[]args){
-        Vecteur vecteur = new Vecteur(new double[]{0,0,0});
+        Vecteur vecteur = new Vecteur(new Point3D(0,0,0));
         vecteur.addforceX(15.0);
         Sol gazon = new Sol(4);
 
