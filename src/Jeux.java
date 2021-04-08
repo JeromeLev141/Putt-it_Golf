@@ -1,7 +1,4 @@
-import controleur.Formule;
 import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.geometry.Point3D;
 import javafx.scene.*;
 import javafx.scene.image.Image;
@@ -18,12 +15,10 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import modele.*;
+import modele.Balle;
+import modele.Plateforme;
 
 import java.io.File;
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Jeux {
 
@@ -32,14 +27,9 @@ public class Jeux {
     private double distance;
     private Color couleur;
 
-
     private MediaPlayer son;
     private MediaPlayer music;
     private double tourne;
-    private Vecteur vecteur;
-    private List<FormeCordonneSommet> mur;
-    private List<FormeCordonneSommet> sol;
-    private Espace3D espace3D;
 
     private SubScene scene;
     private Balle balle;
@@ -49,11 +39,6 @@ public class Jeux {
         musicOn = true;
         distance = 50;
         couleur = Color.WHITE;
-
-        vecteur = null;
-        mur = null;
-        sol = null;
-
 
         Media hit = new Media(new File("src/ressources/Puzzle-Dreams.mp3").toURI().toString());
         music = new MediaPlayer(hit);
@@ -194,7 +179,6 @@ public class Jeux {
 
         resetBalle();
         scene.setRoot(niveau);
-        bougerBalleEspaceTemps(new double[]{0,0});
     }
 
     private void resetBalle() {
@@ -218,24 +202,14 @@ public class Jeux {
         return iv;
     }
 
-    private void prepareMapForme(List<FormeCordonneSommet> liste,int x,int y,int z,int angleXZ, int angleXY,int sol,int widgh, int heigh, int depth){
-
-        FormeCordonneSommet box = new FormeCordonneSommet(new Point3D(x*64,y,z*64), widgh, heigh, depth, angleXZ,angleXY,sol );
-        liste.add(box);
-    }
-
     private Group prepareMap(String description) {
         int x = -2;
         int z = 2;
-        sol = new ArrayList<>();
-        mur = new ArrayList<>();
-
         Group group = new Group();
         for (int i = 0; i < description.length(); i ++) {
             if (description.charAt(i) == 'o') {
                 Node bloc = prepareBox(x, z);
                 group.getChildren().add(bloc);
-                prepareMapForme(sol,x,0,z,0,0,4,64,64,64);
                 x++;
             }
             else if (description.charAt(i) == '\n') {
@@ -250,7 +224,6 @@ public class Jeux {
                 mat.setDiffuseColor(Color.DARKGREY);
                 bloc.setMaterial(mat);
                 group.getChildren().add(bloc);
-                prepareMapForme(mur,x,0,z,0,0,4,64,128,64);
                 x++;
             }
             else if (description.charAt(i) == 'v') {
@@ -260,7 +233,6 @@ public class Jeux {
                 mat.setDiffuseColor(Color.LIGHTGOLDENRODYELLOW);
                 bloc.setMaterial(mat);
                 group.getChildren().add(bloc);
-                prepareMapForme(sol,x,0,z,0,0,4,64,64,64);
                 x++;
             }
             else {
@@ -273,20 +245,9 @@ public class Jeux {
                 bloc.setMaterial(mat);
                 group.getChildren().add(bloc);
                 x++;
-                prepareMapForme(sol,x,0,z,0,0,4,64,32,64);
             }
         }
         return group;
-    }
-
-    private Node prepareBox(int x, int z) {
-        PhongMaterial material = new PhongMaterial();
-        material.setDiffuseMap(new Image("ressources/images/patern.png"));
-        Box box = new Box(64, 64, 64);
-        box.setMaterial(material);
-        box.setTranslateX(x * 64);
-        box.setTranslateZ(z * 64);
-        return box;
     }
 
     private Group debut() {
@@ -299,7 +260,15 @@ public class Jeux {
         return group;
     }
 
-
+    private Node prepareBox(int x, int z) {
+        PhongMaterial material = new PhongMaterial();
+        material.setDiffuseMap(new Image("ressources/images/patern.png"));
+        Box box = new Box(64, 64, 64);
+        box.setMaterial(material);
+        box.setTranslateX(x * 64);
+        box.setTranslateZ(z * 64);
+        return box;
+    }
 
     /*private void prepareAnimation(Sphere balle) {
         AnimationTimer timer = new AnimationTimer() {
@@ -326,58 +295,4 @@ public class Jeux {
     public Color getCouleur() { return couleur; }
 
     public void setCouleur(Color couleur) { this.couleur = couleur; }
-
-    private void bougerBalleEspaceTemps(double[] vitesseinitial){
-        vecteur = new Vecteur(balle.getPosition());
-        espace3D = new Espace3D(balle.getPosition(),sol,mur);
-        Forme formeSol;
-        Forme formeMur;
-        int fgPosition = vecteur.creeSection();
-        int fnPosition = vecteur.creeSection();
-        for (int x = 0; x < vitesseinitial.length;x++)
-            vecteur.setVecteurVitesseResultant(x,vitesseinitial[x]);
-
-        double[] fg;
-        double forceFrottement = 0;
-
-        do {
-            formeSol = espace3D.detectColisionDansQuelleFormeSol();
-            fg = Formule.forcegravitationnel(formeSol);
-            vecteur.setForceX(fgPosition,fg[0]);
-            vecteur.setForceY(fgPosition,fg[1]);
-            vecteur.setForceZ(fgPosition,fg[2]);
-            if (formeSol != null && formeSol.getTypeSol().isTraversable() == false) {
-                vecteur.setForceY(fnPosition, vecteur.getForceY().get(fgPosition) * -1);
-                if (vecteur.getVecteurVitesseResultant()[0] >= 0.01 && vecteur.getVecteurVitesseResultant()[0] <= 0.01 &&
-                        vecteur.getVecteurVitesseResultant()[2] >= 0.01 && vecteur.getVecteurVitesseResultant()[2] <= 0.01){
-                    forceFrottement = 0;
-                    vecteur.setForceX(fnPosition,forceFrottement);
-                    vecteur.setForceZ(fnPosition,forceFrottement);
-                }
-                else {
-                    forceFrottement = Formule.forceDeFrottement(formeSol.getTypeSol().getFrottement(), vecteur.getForceY().get(fnPosition));
-                    vecteur.setForceX(fnPosition, forceFrottement * Math.cos(Math.toRadians(vecteur.getAngleXZ() + 180)));
-                    vecteur.setForceZ(fnPosition, forceFrottement * Math.sin(Math.toRadians(vecteur.getAngleXZ() + 180)));
-                }
-            }
-            else {
-                forceFrottement = 0;
-                vecteur.setForceX(fnPosition,forceFrottement);
-                vecteur.setForceZ(fnPosition,forceFrottement);
-            }
-
-            vecteur.refreshVecteurAccelerationResultant();
-            for (int x = 0; x < 3; x++) {
-                vecteur.getPossition()[x] = Formule.MRUA(vecteur.getPossition()[x],vecteur.getVecteurVitesseResultant()[x],vecteur.getVecteurAccelerationResultant()[x],0.1 );
-                vecteur.getVecteurVitesseResultant()[x] = Formule.MRUA_Vf(vecteur.getVecteurVitesseResultant()[x],vecteur.getVecteurAccelerationResultant()[x],0.1);
-            }
-        }while(vecteur.getVecteurAccelerationResultant()[0] >= 0.01 && vecteur.getVecteurAccelerationResultant()[0] <= 0.01 &&
-                vecteur.getVecteurAccelerationResultant()[1] >= 0 && vecteur.getVecteurAccelerationResultant()[1] <= 0 &&
-                vecteur.getVecteurAccelerationResultant()[2] >= 0.01 && vecteur.getVecteurAccelerationResultant()[2] <= 0.01);
-
-
-
-
-    }
-
 }
