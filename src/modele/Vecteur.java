@@ -55,6 +55,9 @@ public class Vecteur {
         if (vecteurVitesseResultant[0] > 0 && vecteurVitesseResultant[2] < 0)
             angleXZ += 360;
 
+        if (angleXZ == -90)
+            angleXZ = 270;
+
     }
 
     private void refreshForce(){
@@ -115,6 +118,12 @@ public class Vecteur {
 
     public void setVecteurVitesseResultant(int position, double vitesse){
         vecteurVitesseResultant[position] = vitesse;
+        refreshAngleXZ();
+    }
+
+    public void setVecteurVitesseResultant(double[] vitesse){
+        for (int x = 0; x<3 ;x++)
+            vecteurVitesseResultant[x] = vitesse[x];
         refreshAngleXZ();
     }
 

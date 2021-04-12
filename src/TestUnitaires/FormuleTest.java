@@ -24,6 +24,44 @@ public class FormuleTest {
     }
 
     @Test
+    public void MRUA_VFTest(){
+        assertEquals(50.0,Formule.MRUA_Vf(0,5,10));
+        assertEquals(-20.0,Formule.MRUA_Vf(30,-5,10));
+        assertEquals(-4.42,Formule.MRUA_Vf(-4.68,2.6,0.1));
+    }
+
+    @Test
+    public void rebondissementTest2(){
+        // test avec pas d'angle dans les murs
+        Vecteur a = new Vecteur(new Point3D(0,0,0));
+        double[] vitesse1 = new double[]{10,0,20};
+        double[] vitesse2 = new double[]{-15,0,15};
+        double[] vitesse3 = new double[]{0,0,50};
+        double[] vitesse4 = new double[]{20,0,0};
+
+        a.setVecteurVitesseResultant(vitesse1);
+        assertEquals(63.43,a.getAngleXZ(),0.01);
+        Formule.rebondissement(a,0);
+        assertEquals(296.56,a.getAngleXZ(),0.01);
+
+        a.setVecteurVitesseResultant(vitesse2);
+        assertEquals(135.0,a.getAngleXZ(),0.01);
+        Formule.rebondissement(a,6);
+        assertEquals(45.0,a.getAngleXZ(),0.01);
+
+        a.setVecteurVitesseResultant(vitesse3);
+        assertEquals(90.0,a.getAngleXZ(),0.01);
+        Formule.rebondissement(a,6);
+        assertEquals(270.0,a.getAngleXZ(),0.01);
+
+        a.setVecteurVitesseResultant(vitesse4);
+        assertEquals(0.0,a.getAngleXZ(),0.01);
+        Formule.rebondissement(a,6);
+        assertEquals(180.0,a.getAngleXZ(),0.01);
+
+    }
+
+    @Test
     public void rebondissementTest() {
         Vecteur a = new Vecteur(new Point3D(0,0,0));
         a.setAngleXZ(15);
@@ -85,5 +123,10 @@ public class FormuleTest {
         assertEquals(-0.3118,force5[1],0.0001);
         assertEquals(0.0,force5[0],0.0001);
         assertEquals(-0.3118,force5[2],0.0001);
+
+        double[] force6 = Formule.forcegravitationnel(null);
+        assertEquals(0.0,force6[0]);
+        assertEquals(-0.441,force6[1]);
+        assertEquals(0.0,force6[2]);
     }
 }

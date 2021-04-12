@@ -36,20 +36,29 @@ public class Formule {
         return 0;
     }
 
+    public static void rebondissement(Vecteur balle, int positionImpact){
+        if (positionImpact == 0 || positionImpact == 4)
+            balle.setVecteurVitesseResultant(2,balle.getVecteurVitesseResultant()[2] * -1);
+        else if (positionImpact == 2 || positionImpact == 6)
+            balle.setVecteurVitesseResultant(0,balle.getVecteurVitesseResultant()[0] * -1);
+
+    }
+
     public static double[] forcegravitationnel(Forme forme){
         double[] resultat = new double[3];
-        if (forme.getAngleXY() == 0 || forme == null){
+        if (forme == null  || forme.getAngleXY() == 0){
             resultat[0] = 0;
             resultat[1] = Balle.getMasse() * -9.8;
             resultat[2] = 0;
             return resultat;
+        }else {
+            double angle = 180 - (forme.getAngleXY() + 90);
+            resultat[1] = (Balle.getMasse() * -9.8) * Math.sin(Math.toRadians(angle));
+            double hyp = (Balle.getMasse() * -9.8) * Math.cos(Math.toRadians(angle));
+            resultat[0] = hyp * Math.cos(Math.toRadians(forme.getAngleXZ()));
+            resultat[2] = hyp * Math.sin(Math.toRadians(forme.getAngleXZ()));
+            return resultat;
         }
-        double angle = 180 -(forme.getAngleXY() + 90);
-        resultat[1] = (Balle.getMasse() * -9.8) * Math.sin(Math.toRadians(angle));
-        double hyp = (Balle.getMasse() * -9.8) * Math.cos(Math.toRadians(angle));
-        resultat[0] = hyp * Math.cos(Math.toRadians(forme.getAngleXZ()));
-        resultat[2] = hyp * Math.sin(Math.toRadians(forme.getAngleXZ()));
-        return resultat;
     }
 
     public static double forceAAcceleration(double force){
