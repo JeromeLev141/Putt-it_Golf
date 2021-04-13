@@ -332,6 +332,15 @@ public class Jeux {
                 group.getChildren().add(bloc);
                 x++;
             }
+            else if (description.charAt(i) == 't') {
+                prepareMapForme(sol,x,0,z,0,0,4,64,64,64);
+                Box bloc = (Box) prepareBox(x, z);
+                PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
+                mat.setDiffuseMap(new Image("ressources/images/trou.png"));
+                bloc.setMaterial(mat);
+                group.getChildren().add(bloc);
+                x++;
+            }
             else {
                 prepareMapForme(sol,x,0,z,0,0,4,64,32,64);
                 Box bloc = (Box) prepareBox(x, z);

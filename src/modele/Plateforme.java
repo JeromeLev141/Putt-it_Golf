@@ -7,7 +7,7 @@ public class Plateforme {
                 "xooox\n" +
                 "xoooxxxxxxx\n" +
                 "xooooooooox\n" +
-                "xooooooooox\n" +
+                "xoooooootox\n" +
                 "xooooooooox\n" +
                 "xxxxxxxxxxx";
     }
