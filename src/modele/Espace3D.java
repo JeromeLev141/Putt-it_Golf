@@ -50,8 +50,10 @@ public class Espace3D {
         for (FormeCordonneSommet mur : plateformeMur)
             for (int x = 0;x < tableau.length;x++)
                 if (mur.getAngleXZTableau()[0].angle(tableau[x], mur.getAngleXZTableau()[1]) <= 90 && mur.getAngleXZTableau()[0].angle(tableau[x], mur.getAngleXZTableau()[3]) <= 90)
-                    if (mur.getAngleXZTableau()[2].angle(tableau[x], mur.getAngleXZTableau()[1]) <= 90 && mur.getAngleXZTableau()[2].angle(tableau[x], mur.getAngleXZTableau()[3]) <= 90)
+                    if (mur.getAngleXZTableau()[2].angle(tableau[x], mur.getAngleXZTableau()[1]) <= 90 && mur.getAngleXZTableau()[2].angle(tableau[x], mur.getAngleXZTableau()[3]) <= 90) {
+                        System.out.println("colision");
                         return x;
+                    }
         return  -1;
     }
 

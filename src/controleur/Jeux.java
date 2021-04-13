@@ -1,9 +1,7 @@
 package controleur;
 
 import controleur.Formule;
-import javafx.animation.AnimationTimer;
-import javafx.animation.RotateTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.*;
@@ -23,9 +21,12 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import modele.*;
 
+import javax.sound.midi.MidiFileFormat;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Jeux {
 
@@ -46,6 +47,7 @@ public class Jeux {
     private double yDebut;
     private double force;
     private double angle;
+    List<Point3D> positions;
 
     private Vecteur vecteur;
     private List<FormeCordonneSommet> mur;
@@ -59,8 +61,8 @@ public class Jeux {
         couleur = Color.WHITE;
 
         vecteur = null;
-        mur = null;
-        sol = null;
+        sol = new ArrayList<>();
+        mur = new ArrayList<>();
 
         Media hit = new Media(new File("src/ressources/Puzzle-Dreams.mp3").toURI().toString());
         music = new MediaPlayer(hit);
@@ -79,7 +81,8 @@ public class Jeux {
         balle.setTranslateY(-40);
         balle.setRotationAxis(Rotate.X_AXIS);
 
-        Group niveau = new Group(prepareMap(Plateforme.getNiveau1()), debut());
+        Group niveau = new Group(prepareMap(Plateforme.getNiveau1()));
+        espace3D = new Espace3D(new Point3D(0,0,0), sol, mur);
         niveau.getChildren().add(balle);
 
         Camera camera = new PerspectiveCamera();
@@ -220,15 +223,17 @@ public class Jeux {
             corps.setHeight(0);
         });
 
-        music.play();
+        System.out.println(sol.size());
+        System.out.println(mur.size());
 
+        music.play();
         return scene;
     }
 
     public void frapper(double x, double z) {
-        balle.setRotationAxis(new Point3D(-z, 0, x));
+        //balle.setRotationAxis(new Point3D(-z, 0, x));
 
-        TranslateTransition avancer = new TranslateTransition(Duration.seconds(1), balle);
+        /*TranslateTransition avancer = new TranslateTransition(Duration.seconds(1), balle);
         avancer.setByX(x);
         avancer.setByZ(z);
 
@@ -237,7 +242,31 @@ public class Jeux {
 
         rouler.play();
         avancer.play();
-        avancer.setOnFinished(event -> rouler.stop());
+        avancer.setOnFinished(event -> rouler.stop());*/
+
+        /////////
+        vecteur = new Vecteur(new Point3D(balle.getTranslateX(), -balle.getTranslateY(), balle.getTranslateZ()));
+        positions = bougerBalleEspaceTemps(new double[]{x, 0, z}, vecteur, espace3D);
+
+        System.out.println("---" + positions.size());
+        avancer(0);
+        System.out.println("fini");
+
+        /*balle.translateXProperty().set(positions.get(positions.size() - 1).getX());
+        balle.translateZProperty().set(positions.get(positions.size() -1).getZ());
+        balle.translateYProperty().set(-positions.get(positions.size() -1).getY());*/
+    }
+
+    public void avancer(int i) {
+        if (i < positions.size()) {
+            Timeline timeline = new Timeline();
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5),
+                    new KeyValue (balle.translateXProperty(), positions.get(i).getX()),
+                    new KeyValue(balle.translateZProperty(), positions.get(i).getZ())));
+            timeline.setAutoReverse(false);
+            timeline.setOnFinished(event -> avancer(i + 1));
+            timeline.play();
+        }
     }
 
     public void sonEntre() {
@@ -261,7 +290,10 @@ public class Jeux {
     }
 
     public void niveauSuivant() {
-        Group niveau = new Group(prepareMap(Plateforme.getNiveau2()), debut());
+        sol = new ArrayList<>();
+        mur = new ArrayList<>();
+
+        Group niveau = new Group(prepareMap(Plateforme.getNiveau2()));
         niveau.getChildren().addAll(balle, fleche);
         niveau.translateXProperty().set(400);
         niveau.translateYProperty().set(300);
@@ -294,10 +326,7 @@ public class Jeux {
 
     public Group prepareMap(String description) {
         int x = -2;
-        int z = 2;
-
-        sol = new ArrayList<>();
-        mur = new ArrayList<>();
+        int z = -2;
 
         Group group = new Group();
         for (int i = 0; i < description.length(); i ++) {
@@ -333,7 +362,7 @@ public class Jeux {
                 x++;
             }
             else if (description.charAt(i) == 't') {
-                prepareMapForme(sol,x,0,z,0,0,4,64,64,64);
+                prepareMapForme(sol,x,0,z,0,0,5,64,64,64);
                 Box bloc = (Box) prepareBox(x, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/trou.png"));
@@ -357,7 +386,7 @@ public class Jeux {
         return group;
     }
 
-    private Group debut() {
+    /*private Group debut() {
         String des = new String("xxxxx\n" +
                 "xooox\n" +
                 "xovox\n" +
@@ -365,7 +394,7 @@ public class Jeux {
         Group group = prepareMap(des);
         group.setTranslateZ(-256);
         return group;
-    }
+    }*/
 
     private Node prepareBox(int x, int z) {
         PhongMaterial material = new PhongMaterial();
@@ -444,6 +473,7 @@ public class Jeux {
                 if (vecteur.getVecteurVitesseResultant()[0] <= 0.2 && vecteur.getVecteurVitesseResultant()[0] >= -0.2 &&
                         vecteur.getVecteurVitesseResultant()[2] <= 0.2 && vecteur.getVecteurVitesseResultant()[2] >= -0.2) {
                     forceFrottement = 0.0D;
+                    vecteur.setVecteurVitesseResultant(new double[]{0,0,0});
                     vecteur.setForceX(fnPosition, forceFrottement);
                     vecteur.setForceZ(fnPosition, forceFrottement);
                 } else {

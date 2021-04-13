@@ -3,7 +3,11 @@ package modele;
 public class Plateforme {
 
     public static String getNiveau1() {
-        return "xooox\n" +
+        return "xxxxx\n" +
+                "xooox\n" +
+                "xovox\n" +
+                "xooox\n" +
+                "xooox\n" +
                 "xooox\n" +
                 "xoooxxxxxxx\n" +
                 "xooooooooox\n" +

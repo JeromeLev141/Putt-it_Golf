@@ -30,6 +30,10 @@ public class Sol {
             traversable = false;
             frottement = 2;
         }
+        else if (type == 5) {/*trou*/
+            traversable = true;
+            frottement = 0;
+        }
     }
 
     public boolean isTraversable() { return traversable; }

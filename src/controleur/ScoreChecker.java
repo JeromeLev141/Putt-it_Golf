@@ -1,3 +1,5 @@
+package controleur;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -11,8 +13,8 @@ public class ScoreChecker {
         File file = new File("src/scoreboard");
         try {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true)));
-            writer.write(informations);
             writer.newLine();
+            writer.write(informations);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
