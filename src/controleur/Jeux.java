@@ -262,7 +262,8 @@ public class Jeux {
             Timeline timeline = new Timeline();
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5),
                     new KeyValue (balle.translateXProperty(), positions.get(i).getX()),
-                    new KeyValue(balle.translateZProperty(), positions.get(i).getZ())));
+                    new KeyValue(balle.translateZProperty(), positions.get(i).getZ()),
+                    new KeyValue (balle.translateYProperty(), -positions.get(i).getY())));
             timeline.setAutoReverse(false);
             timeline.setOnFinished(event -> avancer(i + 1));
             timeline.play();
@@ -462,7 +463,7 @@ public class Jeux {
             vecteur.setForceY(fgPosition, fg[1]);
             vecteur.setForceZ(fgPosition, fg[2]);
 
-            if (formeSol == null){
+            if (formeSol == null || formeSol.getTypeSol().isTraversable()){
                 vecteur.setForceY(fnPosition,0);
             }
             else{
