@@ -35,7 +35,7 @@ public class FormeCordonneSommet extends Forme {
         Point3D numero6 = trouverPointFormeAngle3D(formeX + width,formeY - height,formeZ - depth);
         Point3D numero7 = trouverPointFormeAngle3D(formeX + width,formeY - height,formeZ + depth);
         Point3D numero8 = trouverPointFormeAngle3D(formeX - width,formeY - height,formeZ + depth);
-
+/*
         System.out.println("-----------------------------");
         System.out.println(numero1);
         System.out.println(numero2);
@@ -46,7 +46,7 @@ public class FormeCordonneSommet extends Forme {
         System.out.println(numero7);
         System.out.println(numero8);
         System.out.println("-----------------------------");
-
+*/
 
         Point2D pointXZ1 = new Point2D(numero1.getX(),numero1.getZ());
         Point2D pointXZ2 = new Point2D(numero2.getX(),numero2.getZ());
@@ -100,7 +100,7 @@ public class FormeCordonneSommet extends Forme {
     }
 
     private Point3D trouverPointFormeAngle3D(double x, double y, double z){
-        System.out.println("\n" + x + " , " + y + " , " + z);
+        //System.out.println("\n" + x + " , " + y + " , " + z);
 
         Point2D pointXY = trouverPointFormeAngleXY(x,y);
         x = pointXY.getX();
@@ -151,16 +151,6 @@ public class FormeCordonneSommet extends Forme {
     public Point2D[] getAngleYZTableau() {
         return angleYZTableau;
     }
-/*
-    public static List<FormeCordonneSommet> listeFormeToListFormeCordonne(List<Forme> liste){
-        List<FormeCordonneSommet> cordonnerForme = new ArrayList<>();
-
-        for (Forme forme1:liste) {
-            cordonnerForme.add(new FormeCordonneSommet(forme1));
-        }
-        return cordonnerForme;
-    }
-*/
 
 }
 

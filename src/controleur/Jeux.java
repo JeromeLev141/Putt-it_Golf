@@ -1,3 +1,5 @@
+package controleur;
+
 import controleur.Formule;
 import javafx.animation.AnimationTimer;
 import javafx.animation.RotateTransition;
@@ -290,7 +292,7 @@ public class Jeux {
         return iv;
     }
 
-    private Group prepareMap(String description) {
+    public Group prepareMap(String description) {
         int x = -2;
         int z = 2;
 
@@ -310,7 +312,7 @@ public class Jeux {
                 x = -2;
             }
             else if (description.charAt(i) == 'x') {
-                prepareMapForme(sol,x,0,z,0,0,4,64,64,64);
+                prepareMapForme(mur,x,0,z,0,0,4,64,128,64);
                 Box bloc = (Box) prepareBox(x, z);
                 bloc.setHeight(128);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
@@ -392,54 +394,71 @@ public class Jeux {
 
     public void setCouleur(Color couleur) { this.couleur = couleur; }
 
-    private void prepareMapForme(List<FormeCordonneSommet> liste,int x,int y,int z,int angleXZ, int angleXY,int sol,int widgh, int heigh, int depth){
+    public List<FormeCordonneSommet> getMur() {
+        return mur;
+    }
+
+    public List<FormeCordonneSommet> getSol() {
+        return sol;
+    }
+
+    public static void prepareMapForme(List<FormeCordonneSommet> liste, int x, int y, int z, int angleXZ, int angleXY, int sol, int widgh, int heigh, int depth){
 
         FormeCordonneSommet box = new FormeCordonneSommet(new Point3D(x * 64,y,z * 64), widgh, heigh, depth, angleXZ,angleXY,sol );
         liste.add(box);
     }
 
-    private void bougerBalleEspaceTemps(double[] vitesseinitial) {
-        this.vecteur = new Vecteur(this.balle.getPosition());
-        this.espace3D = new Espace3D(this.balle.getPosition(), this.sol, this.mur);
-        int fgPosition = this.vecteur.creeSection();
-        int fnPosition = this.vecteur.creeSection();
-
-        for(int x = 0; x < vitesseinitial.length; ++x) {
-            this.vecteur.setVecteurVitesseResultant(x, vitesseinitial[x]);
-        }
+    public static List<Point3D> bougerBalleEspaceTemps(double[] vitesseinitial, Vecteur vecteur, Espace3D espace3D) {
+        int fgPosition = vecteur.creeSection();
+        int fnPosition = vecteur.creeSection();
+        vecteur.setVecteurVitesseResultant(vitesseinitial);
+        List<Point3D> coordonne = new ArrayList<>();
 
         double forceFrottement = 0.0D;
 
         do {
-            Forme formeSol = this.espace3D.detectColisionDansQuelleFormeSol();
-            double[] fg = Formule.forcegravitationnel(formeSol);
-            this.vecteur.setForceX(fgPosition, fg[0]);
-            this.vecteur.setForceY(fgPosition, fg[1]);
-            this.vecteur.setForceZ(fgPosition, fg[2]);
-            if (formeSol != null && !formeSol.getTypeSol().isTraversable()) {
-                this.vecteur.setForceY(fnPosition, (Double)this.vecteur.getForceY().get(fgPosition) * -1.0D);
-                if (this.vecteur.getVecteurVitesseResultant()[0] >= 0.01D && this.vecteur.getVecteurVitesseResultant()[0] <= 0.01D && this.vecteur.getVecteurVitesseResultant()[2] >= 0.01D && this.vecteur.getVecteurVitesseResultant()[2] <= 0.01D) {
+            FormeCordonneSommet formeSol = espace3D.detectColisionDansQuelleFormeSol();
+            int positionImpact = espace3D.detectionColisionDansQuelleFormeMur();
+            double [] fg = Formule.forcegravitationnel(formeSol);
+            vecteur.setForceX(fgPosition, fg[0]);
+            vecteur.setForceY(fgPosition, fg[1]);
+            vecteur.setForceZ(fgPosition, fg[2]);
+
+            if (formeSol == null){
+                vecteur.setForceY(fnPosition,0);
+            }
+            else{
+                if (!formeSol.getTypeSol().isTraversable())
+                    vecteur.setForceY(fnPosition, (Double)vecteur.getForceY().get(fgPosition) * -1.0D);
+                if (positionImpact != -1)
+                    Formule.rebondissement(vecteur,positionImpact);
+                if (vecteur.getVecteurVitesseResultant()[0] <= 0.2 && vecteur.getVecteurVitesseResultant()[0] >= -0.2 &&
+                        vecteur.getVecteurVitesseResultant()[2] <= 0.2 && vecteur.getVecteurVitesseResultant()[2] >= -0.2) {
                     forceFrottement = 0.0D;
-                    this.vecteur.setForceX(fnPosition, forceFrottement);
-                    this.vecteur.setForceZ(fnPosition, forceFrottement);
+                    vecteur.setForceX(fnPosition, forceFrottement);
+                    vecteur.setForceZ(fnPosition, forceFrottement);
                 } else {
-                    forceFrottement = Formule.forceDeFrottement(formeSol.getTypeSol().getFrottement(), (Double)this.vecteur.getForceY().get(fnPosition));
-                    this.vecteur.setForceX(fnPosition, forceFrottement * Math.cos(Math.toRadians(this.vecteur.getAngleXZ() + 180.0D)));
-                    this.vecteur.setForceZ(fnPosition, forceFrottement * Math.sin(Math.toRadians(this.vecteur.getAngleXZ() + 180.0D)));
+                    forceFrottement = Formule.forceDeFrottement(formeSol.getTypeSol().getFrottement(), (Double)vecteur.getForceY().get(fnPosition));
+                    vecteur.setForceX(fnPosition, forceFrottement * Math.cos(Math.toRadians(vecteur.getAngleXZ() + 180.0D)));
+                    vecteur.setForceZ(fnPosition, forceFrottement * Math.sin(Math.toRadians(vecteur.getAngleXZ() + 180.0D)));
                 }
-            } else {
-                forceFrottement = 0.0D;
-                this.vecteur.setForceX(fnPosition, forceFrottement);
-                this.vecteur.setForceZ(fnPosition, forceFrottement);
             }
 
-            this.vecteur.refreshVecteurAccelerationResultant();
+            vecteur.refreshVecteurAccelerationResultant();
 
             for(int x = 0; x < 3; ++x) {
-                this.vecteur.getPossition()[x] = Formule.MRUA(this.vecteur.getPossition()[x], this.vecteur.getVecteurVitesseResultant()[x], this.vecteur.getVecteurAccelerationResultant()[x], 0.1D);
-                this.vecteur.getVecteurVitesseResultant()[x] = Formule.MRUA_Vf(this.vecteur.getVecteurVitesseResultant()[x], this.vecteur.getVecteurAccelerationResultant()[x], 0.1D);
+                vecteur.getPossition()[x] = Formule.MRUA(vecteur.getPossition()[x], vecteur.getVecteurVitesseResultant()[x], vecteur.getVecteurAccelerationResultant()[x], 0.005);
+                vecteur.setVecteurVitesseResultant(x,Formule.MRUA_Vf(vecteur.getVecteurVitesseResultant()[x], vecteur.getVecteurAccelerationResultant()[x], 0.005));
             }
-        } while(this.vecteur.getVecteurAccelerationResultant()[0] >= 0.01D && this.vecteur.getVecteurAccelerationResultant()[0] <= 0.01D && this.vecteur.getVecteurAccelerationResultant()[1] >= 0.0D && this.vecteur.getVecteurAccelerationResultant()[1] <= 0.0D && this.vecteur.getVecteurAccelerationResultant()[2] >= 0.01D && this.vecteur.getVecteurAccelerationResultant()[2] <= 0.01D);
+            Point3D nouvellePosition = new Point3D(vecteur.getPossition()[0],vecteur.getPossition()[1],vecteur.getPossition()[2]);
+            espace3D.refreshPositionBalle(nouvellePosition);
+            coordonne.add(nouvellePosition);
 
+
+        } while(vecteur.getVecteurAccelerationResultant()[0] <= -0.1 || vecteur.getVecteurAccelerationResultant()[0] >= 0.1 ||
+                vecteur.getVecteurAccelerationResultant()[1] != 0 || vecteur.getVecteurAccelerationResultant()[2] >= 0.1 || vecteur.getVecteurAccelerationResultant()[2] <= -0.1);
+
+        return coordonne;
     }
+
 }
