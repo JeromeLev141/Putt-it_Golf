@@ -35,6 +35,10 @@ public class Jeux {
     private double distance;
     private Color couleur;
 
+    private int niveau;
+    private int coups;
+    private int coupsTotal;
+
     private MediaPlayer son;
     private MediaPlayer music;
     private double tourne;
@@ -47,8 +51,10 @@ public class Jeux {
     private double yDebut;
     private double force;
     private double angle;
-    List<Point3D> positions;
+    private List<Point3D> positions;
     private double rotation;
+    private Boolean roule;
+
 
     private Vecteur vecteur;
     private List<FormeCordonneSommet> mur;
@@ -61,6 +67,12 @@ public class Jeux {
         musicOn = true;
         distance = 50;
         couleur = Color.WHITE;
+
+        niveau = 1;
+        coups = 0;
+        coupsTotal = 0;
+
+        roule = false;
 
         vecteur = null;
         sol = new ArrayList<>();
@@ -182,47 +194,53 @@ public class Jeux {
         niveau.getChildren().add(fleche);
 
         stage.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
-            fleche.setVisible(true);
+            if (!roule) {
+                fleche.setVisible(true);
 
-            fleche.setTranslateX(balle.getTranslateX());
-            fleche.setTranslateY(balle.getTranslateY());
-            fleche.setTranslateZ(balle.getTranslateZ());
+                fleche.setTranslateX(balle.getTranslateX());
+                fleche.setTranslateY(balle.getTranslateY());
+                fleche.setTranslateZ(balle.getTranslateZ());
 
-            xDebut = mouseEvent.getSceneX();
-            yDebut = mouseEvent.getSceneY();
+                xDebut = mouseEvent.getSceneX();
+                yDebut = mouseEvent.getSceneY();
 
-            fleche.getTransforms().add(new Rotate(0,Rotate.X_AXIS));
+                fleche.getTransforms().add(new Rotate(0,Rotate.X_AXIS));
+            }
         });
 
         stage.addEventHandler(MouseEvent.MOUSE_DRAGGED, mouseEvent -> {
-            angle = Math.atan((mouseEvent.getSceneX() - xDebut) / (mouseEvent.getSceneY() - yDebut)) * 180 / Math.PI + 20;
-           if ((mouseEvent.getSceneX() - xDebut) < 0 && (mouseEvent.getSceneY() - yDebut) < 0) {
-                fleche.getTransforms().set(1, new Rotate(-180 + angle, Rotate.Z_AXIS));
-                angle -= 180;
-           }
-           else if ((mouseEvent.getSceneX() - xDebut) > 0 && (mouseEvent.getSceneY() - yDebut) < 0) {
-               fleche.getTransforms().set(1, new Rotate(180 + angle, Rotate.Z_AXIS));
-               angle += 180;
-           }
-           else
-               fleche.getTransforms().set(1, new Rotate(angle, Rotate.Z_AXIS));
+            if (!roule) {
+                angle = Math.atan((mouseEvent.getSceneX() - xDebut) / (mouseEvent.getSceneY() - yDebut)) * 180 / Math.PI + 20;
+                if ((mouseEvent.getSceneX() - xDebut) < 0 && (mouseEvent.getSceneY() - yDebut) < 0) {
+                    fleche.getTransforms().set(1, new Rotate(-180 + angle, Rotate.Z_AXIS));
+                    angle -= 180;
+                }
+                else if ((mouseEvent.getSceneX() - xDebut) > 0 && (mouseEvent.getSceneY() - yDebut) < 0) {
+                    fleche.getTransforms().set(1, new Rotate(180 + angle, Rotate.Z_AXIS));
+                    angle += 180;
+                }
+                else
+                    fleche.getTransforms().set(1, new Rotate(angle, Rotate.Z_AXIS));
 
-           force = Math.sqrt(Math.pow(mouseEvent.getSceneX() - xDebut, 2) + Math.pow(mouseEvent.getSceneY() - yDebut, 2)) / 2;
-           if (force < 100)
-               corps.setHeight(force);
+                force = Math.sqrt(Math.pow(mouseEvent.getSceneX() - xDebut, 2) + Math.pow(mouseEvent.getSceneY() - yDebut, 2)) / 2;
+                if (force < 100)
+                    corps.setHeight(force);
+            }
         });
 
         stage.addEventHandler(MouseEvent.MOUSE_RELEASED, mouseEvent -> {
-            fleche.setVisible(false);
+            if (!roule) {
+                fleche.setVisible(false);
 
-            if (force > 100)
-                force = 100;
+                if (force > 100)
+                    force = 100;
 
-            frapper(-force * 2.5 * Math.sin(Math.toRadians(angle)), force * 2.5 * Math.cos(Math.toRadians(angle)));
+                frapper(-force * 2.5 * Math.sin(Math.toRadians(angle)), force * 2.5 * Math.cos(Math.toRadians(angle)));
 
-            fleche.getTransforms().clear();
-            fleche.getTransforms().add(new Rotate(90, Rotate.X_AXIS));
-            corps.setHeight(0);
+                fleche.getTransforms().clear();
+                fleche.getTransforms().add(new Rotate(90, Rotate.X_AXIS));
+                corps.setHeight(0);
+            }
         });
 
         System.out.println(sol.size());
@@ -232,18 +250,23 @@ public class Jeux {
         return scene;
     }
 
-    public void frapper(double x, double z) {
+    private void frapper(double x, double z) {
         vecteur = new Vecteur(new Point3D(balle.getTranslateX(), -balle.getTranslateY(), balle.getTranslateZ()));
         positions = bougerBalleEspaceTemps(new double[]{x, 0, z}, vecteur, espace3D);
         rotation = 0;
 
+        coups++;
+        coupsTotal++;
+
         System.out.println("---" + positions.size());
+        roule = true;
         avancer();
         System.out.println("fini");
     }
 
-    public void avancer() {
+    private void avancer() {
         Timeline timeline = new Timeline();
+        timeline.setOnFinished(event -> roule = false);
         for (int i = 0; i < positions.size() - 1; i++){
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5 * (i + 1)),
                     new KeyValue (balle.translateXProperty(), positions.get(i).getX()),
@@ -255,14 +278,14 @@ public class Jeux {
         timeline.play();
     }
 
-    public double getRotation(int i) {
+    private double getRotation(int i) {
         if (i == 0)
             return  rotation;
         else return rotation += (Math.sqrt(Math.pow(positions.get(i).getZ() - positions.get(i - 1).getZ(), 2) +
                 Math.pow(positions.get(i).getX() - positions.get(i - 1).getX(), 2)) / (2 * Math.PI * 8)) * 360;
     }
 
-    public Point3D getAxeRotation(int i) {
+    private Point3D getAxeRotation(int i) {
         if (i == 0)
             return balle.getRotationAxis();
         else return new Point3D(-(positions.get(i).getZ() - positions.get(i - 1).getZ()), 0,
@@ -325,7 +348,7 @@ public class Jeux {
         return iv;
     }
 
-    public Group prepareMap(String description) {
+    private Group prepareMap(String description) {
         int x = -2;
         int z = -2;
 
@@ -465,7 +488,7 @@ public class Jeux {
             vecteur.setForceZ(fgPosition, fg[2]);
 
             if (formeSol == null || formeSol.getTypeSol().isTraversable()){
-                vecteur.setForceY(fnPosition,0);
+                vecteur.setForceY(fnPosition,-9.8);
             }
             else{
                 if (!formeSol.getTypeSol().isTraversable())

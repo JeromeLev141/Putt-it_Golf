@@ -4,6 +4,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -17,6 +19,8 @@ public class JeuxController {
     private Node node2;
     @FXML
     private StackPane stp;
+    @FXML
+    private GridPane grid;
 
     private Jeux jeux;
 
@@ -24,6 +28,23 @@ public class JeuxController {
         this.jeux = jeux;
         stp.getChildren().add(0, jeux.jouer(stage));
         stage.setScene(new Scene(stp));
+
+        for (int i = 0; i < 9; i++) {
+            if (i == 8) {
+                grid.add(new Label("Score"), i, 0);
+            }
+            else {
+                grid.add(new Label("niv. " + (i + 1)), i, 0);
+            }
+            grid.add(new Label("0"), i,1);
+        }
+    }
+
+    public void updateScore(int niveau) {
+        Label plus = (Label) grid.getChildren().get(8 + niveau);
+        plus.setText("" + Integer.parseInt(plus.getText()) + 1);
+        Label plusTotal = (Label) grid.getChildren().get(17);
+        plusTotal.setText("" + Integer.parseInt(plusTotal.getText()) + 1);
     }
 
     @FXML
