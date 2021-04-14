@@ -48,10 +48,12 @@ public class Jeux {
     private double force;
     private double angle;
     List<Point3D> positions;
+    private double rotation;
 
     private Vecteur vecteur;
     private List<FormeCordonneSommet> mur;
     private List<FormeCordonneSommet> sol;
+    private List<FormeCordonneSommet> test;
     private Espace3D espace3D;
 
     public Jeux() {
@@ -216,7 +218,7 @@ public class Jeux {
             if (force > 100)
                 force = 100;
 
-            frapper(-force * Math.sin(Math.toRadians(angle)), force * Math.cos(Math.toRadians(angle)));
+            frapper(-force * 2.5 * Math.sin(Math.toRadians(angle)), force * 2.5 * Math.cos(Math.toRadians(angle)));
 
             fleche.getTransforms().clear();
             fleche.getTransforms().add(new Rotate(90, Rotate.X_AXIS));
@@ -231,43 +233,40 @@ public class Jeux {
     }
 
     public void frapper(double x, double z) {
-        //balle.setRotationAxis(new Point3D(-z, 0, x));
-
-        /*TranslateTransition avancer = new TranslateTransition(Duration.seconds(1), balle);
-        avancer.setByX(x);
-        avancer.setByZ(z);
-
-        RotateTransition rouler = new RotateTransition(Duration.seconds(1), balle);
-        rouler.setByAngle((force / (2 * Math.PI * 8)) * 360);
-
-        rouler.play();
-        avancer.play();
-        avancer.setOnFinished(event -> rouler.stop());*/
-
-        /////////
         vecteur = new Vecteur(new Point3D(balle.getTranslateX(), -balle.getTranslateY(), balle.getTranslateZ()));
         positions = bougerBalleEspaceTemps(new double[]{x, 0, z}, vecteur, espace3D);
+        rotation = 0;
 
         System.out.println("---" + positions.size());
-        avancer(0);
+        avancer();
         System.out.println("fini");
-
-        /*balle.translateXProperty().set(positions.get(positions.size() - 1).getX());
-        balle.translateZProperty().set(positions.get(positions.size() -1).getZ());
-        balle.translateYProperty().set(-positions.get(positions.size() -1).getY());*/
     }
 
-    public void avancer(int i) {
-        if (i < positions.size()) {
-            Timeline timeline = new Timeline();
-            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5),
+    public void avancer() {
+        Timeline timeline = new Timeline();
+        for (int i = 0; i < positions.size() - 1; i++){
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5 * (i + 1)),
                     new KeyValue (balle.translateXProperty(), positions.get(i).getX()),
                     new KeyValue(balle.translateZProperty(), positions.get(i).getZ()),
-                    new KeyValue (balle.translateYProperty(), -positions.get(i).getY())));
-            timeline.setAutoReverse(false);
-            timeline.setOnFinished(event -> avancer(i + 1));
-            timeline.play();
+                    new KeyValue (balle.translateYProperty(), -positions.get(i).getY()),
+                    new KeyValue(balle.rotationAxisProperty(), getAxeRotation(i)),
+                    new KeyValue(balle.rotateProperty(), getRotation(i))));
         }
+        timeline.play();
+    }
+
+    public double getRotation(int i) {
+        if (i == 0)
+            return  rotation;
+        else return rotation += (Math.sqrt(Math.pow(positions.get(i).getZ() - positions.get(i - 1).getZ(), 2) +
+                Math.pow(positions.get(i).getX() - positions.get(i - 1).getX(), 2)) / (2 * Math.PI * 8)) * 360;
+    }
+
+    public Point3D getAxeRotation(int i) {
+        if (i == 0)
+            return balle.getRotationAxis();
+        else return new Point3D(-(positions.get(i).getZ() - positions.get(i - 1).getZ()), 0,
+                    positions.get(i).getX() - positions.get(i - 1).getX());
     }
 
     public void sonEntre() {
@@ -295,6 +294,7 @@ public class Jeux {
         mur = new ArrayList<>();
 
         Group niveau = new Group(prepareMap(Plateforme.getNiveau2()));
+        espace3D = new Espace3D(new Point3D(0,0,0), sol, mur);
         niveau.getChildren().addAll(balle, fleche);
         niveau.translateXProperty().set(400);
         niveau.translateYProperty().set(300);
@@ -363,10 +363,11 @@ public class Jeux {
                 x++;
             }
             else if (description.charAt(i) == 't') {
-                prepareMapForme(sol,x,0,z,0,0,5,64,64,64);
+                //prepareMapForme(sol,x,0,z,0,0,5,64,64,64);
                 Box bloc = (Box) prepareBox(x, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
-                mat.setDiffuseMap(new Image("ressources/images/trou.png"));
+                mat.setDiffuseMap(new Image("ressources/images/patern.png"));
+                mat.setBumpMap(new Image("ressources/images/trou.png"));
                 bloc.setMaterial(mat);
                 group.getChildren().add(bloc);
                 x++;

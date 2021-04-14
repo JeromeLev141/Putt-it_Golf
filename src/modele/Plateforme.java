@@ -17,7 +17,11 @@ public class Plateforme {
     }
 
     public static String getNiveau2() {
-        return "xooox\n" +
+        return "xxxxx\n" +
+                "xooox\n" +
+                "xovox\n" +
+                "xooox\n" +
+                "xooox\n" +
                 "xo ox\n" +
                 "xooox\n" +
                 "xooox\n" +
@@ -27,7 +31,7 @@ public class Plateforme {
                 "xo ox\n" +
                 "xooox\n" +
                 "xooox\n" +
-                "xooox\n" +
+                "xotox\n" +
                 "xooox\n" +
                 "xxxxx\n";
     }
