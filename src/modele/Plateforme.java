@@ -42,38 +42,4 @@ public class Plateforme {
                         "xxxxx\n";
         }
     }
-
-    public static String getNiveau1() {
-        return "xxxxx\n" +
-                "xooox\n" +
-                "xovox\n" +
-                "xooox\n" +
-                "xooox\n" +
-                "xooox\n" +
-                "xoooxxxxxxx\n" +
-                "xooooooooox\n" +
-                "xoooooootox\n" +
-                "xooooooooox\n" +
-                "xxxxxxxxxxx";
-    }
-
-    public static String getNiveau2() {
-        return "xxxxx\n" +
-                "xooox\n" +
-                "xovox\n" +
-                "xooox\n" +
-                "xooox\n" +
-                "xo ox\n" +
-                "xooox\n" +
-                "xooox\n" +
-                "x o x\n" +
-                "xooox\n" +
-                "xooox\n" +
-                "xo ox\n" +
-                "xooox\n" +
-                "xooox\n" +
-                "xotox\n" +
-                "xooox\n" +
-                "xxxxx\n";
-    }
 }

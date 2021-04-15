@@ -84,10 +84,6 @@ public class Jeux {
         timeline = new Timeline();
         eventProgress = 0;
 
-        vecteur = null;
-        sol = new ArrayList<>();
-        mur = new ArrayList<>();
-
         Media hit = new Media(new File("src/ressources/Puzzle-Dreams.mp3").toURI().toString());
         music = new MediaPlayer(hit);
         music.setVolume(0.2);
@@ -174,6 +170,10 @@ public class Jeux {
         for (int i = 0; i < 9; i++) {
             scores.get(i).setText("0");
         }
+
+        vecteur = null;
+        sol = new ArrayList<>();
+        mur = new ArrayList<>();
 
         music.setMute(!musicOn);
 
