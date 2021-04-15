@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Material;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.*;
 import javafx.scene.transform.Rotate;
@@ -85,7 +86,6 @@ public class Jeux {
         balle = new Balle(8);
         PhongMaterial material = new PhongMaterial();
         material.setDiffuseMap(new Image("ressources/images/texture.png"));
-        material.setDiffuseColor(couleur);
         balle.setMaterial(material);
         balle.setTranslateY(-40);
         balle.setRotationAxis(Rotate.X_AXIS);
@@ -208,7 +208,7 @@ public class Jeux {
         timeline = new Timeline();
         timeline.setOnFinished(event -> roule = false);
         for (int i = 0; i < positions.size() - 1; i++){
-            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(50 * (i + 1)),
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5 * (i + 1)),
                     new KeyValue (balle.translateXProperty(), positions.get(i).getX()),
                     new KeyValue(balle.translateZProperty(), positions.get(i).getZ()),
                     new KeyValue (balle.translateYProperty(), -positions.get(i).getY()),
@@ -272,6 +272,8 @@ public class Jeux {
     private void resetBalle() {
         timeline.stop();
         roule = false;
+        PhongMaterial mat = (PhongMaterial) balle.getMaterial();
+        mat.setDiffuseColor(couleur);
         balle.translateXProperty().set(0);
         balle.translateZProperty().set(0);
         balle.translateYProperty().set(-40);
@@ -400,7 +402,6 @@ public class Jeux {
         int fnPosition = vecteur.creeSection();
         vecteur.setVecteurVitesseResultant(vitesseinitial);
         List<Point3D> coordonne = new ArrayList<>();
-        int dixieme = 0;
 
         double forceFrottement = 0.0D;
 
@@ -441,13 +442,7 @@ public class Jeux {
             }
             Point3D nouvellePosition = new Point3D(vecteur.getPossition()[0],vecteur.getPossition()[1],vecteur.getPossition()[2]);
             espace3D.refreshPositionBalle(nouvellePosition);
-            if (dixieme == 0) {
-                coordonne.add(nouvellePosition);
-                dixieme++;
-            }
-            else if (dixieme == 9)
-                dixieme = 0;
-            else dixieme++;
+            coordonne.add(nouvellePosition);
 
 
         } while(vecteur.getVecteurAccelerationResultant()[0] <= -0.1 || vecteur.getVecteurAccelerationResultant()[0] >= 0.1 ||
