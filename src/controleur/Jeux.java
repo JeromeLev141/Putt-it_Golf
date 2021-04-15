@@ -296,13 +296,14 @@ public class Jeux {
 
     private Group prepareMap(String description) {
         int x = -2;
+        int y = 0;
         int z = -2;
 
         Group group = new Group();
         for (int i = 0; i < description.length(); i ++) {
             if (description.charAt(i) == 'o') {
-                prepareMapForme(sol,x,0,z,0,0,4,64,64,64);
-                Node bloc = prepareBox(x, z);
+                prepareMapForme(sol,x,y,z,0,0,4,64,64,64);
+                Node bloc = prepareBox(x, y, z);
                 group.getChildren().add(bloc);
                 x++;
             }
@@ -311,8 +312,8 @@ public class Jeux {
                 x = -2;
             }
             else if (description.charAt(i) == 'x') {
-                prepareMapForme(mur,x,0,z,0,0,4,64,128,64);
-                Box bloc = (Box) prepareBox(x, z);
+                prepareMapForme(mur,x,y,z,0,0,4,64,128,64);
+                Box bloc = (Box) prepareBox(x, y, z);
                 bloc.setHeight(128);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/patern.png"));
@@ -322,8 +323,8 @@ public class Jeux {
                 x++;
             }
             else if (description.charAt(i) == 'v') {
-                prepareMapForme(sol,x,0,z,0,0,4,64,64,64);
-                Box bloc = (Box) prepareBox(x, z);
+                prepareMapForme(sol,x,y,z,0,0,4,64,64,64);
+                Box bloc = (Box) prepareBox(x, y, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/patern.png"));
                 mat.setDiffuseColor(Color.LIGHTGOLDENRODYELLOW);
@@ -332,11 +333,11 @@ public class Jeux {
                 x++;
             }
             else if (description.charAt(i) == 't') {
-                prepareMapForme(sol,x - 1,0,z,0,0,4,96,64,64);
-                prepareMapForme(sol,x + 1,0,z,0,0,4,96,64,64);
-                prepareMapForme(sol,x,0,z - 1,0,0,4,64,64,96);
-                prepareMapForme(sol,x,0,z + 1,0,0,4,64,64,96);
-                Box bloc = (Box) prepareBox(x, z);
+                prepareMapForme(sol,x - 1,y,z,0,0,4,96,64,64);
+                prepareMapForme(sol,x + 1,y,z,0,0,4,96,64,64);
+                prepareMapForme(sol,x,y,z - 1,0,0,4,64,64,96);
+                prepareMapForme(sol,x,y,z + 1,0,0,4,64,64,96);
+                Box bloc = (Box) prepareBox(x, y, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/patern.png"));
                 mat.setBumpMap(new Image("ressources/images/trou.png"));
@@ -344,10 +345,12 @@ public class Jeux {
                 group.getChildren().add(bloc);
                 x++;
             }
+            else if (description.charAt(i) == '/')
+                y++;
             else {
-                prepareMapForme(sol,x,0,z,0,0,4,64,32,64);
-                Box bloc = (Box) prepareBox(x, z);
-                bloc.setTranslateY(32);
+                prepareMapForme(sol,x,y,z,0,0,4,64,32,64);
+                Box bloc = (Box) prepareBox(x, y, z);
+                bloc.setTranslateY(bloc.getTranslateY() + 32);
                 bloc.setHeight(32);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/patern.png"));
@@ -360,12 +363,13 @@ public class Jeux {
         return group;
     }
 
-    private Node prepareBox(int x, int z) {
+    private Node prepareBox(int x, int y, int z) {
         PhongMaterial material = new PhongMaterial();
         material.setDiffuseMap(new Image("ressources/images/patern.png"));
         Box box = new Box(64, 64, 64);
         box.setMaterial(material);
         box.setTranslateX(x * 64);
+        box.setTranslateY(y * 64);
         box.setTranslateZ(z * 64);
         return box;
     }
