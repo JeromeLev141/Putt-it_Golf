@@ -2,13 +2,17 @@ package controleur;
 
 import controleur.Formule;
 import javafx.animation.*;
+import javafx.geometry.HPos;
 import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.*;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -38,11 +42,10 @@ public class Jeux {
 
     private int niv;
     private int coups;
-    private int coupsTotal;
+    private List<Label> scores;
 
     private MediaPlayer son;
     private MediaPlayer music;
-    private double tourne;
 
     private SubScene scene;
     private Balle balle;
@@ -61,7 +64,6 @@ public class Jeux {
     private Vecteur vecteur;
     private List<FormeCordonneSommet> mur;
     private List<FormeCordonneSommet> sol;
-    private List<FormeCordonneSommet> test;
     private Espace3D espace3D;
 
     public Jeux() {
@@ -69,6 +71,14 @@ public class Jeux {
         musicOn = true;
         distance = 50;
         couleur = Color.WHITE;
+
+        scores = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            Label nb = new Label("" + i);
+            GridPane.setHalignment(nb, HPos.CENTER);
+            GridPane.setValignment(nb, VPos.CENTER);
+            scores.add(nb);
+        }
 
         roule = false;
         timeline = new Timeline();
@@ -161,7 +171,9 @@ public class Jeux {
         resetBalle();
         niv = 1;
         coups = 0;
-        coupsTotal = 0;
+        for (int i = 0; i < 9; i++) {
+            scores.get(i).setText("0");
+        }
 
         music.setMute(!musicOn);
 
@@ -196,7 +208,7 @@ public class Jeux {
         rotation = 0;
 
         coups++;
-        coupsTotal++;
+        scores.get(niv - 1).setText("" + coups);
 
         System.out.println("---" + positions.size());
         roule = true;
@@ -253,7 +265,22 @@ public class Jeux {
     }
 
     public void niveauSuivant() {
+        switch (coups) {
+            case 1 : scores.get(8).setText("" + (Integer.parseInt(scores.get(8).getText()) + 100));
+                break;
+            case 2 : scores.get(8).setText("" + (Integer.parseInt(scores.get(8).getText()) + 80));
+                break;
+            case 3 : scores.get(8).setText("" + (Integer.parseInt(scores.get(8).getText()) + 60));
+                break;
+            case 4 : scores.get(8).setText("" + (Integer.parseInt(scores.get(8).getText()) + 50));
+                break;
+            case 5 : scores.get(8).setText("" + (Integer.parseInt(scores.get(8).getText()) + 30));
+                break;
+            default : scores.get(8).setText("" + (Integer.parseInt(scores.get(8).getText()) + 10));
+        }
+
         niv++;
+        coups = 0;
 
         sol = new ArrayList<>();
         mur = new ArrayList<>();
@@ -337,6 +364,7 @@ public class Jeux {
                 prepareMapForme(sol,x + 1,y,z,0,0,4,96,64,64);
                 prepareMapForme(sol,x,y,z - 1,0,0,4,64,64,96);
                 prepareMapForme(sol,x,y,z + 1,0,0,4,64,64,96);
+                prepareMapForme(sol,x,y,z,0,0,5,64,32,64);
                 Box bloc = (Box) prepareBox(x, y, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/patern.png"));
@@ -390,6 +418,8 @@ public class Jeux {
 
     public void setCouleur(Color couleur) { this.couleur = couleur; }
 
+    public List<Label> getScores() { return scores; }
+
     public List<FormeCordonneSommet> getMur() {
         return mur;
     }
@@ -420,8 +450,8 @@ public class Jeux {
             vecteur.setForceY(fgPosition, fg[1]);
             vecteur.setForceZ(fgPosition, fg[2]);
 
-            if (formeSol == null || formeSol.getTypeSol().isTraversable()){
-                vecteur.setForceY(fnPosition,-9.8 * 9.8);
+            if (formeSol == null){
+                vecteur.setForceY(fnPosition,-64);
             }
             else{
                 if (!formeSol.getTypeSol().isTraversable())

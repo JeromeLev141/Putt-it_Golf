@@ -47,10 +47,7 @@ public class JeuxController {
                 GridPane.setHalignment(niveau, HPos.CENTER);
                 GridPane.setValignment(niveau, VPos.CENTER);
             }
-            Label coups = new Label("0");
-            grid.add(coups, i,1);
-            GridPane.setHalignment(coups, HPos.CENTER);
-            GridPane.setValignment(coups, VPos.CENTER);
+            grid.add(jeux.getScores().get(i), i,1);
         }
     }
 
