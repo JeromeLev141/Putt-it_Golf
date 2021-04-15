@@ -208,7 +208,7 @@ public class Jeux {
         timeline = new Timeline();
         timeline.setOnFinished(event -> roule = false);
         for (int i = 0; i < positions.size() - 1; i++){
-            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5 * (i + 1)),
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(20 * (i + 1)),
                     new KeyValue (balle.translateXProperty(), positions.get(i).getX()),
                     new KeyValue(balle.translateZProperty(), positions.get(i).getZ()),
                     new KeyValue (balle.translateYProperty(), -positions.get(i).getY()),
@@ -332,7 +332,10 @@ public class Jeux {
                 x++;
             }
             else if (description.charAt(i) == 't') {
-                //prepareMapForme(sol,x,0,z,0,0,5,64,64,64);
+                prepareMapForme(sol,x - 1,0,z,0,0,4,96,64,64);
+                prepareMapForme(sol,x + 1,0,z,0,0,4,96,64,64);
+                prepareMapForme(sol,x,0,z - 1,0,0,4,64,64,96);
+                prepareMapForme(sol,x,0,z + 1,0,0,4,64,64,96);
                 Box bloc = (Box) prepareBox(x, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/patern.png"));
@@ -414,7 +417,7 @@ public class Jeux {
             vecteur.setForceZ(fgPosition, fg[2]);
 
             if (formeSol == null || formeSol.getTypeSol().isTraversable()){
-                vecteur.setForceY(fnPosition,-9.8);
+                vecteur.setForceY(fnPosition,-9.8 * 9.8);
             }
             else{
                 if (!formeSol.getTypeSol().isTraversable())
@@ -437,8 +440,8 @@ public class Jeux {
             vecteur.refreshVecteurAccelerationResultant();
 
             for(int x = 0; x < 3; ++x) {
-                vecteur.getPossition()[x] = Formule.MRUA(vecteur.getPossition()[x], vecteur.getVecteurVitesseResultant()[x], vecteur.getVecteurAccelerationResultant()[x], 0.005);
-                vecteur.setVecteurVitesseResultant(x,Formule.MRUA_Vf(vecteur.getVecteurVitesseResultant()[x], vecteur.getVecteurAccelerationResultant()[x], 0.005));
+                vecteur.getPossition()[x] = Formule.MRUA(vecteur.getPossition()[x], vecteur.getVecteurVitesseResultant()[x], vecteur.getVecteurAccelerationResultant()[x], 0.02);
+                vecteur.setVecteurVitesseResultant(x,Formule.MRUA_Vf(vecteur.getVecteurVitesseResultant()[x], vecteur.getVecteurAccelerationResultant()[x], 0.02));
             }
             Point3D nouvellePosition = new Point3D(vecteur.getPossition()[0],vecteur.getPossition()[1],vecteur.getPossition()[2]);
             espace3D.refreshPositionBalle(nouvellePosition);
