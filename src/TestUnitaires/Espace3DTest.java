@@ -1,7 +1,5 @@
 package TestUnitaires;
 
-
-import controleur.Formule;
 import controleur.Jeux;
 import javafx.geometry.Point3D;
 import modele.*;
@@ -133,7 +131,7 @@ public class Espace3DTest {
     }
 
 
-    //copie de Jeux
+    //copie de controleur.Jeux
     private void prepareMap(String description ,List<FormeCordonneSommet> sol, List<FormeCordonneSommet> mur){
         int x = -2;
         int z = 2;

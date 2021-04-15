@@ -1,5 +1,5 @@
-import controleur.Jeux;
-import controleur.ScoreChecker;
+package controleur;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -23,7 +23,7 @@ public class ScoreController {
         this.jeux = jeux;
 
         node2.setItems(ScoreChecker.topScores());
-        node2.getStylesheets().add("listCell.css");
+        node2.getStylesheets().add("ressources/listCell.css");
     }
 
     @FXML

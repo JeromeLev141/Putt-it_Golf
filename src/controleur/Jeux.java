@@ -2,6 +2,7 @@ package controleur;
 
 import controleur.Formule;
 import javafx.animation.*;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
@@ -33,6 +34,7 @@ import javax.sound.midi.MidiFileFormat;
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.io.File;
+import java.io.IOException;
 import java.text.AttributedString;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,6 +55,7 @@ public class Jeux {
     private MediaPlayer son;
     private MediaPlayer music;
 
+    private Stage stage;
     private SubScene scene;
     private Balle balle;
     private VBox fleche;
@@ -229,8 +232,13 @@ public class Jeux {
             roule = false;
             if (positions.get(positions.size()-1).getX() == 7 &&
                     positions.get(positions.size()-1).getY() == 7 &&
-                    positions.get(positions.size()-1).getZ() == 7)
-                niveauSuivant();
+                    positions.get(positions.size()-1).getZ() == 7) {
+                try {
+                    niveauSuivant();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         });
         for (int i = 0; i < positions.size() - 1; i++){
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(20 * (i + 1)),
@@ -277,7 +285,7 @@ public class Jeux {
         music.stop();
     }
 
-    public void niveauSuivant() {
+    public void niveauSuivant() throws IOException {
         switch (coups) {
             case 1 : scores.get(8).setText("" + (Integer.parseInt(scores.get(8).getText()) + 100));
                 break;
@@ -290,6 +298,17 @@ public class Jeux {
             case 5 : scores.get(8).setText("" + (Integer.parseInt(scores.get(8).getText()) + 30));
                 break;
             default : scores.get(8).setText("" + (Integer.parseInt(scores.get(8).getText()) + 10));
+        }
+
+        if (niv == 8) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneFin.fxml"));
+            Parent fin = loader.load();
+
+            FinController finController = loader.getController();
+            finController.transfert(this, Integer.parseInt(scores.get(8).getText()));
+
+            Scene scene = new Scene(fin, 800, 600);
+            stage.setScene(scene);
         }
 
         niv++;
@@ -433,6 +452,8 @@ public class Jeux {
 
     public List<Label> getScores() { return scores; }
 
+    public void setStage(Stage stage) { this.stage = stage; }
+
     public List<FormeCordonneSommet> getMur() {
         return mur;
     }
@@ -497,6 +518,8 @@ public class Jeux {
                     vecteur.setForceX(fnPosition, forceFrottement * Math.cos(Math.toRadians(vecteur.getAngleXZ() + 180.0D)));
                     vecteur.setForceZ(fnPosition, forceFrottement * Math.sin(Math.toRadians(vecteur.getAngleXZ() + 180.0D)));
                 }
+                if (decompte > 0)
+                    decompte++;
             }
 
             vecteur.refreshVecteurAccelerationResultant();

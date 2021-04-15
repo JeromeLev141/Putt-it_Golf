@@ -42,7 +42,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="bdp" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuController">
+<BorderPane fx:id="bdp" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.MenuController">
    <center>
       <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-image: url(/ressources/images/back.gif);" BorderPane.alignment="CENTER">
          <children>
@@ -86,7 +86,7 @@
                   <DropShadow height="10.0" radius="4.5" width="10.0" />
                </effect>
                <image>
-                  <Image url="@ressources/images/ball.png" />
+                  <Image url="@../ressources/images/ball.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="50.0" fitWidth="50.0" translateX="175.0" translateY="-120.0">
@@ -94,7 +94,7 @@
                   <DropShadow height="10.0" radius="4.5" width="10.0" />
                </effect>
                <image>
-                  <Image url="@ressources/images/logo.png" />
+                  <Image url="@../ressources/images/logo.png" />
                </image>
             </ImageView>
          </children>

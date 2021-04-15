@@ -1,3 +1,5 @@
+package controleur;
+
 import controleur.Jeux;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,6 +40,7 @@ public class MenuController {
         JeuxController jeuxController = loader.getController();
 
         Stage stage = (Stage) node1.getScene().getWindow();
+        jeux.setStage(stage);
 
         jeuxController.transfert(jeux, stage);
     }

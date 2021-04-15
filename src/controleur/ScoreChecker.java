@@ -10,7 +10,7 @@ import java.util.*;
 public class ScoreChecker {
 
     public static void ecrire(String informations) {
-        File file = new File("src/scoreboard");
+        File file = new File("src/ressources/scoreboard");
         try {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true)));
             writer.newLine();
@@ -22,7 +22,7 @@ public class ScoreChecker {
     }
 
     public static ObservableList<String> topScores() {
-        File file = new File("src/scoreboard");
+        File file = new File("src/ressources/scoreboard");
         try {
             String entree = new String(Files.readAllBytes(file.toPath()));
             entree = entree.replace("\n", ",").replace("\r", "");

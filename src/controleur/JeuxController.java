@@ -1,16 +1,16 @@
+package controleur;
+
 import controleur.Jeux;
+import controleur.MenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -51,13 +51,6 @@ public class JeuxController {
         }
     }
 
-    public void updateScore(int niveau) {
-        Label plus = (Label) grid.getChildren().get(8 + niveau);
-        plus.setText("" + Integer.parseInt(plus.getText()) + 1);
-        Label plusTotal = (Label) grid.getChildren().get(17);
-        plusTotal.setText("" + Integer.parseInt(plusTotal.getText()) + 1);
-    }
-
     @FXML
     private void retour() throws IOException {
         jeux.musicStop();
@@ -74,7 +67,7 @@ public class JeuxController {
     }
 
     @FXML
-    private void suivant() { jeux.niveauSuivant(); }
+    private void suivant() throws IOException { jeux.niveauSuivant(); }
 
     @FXML
     private void hover1() { hover(node1);}
