@@ -23,6 +23,7 @@ public class ScoreController {
         this.jeux = jeux;
 
         node2.setItems(ScoreChecker.topScores());
+        node2.getStylesheets().add("listCell.css");
     }
 
     @FXML
