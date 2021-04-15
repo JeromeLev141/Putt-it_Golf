@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Material;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.*;
+import javafx.scene.text.Font;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
@@ -75,6 +76,7 @@ public class Jeux {
         scores = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             Label nb = new Label("" + i);
+            nb.setFont(Font.font("OCR A Extended", 12));
             GridPane.setHalignment(nb, HPos.CENTER);
             GridPane.setValignment(nb, VPos.CENTER);
             scores.add(nb);
@@ -218,7 +220,13 @@ public class Jeux {
 
     private void avancer() {
         timeline = new Timeline();
-        timeline.setOnFinished(event -> roule = false);
+        timeline.setOnFinished(event -> {
+            roule = false;
+            if (positions.get(positions.size()-1).getX() == 7 &&
+                    positions.get(positions.size()-1).getY() == 7 &&
+                    positions.get(positions.size()-1).getZ() == 7)
+                niveauSuivant();
+        });
         for (int i = 0; i < positions.size() - 1; i++){
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(20 * (i + 1)),
                     new KeyValue (balle.translateXProperty(), positions.get(i).getX()),
@@ -360,11 +368,11 @@ public class Jeux {
                 x++;
             }
             else if (description.charAt(i) == 't') {
-                prepareMapForme(sol,x - 1,y,z,0,0,4,96,64,64);
-                prepareMapForme(sol,x + 1,y,z,0,0,4,96,64,64);
-                prepareMapForme(sol,x,y,z - 1,0,0,4,64,64,96);
-                prepareMapForme(sol,x,y,z + 1,0,0,4,64,64,96);
-                prepareMapForme(sol,x,y,z,0,0,5,64,32,64);
+                prepareMapForme(sol,x - 1,y,z,0,0,4,104,64,64);
+                prepareMapForme(sol,x + 1,y,z,0,0,4,104,64,64);
+                prepareMapForme(sol,x,y,z - 1,0,0,4,64,64,104);
+                prepareMapForme(sol,x,y,z + 1,0,0,4,64,64,104);
+                prepareMapForme(sol,x,y,z,0,0,5,64,8,64);
                 Box bloc = (Box) prepareBox(x, y, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/patern.png"));
@@ -376,7 +384,7 @@ public class Jeux {
             else if (description.charAt(i) == '/')
                 y++;
             else {
-                prepareMapForme(sol,x,y,z,0,0,4,64,32,64);
+                prepareMapForme(sol,x,y,z,0,0,1,64,32,64);
                 Box bloc = (Box) prepareBox(x, y, z);
                 bloc.setTranslateY(bloc.getTranslateY() + 32);
                 bloc.setHeight(32);
@@ -440,6 +448,7 @@ public class Jeux {
         vecteur.setVecteurVitesseResultant(vitesseinitial);
         List<Point3D> coordonne = new ArrayList<>();
 
+        int decompte = 0;
         double forceFrottement = 0.0D;
 
         do {
@@ -451,7 +460,21 @@ public class Jeux {
             vecteur.setForceZ(fgPosition, fg[2]);
 
             if (formeSol == null){
-                vecteur.setForceY(fnPosition,-64);
+                vecteur.setForceY(fnPosition,-64 * 9.8);
+            }
+            else if (formeSol.getTypeSol().getFrottement() == 0) {
+                coordonne.add(new Point3D(7,7,7));
+                return coordonne;
+            }
+            else if (formeSol.getTypeSol().isTraversable()) {
+                if (decompte == 10) {
+                Point3D nouvellePosition = coordonne.get(0);
+                espace3D.refreshPositionBalle(nouvellePosition);
+                coordonne.add(nouvellePosition);
+                coordonne.add(new Point3D(0,0,0));
+                return coordonne;
+                }
+                else decompte++;
             }
             else{
                 if (!formeSol.getTypeSol().isTraversable())

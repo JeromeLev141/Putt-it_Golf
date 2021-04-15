@@ -15,7 +15,7 @@ public class Forme extends Box{
         positionEspace = position1;
         this.angleXY = angleXY;
         this.angleXZ = angleXZ;
-        typeSol = new Sol(4);
+        typeSol = new Sol(sol);
     }
 
 
