@@ -1,11 +1,16 @@
 import controleur.Jeux;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -26,17 +31,26 @@ public class JeuxController {
 
     public void transfert(Jeux jeux, Stage stage) {
         this.jeux = jeux;
-        stp.getChildren().add(0, jeux.jouer(stage));
+        stp.getChildren().add(0, jeux.jouer());
         stage.setScene(new Scene(stp));
 
         for (int i = 0; i < 9; i++) {
             if (i == 8) {
-                grid.add(new Label("Score"), i, 0);
+                Label score = new Label("Score");
+                grid.add(score, i, 0);
+                GridPane.setHalignment(score, HPos.CENTER);
+                GridPane.setValignment(score, VPos.CENTER);
             }
             else {
-                grid.add(new Label("niv. " + (i + 1)), i, 0);
+                Label niveau = new Label("niv. " + (i + 1));
+                grid.add(niveau, i, 0);
+                GridPane.setHalignment(niveau, HPos.CENTER);
+                GridPane.setValignment(niveau, VPos.CENTER);
             }
-            grid.add(new Label("0"), i,1);
+            Label coups = new Label("0");
+            grid.add(coups, i,1);
+            GridPane.setHalignment(coups, HPos.CENTER);
+            GridPane.setValignment(coups, VPos.CENTER);
         }
     }
 

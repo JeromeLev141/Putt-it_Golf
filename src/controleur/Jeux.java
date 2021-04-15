@@ -35,7 +35,7 @@ public class Jeux {
     private double distance;
     private Color couleur;
 
-    private int niveau;
+    private int niv;
     private int coups;
     private int coupsTotal;
 
@@ -54,7 +54,8 @@ public class Jeux {
     private List<Point3D> positions;
     private double rotation;
     private Boolean roule;
-
+    private Timeline timeline;
+    private int eventProgress;
 
     private Vecteur vecteur;
     private List<FormeCordonneSommet> mur;
@@ -68,11 +69,9 @@ public class Jeux {
         distance = 50;
         couleur = Color.WHITE;
 
-        niveau = 1;
-        coups = 0;
-        coupsTotal = 0;
-
         roule = false;
+        timeline = new Timeline();
+        eventProgress = 0;
 
         vecteur = null;
         sol = new ArrayList<>();
@@ -82,10 +81,6 @@ public class Jeux {
         music = new MediaPlayer(hit);
         music.setVolume(0.2);
         music.setOnEndOfMedia(() -> music.seek(Duration.ZERO));
-    }
-
-    public SubScene jouer(Stage stage) {
-        music.setMute(!musicOn);
 
         balle = new Balle(8);
         PhongMaterial material = new PhongMaterial();
@@ -94,90 +89,6 @@ public class Jeux {
         balle.setMaterial(material);
         balle.setTranslateY(-40);
         balle.setRotationAxis(Rotate.X_AXIS);
-
-        Group niveau = new Group(prepareMap(Plateforme.getNiveau1()));
-        espace3D = new Espace3D(new Point3D(0,0,0), sol, mur);
-        niveau.getChildren().add(balle);
-
-        Camera camera = new PerspectiveCamera();
-        scene = new SubScene(niveau, 800, 600,true, SceneAntialiasing.BALANCED);
-        scene.setCamera(camera);
-
-        niveau.translateXProperty().set(400);
-        niveau.translateYProperty().set(300);
-        niveau.getChildren().add(backround(balle));
-
-        camera.setTranslateX(camera.getTranslateX() + 150 - distance);
-        camera.setTranslateY(camera.getTranslateY() - 150 + distance);
-        camera.getTransforms().addAll(new Rotate(-45, Rotate.Y_AXIS),
-                new Rotate(-70, Rotate.X_AXIS), new Rotate(15, Rotate.Z_AXIS));
-        camera.translateXProperty().bind(balle.translateXProperty());
-        camera.translateZProperty().bind(balle.translateZProperty());
-
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long l) {
-                balle.rotateProperty().set(balle.getRotate() - tourne);
-            }
-        };
-
-        stage.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
-            switch (keyEvent.getCode()) {
-                case W :
-                    balle.setTranslateZ(balle.getTranslateZ() + 4);
-                    balle.setRotationAxis(Rotate.X_AXIS);
-                    tourne = 2;
-                    timer.start();
-                    break;
-                case S :
-                    balle.setTranslateZ(balle.getTranslateZ() - 4);
-                    balle.setRotationAxis(Rotate.X_AXIS);
-                    tourne = -2;
-                    timer.start();
-                    break;
-                case A :
-                    balle.setTranslateX(balle.getTranslateX() - 4);
-                    balle.setRotationAxis(Rotate.Z_AXIS);
-                    tourne = 2;
-                    timer.start();
-                    break;
-                case D :
-                    balle.setTranslateX(balle.getTranslateX() + 4);
-                    balle.setRotationAxis(Rotate.Z_AXIS);
-                    tourne = -2;
-                    timer.start();
-                    break;
-                case Q :
-                    balle.setTranslateZ(balle.getTranslateZ() + 4);
-                    balle.setTranslateX(balle.getTranslateX() - 4);
-                    balle.setRotationAxis(new Point3D(4, 0, 4));
-                    tourne = 2;
-                    timer.start();
-                    break;
-                case E :
-                    balle.setTranslateZ(balle.getTranslateZ() + 4);
-                    balle.setTranslateX(balle.getTranslateX() + 4);
-                    balle.setRotationAxis(new Point3D(4, 0, -4));
-                    tourne = 2;
-                    timer.start();
-                    break;
-                case Z :
-                    balle.setTranslateX(balle.getTranslateX() - 4);
-                    balle.setTranslateZ(balle.getTranslateZ() - 4);
-                    balle.setRotationAxis(new Point3D(4, 0, -4));
-                    tourne = -2;
-                    timer.start();
-                    break;
-                case C :
-                    balle.setTranslateX(balle.getTranslateX() + 4);
-                    balle.setTranslateZ(balle.getTranslateZ() - 4);
-                    balle.setRotationAxis(new Point3D(4, 0, 4));
-                    tourne = -2;
-                    timer.start();
-                    break;
-            }
-        });
-        stage.addEventHandler(KeyEvent.KEY_RELEASED, keyEvent -> timer.stop());
 
         Rectangle corps = new Rectangle(4, 20);
         corps.setFill(Color.RED);
@@ -191,10 +102,8 @@ public class Jeux {
         fleche = new VBox(corps, pointe);
         fleche.getTransforms().add(new Rotate(90, Rotate.X_AXIS));
 
-        niveau.getChildren().add(fleche);
-
-        stage.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
-            if (!roule) {
+        balle.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
+            if (!roule && eventProgress == 0) {
                 fleche.setVisible(true);
 
                 fleche.setTranslateX(balle.getTranslateX());
@@ -205,11 +114,13 @@ public class Jeux {
                 yDebut = mouseEvent.getSceneY();
 
                 fleche.getTransforms().add(new Rotate(0,Rotate.X_AXIS));
+
+                eventProgress++;
             }
         });
 
-        stage.addEventHandler(MouseEvent.MOUSE_DRAGGED, mouseEvent -> {
-            if (!roule) {
+        balle.addEventHandler(MouseEvent.MOUSE_DRAGGED, mouseEvent -> {
+            if (!roule && eventProgress == 1) {
                 angle = Math.atan((mouseEvent.getSceneX() - xDebut) / (mouseEvent.getSceneY() - yDebut)) * 180 / Math.PI + 20;
                 if ((mouseEvent.getSceneX() - xDebut) < 0 && (mouseEvent.getSceneY() - yDebut) < 0) {
                     fleche.getTransforms().set(1, new Rotate(-180 + angle, Rotate.Z_AXIS));
@@ -228,8 +139,8 @@ public class Jeux {
             }
         });
 
-        stage.addEventHandler(MouseEvent.MOUSE_RELEASED, mouseEvent -> {
-            if (!roule) {
+        balle.addEventHandler(MouseEvent.MOUSE_RELEASED, mouseEvent -> {
+            if (!roule && eventProgress == 1) {
                 fleche.setVisible(false);
 
                 if (force > 100)
@@ -240,11 +151,40 @@ public class Jeux {
                 fleche.getTransforms().clear();
                 fleche.getTransforms().add(new Rotate(90, Rotate.X_AXIS));
                 corps.setHeight(0);
+
+                eventProgress--;
             }
         });
+    }
 
-        System.out.println(sol.size());
-        System.out.println(mur.size());
+    public SubScene jouer() {
+        resetBalle();
+        niv = 1;
+        coups = 0;
+        coupsTotal = 0;
+
+        music.setMute(!musicOn);
+
+        Group niveau = new Group(prepareMap(Plateforme.getNiveau(niv)));
+        espace3D = new Espace3D(new Point3D(0,0,0), sol, mur);
+        niveau.getChildren().add(balle);
+
+        Camera camera = new PerspectiveCamera();
+        scene = new SubScene(niveau, 800, 600,true, SceneAntialiasing.BALANCED);
+        scene.setCamera(camera);
+
+        niveau.translateXProperty().set(400);
+        niveau.translateYProperty().set(300);
+        niveau.getChildren().add(backround(balle));
+
+        camera.setTranslateX(camera.getTranslateX() + 150 - distance);
+        camera.setTranslateY(camera.getTranslateY() - 150 + distance);
+        camera.getTransforms().addAll(new Rotate(-45, Rotate.Y_AXIS),
+                new Rotate(-70, Rotate.X_AXIS), new Rotate(15, Rotate.Z_AXIS));
+        camera.translateXProperty().bind(balle.translateXProperty());
+        camera.translateZProperty().bind(balle.translateZProperty());
+
+        niveau.getChildren().add(fleche);
 
         music.play();
         return scene;
@@ -265,10 +205,10 @@ public class Jeux {
     }
 
     private void avancer() {
-        Timeline timeline = new Timeline();
+        timeline = new Timeline();
         timeline.setOnFinished(event -> roule = false);
         for (int i = 0; i < positions.size() - 1; i++){
-            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5 * (i + 1)),
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(50 * (i + 1)),
                     new KeyValue (balle.translateXProperty(), positions.get(i).getX()),
                     new KeyValue(balle.translateZProperty(), positions.get(i).getZ()),
                     new KeyValue (balle.translateYProperty(), -positions.get(i).getY()),
@@ -313,10 +253,12 @@ public class Jeux {
     }
 
     public void niveauSuivant() {
+        niv++;
+
         sol = new ArrayList<>();
         mur = new ArrayList<>();
 
-        Group niveau = new Group(prepareMap(Plateforme.getNiveau2()));
+        Group niveau = new Group(prepareMap(Plateforme.getNiveau(niv)));
         espace3D = new Espace3D(new Point3D(0,0,0), sol, mur);
         niveau.getChildren().addAll(balle, fleche);
         niveau.translateXProperty().set(400);
@@ -328,6 +270,8 @@ public class Jeux {
     }
 
     private void resetBalle() {
+        timeline.stop();
+        roule = false;
         balle.translateXProperty().set(0);
         balle.translateZProperty().set(0);
         balle.translateYProperty().set(-40);
@@ -411,16 +355,6 @@ public class Jeux {
         return group;
     }
 
-    /*private Group debut() {
-        String des = new String("xxxxx\n" +
-                "xooox\n" +
-                "xovox\n" +
-                "xooox");
-        Group group = prepareMap(des);
-        group.setTranslateZ(-256);
-        return group;
-    }*/
-
     private Node prepareBox(int x, int z) {
         PhongMaterial material = new PhongMaterial();
         material.setDiffuseMap(new Image("ressources/images/patern.png"));
@@ -430,16 +364,6 @@ public class Jeux {
         box.setTranslateZ(z * 64);
         return box;
     }
-
-    /*private void prepareAnimation(Sphere balle) {
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long l) {
-                balle.rotateProperty().set(balle.getRotate() - tourne);
-            }
-        };
-        timer.start();
-    }*/
 
     public boolean isSonOn() { return sonOn; }
 
@@ -476,6 +400,7 @@ public class Jeux {
         int fnPosition = vecteur.creeSection();
         vecteur.setVecteurVitesseResultant(vitesseinitial);
         List<Point3D> coordonne = new ArrayList<>();
+        int dixieme = 0;
 
         double forceFrottement = 0.0D;
 
@@ -516,7 +441,13 @@ public class Jeux {
             }
             Point3D nouvellePosition = new Point3D(vecteur.getPossition()[0],vecteur.getPossition()[1],vecteur.getPossition()[2]);
             espace3D.refreshPositionBalle(nouvellePosition);
-            coordonne.add(nouvellePosition);
+            if (dixieme == 0) {
+                coordonne.add(nouvellePosition);
+                dixieme++;
+            }
+            else if (dixieme == 9)
+                dixieme = 0;
+            else dixieme++;
 
 
         } while(vecteur.getVecteurAccelerationResultant()[0] <= -0.1 || vecteur.getVecteurAccelerationResultant()[0] >= 0.1 ||
