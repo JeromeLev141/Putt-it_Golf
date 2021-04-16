@@ -1,24 +1,20 @@
 package controleur;
 
-import controleur.Formule;
 import javafx.animation.*;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Point3D;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.*;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Material;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.*;
 import javafx.scene.shape.Polygon;
@@ -30,16 +26,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import modele.*;
 
-import javax.sound.midi.MidiFileFormat;
-import java.awt.*;
-import java.awt.font.TextAttribute;
 import java.io.File;
 import java.io.IOException;
-import java.text.AttributedString;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class Jeux {
 
@@ -408,13 +398,13 @@ public class Jeux {
             else if (description.charAt(i) == '/')
                 y++;
             else {
-                prepareMapForme(sol,x,y,z,0,0,1,64,32,64);
+                prepareMapForme(sol,x,y,z,0,0,1,64,48,64);
                 Box bloc = (Box) prepareBox(x, y, z);
-                bloc.setTranslateY(bloc.getTranslateY() + 32);
-                bloc.setHeight(32);
+                bloc.setTranslateY(bloc.getTranslateY() + 16);
+                bloc.setHeight(48);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
-                mat.setDiffuseMap(new Image("ressources/images/patern.png"));
-                mat.setDiffuseColor(Color.LIGHTBLUE);
+                mat.setDiffuseMap(new Image("ressources/images/eau.gif"));
+                mat.setDiffuseColor(Color.SKYBLUE);
                 bloc.setMaterial(mat);
                 group.getChildren().add(bloc);
                 x++;
