@@ -137,7 +137,7 @@ public class Jeux {
 
         balle.addEventHandler(MouseEvent.MOUSE_DRAGGED, mouseEvent -> {
             if (!roule && eventProgress == 1) {
-                angle = Math.atan((mouseEvent.getSceneX() - xDebut) / (mouseEvent.getSceneY() - yDebut)) * 180 / Math.PI + 20;
+                angle = Math.atan((mouseEvent.getSceneX() - xDebut) / (mouseEvent.getSceneY() - yDebut)) * 180 / Math.PI + 30;
                 if ((mouseEvent.getSceneX() - xDebut) < 0 && (mouseEvent.getSceneY() - yDebut) < 0) {
                     fleche.getTransforms().set(1, new Rotate(-180 + angle, Rotate.Z_AXIS));
                     angle -= 180;
@@ -396,7 +396,7 @@ public class Jeux {
                 prepareMapForme(sol,x + 1,y,z,0,0,4,104,64,64);
                 prepareMapForme(sol,x,y,z - 1,0,0,4,64,64,104);
                 prepareMapForme(sol,x,y,z + 1,0,0,4,64,64,104);
-                prepareMapForme(sol,x,y,z,0,0,5,64,8,64);
+                prepareMapForme(sol,x-1,y,z-1,0,0,5,3*64,8,3*64);
                 Box bloc = (Box) prepareBox(x, y, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/patern.png"));

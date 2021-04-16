@@ -33,13 +33,15 @@ public class Plateforme {
                         "xooox\n" +
                         "xotox\n" +
                         "xooox\n" +
-                        "xxxxx\n";
+                        "xxxxx";
             default:
                 return "xxxxx\n" +
                         "xooox\n" +
                         "xovox\n" +
                         "xooox\n" +
-                        "xxxxx\n";
+                        "xotox\n" +
+                        "xooox\n" +
+                        "xxxxx";
         }
     }
 }
