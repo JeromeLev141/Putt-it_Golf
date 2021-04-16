@@ -45,7 +45,11 @@ public class FinController {
         if (nb.length() == 2)
             nb = "0" + nb;
 
-        ScoreChecker.ecrire(nb + " - " + node2.getText());
+        String nom = node2.getText();
+        if (nom.equals(""))
+            nom = "noname";
+
+        ScoreChecker.ecrire(nb + " - " + nom);
         jeux.sonRetour();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneMenu.fxml"));

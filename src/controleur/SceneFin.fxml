@@ -20,19 +20,19 @@
       </Button>
       <Label fx:id="node1" text="Votre score : ">
          <font>
-            <Font name="OCR A Extended" size="14.0" />
+            <Font name="OCR A Extended" size="16.0" />
          </font>
       </Label>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
          <children>
             <Label text="Nom :">
                <font>
-                  <Font name="OCR A Extended" size="14.0" />
+                  <Font name="OCR A Extended" size="16.0" />
                </font>
             </Label>
             <TextField fx:id="node2" alignment="CENTER" focusTraversable="false" onAction="#retour" promptText="nom" style="-fx-background-insets: 1; -fx-border-color: black; -fx-border-radius: 4; -fx-border-width: 1;">
                <font>
-                  <Font name="OCR A Extended" size="14.0" />
+                  <Font name="OCR A Extended" size="16.0" />
                </font>
             </TextField>
          </children>
