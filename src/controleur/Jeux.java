@@ -485,6 +485,7 @@ public class Jeux {
         int fnPosition = vecteur.creeSection();
         vecteur.setVecteurVitesseResultant(vitesseinitial);
         List<Point3D> coordonne = new ArrayList<>();
+        coordonne.add(new Point3D(vecteur.getPossition()[0],vecteur.getPossition()[1],vecteur.getPossition()[2]));
 
         int positionImpactAvant = -1;
         int decompte = 0;

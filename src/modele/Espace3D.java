@@ -27,6 +27,10 @@ public class Espace3D {
         return formeOuEstLaBalle.getTypeSol();
     }
 
+    public Point3D getPositionBalle() {
+        return positionBalle;
+    }
+
     public List<FormeCordonneSommet> getPlateformeSol() {
         return plateformeSol;
     }
