@@ -491,6 +491,7 @@ public class Jeux {
         double forceFrottement = 0.0D;
 
         do {
+
             FormeCordonneSommet formeSol = espace3D.detectColisionDansQuelleFormeSol();
 
             int positionImpact = espace3D.detectionColisionDansQuelleFormeMur();
@@ -507,6 +508,7 @@ public class Jeux {
                 coordonne.add(null);
                 return coordonne;
             }
+
             //else if (formeSol.getTypeSol().getFrottement() == -2) {
                 /*
                 if (decompte == 20) {
@@ -551,19 +553,20 @@ public class Jeux {
                 vecteur.setVecteurVitesseResultant(x,Formule.MRUA_Vf(vecteur.getVecteurVitesseResultant()[x], vecteur.getVecteurAccelerationResultant()[x], 0.02));
             }
 
+
+
+            Point3D nouvellePosition = new Point3D(vecteur.getPossition()[0],vecteur.getPossition()[1],vecteur.getPossition()[2]);
+            espace3D.refreshPositionBalle(nouvellePosition);
+            coordonne.add(nouvellePosition);
+
             if (vecteur.getPossition()[1] <= -100) {
-                vecteur.getPossition()[1] = 40;
+                vecteur.setVecteurVitesseResultant(new double[]{0, 0, 0});
                 vecteur.getVecteurVitesseResultant()[1] = 0;
                 espace3D.refreshPositionBalle(coordonne.get(0));
                 coordonne.add(coordonne.get(0));
                 coordonne.add(coordonne.get(0));
                 return coordonne;
             }
-
-            Point3D nouvellePosition = new Point3D(vecteur.getPossition()[0],vecteur.getPossition()[1],vecteur.getPossition()[2]);
-            espace3D.refreshPositionBalle(nouvellePosition);
-            coordonne.add(nouvellePosition);
-
 
         } while(vecteur.getVecteurAccelerationResultant()[0] <= -0.1 || vecteur.getVecteurAccelerationResultant()[0] >= 0.1 ||
                 vecteur.getVecteurAccelerationResultant()[1] != 0 || vecteur.getVecteurAccelerationResultant()[2] >= 0.1 || vecteur.getVecteurAccelerationResultant()[2] <= -0.1);
