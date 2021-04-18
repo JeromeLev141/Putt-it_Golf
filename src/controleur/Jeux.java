@@ -400,13 +400,13 @@ public class Jeux {
                 prepareMapForme(sol,x,y,z + 1,0,0,4,64,64,104);
                 prepareMapForme(sol,x-1,y,z-1,0,0,5,3*64,8,3*64);*/
 
-                prepareMapForme(sol,x,y,z,0,0,5,20,16,20);
+                prepareMapForme(sol,x,y,z,0,0,5,64,16,64);
                 prepareMapForme(sol,x,y,z,0,0,1,16,64,16);
                 prepareMapForme(sol,x,y,z,0,0,4,64,64,64);
-                prepareMapForme(mur,x+1,y,z,0,0,4,96,68,64);
-                prepareMapForme(mur,x,y,z+1,0,0,4,64,68,96);
-                prepareMapForme(mur,x-1,y,z,0,0,2,96,68 ,16);
-                prepareMapForme(mur,x,y,z-1,0,0,2,64,68 ,96);
+                prepareMapForme(mur,x+1,y,z,0,0,4,104,71,64);
+                prepareMapForme(mur,x,y,z+1,0,0,4,64,71,104);
+                prepareMapForme(mur,x-1,y,z,0,0,2,104,71 ,16);
+                prepareMapForme(mur,x,y,z-1,0,0,2,64,71 ,104);
                 Box bloc = (Box) prepareBox(x, y, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/patern.png"));
