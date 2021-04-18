@@ -153,6 +153,8 @@ public class Jeux {
                     force = 100;
 
                 frapper(-force * 2.5 * Math.sin(Math.toRadians(angle)), force * 2.5 * Math.cos(Math.toRadians(angle)));
+                force = 0;
+                angle = 0;
 
                 fleche.getTransforms().clear();
                 fleche.getTransforms().add(new Rotate(90, Rotate.X_AXIS));
