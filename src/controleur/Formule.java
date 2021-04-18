@@ -37,10 +37,14 @@ public class Formule {
     }
 
     public static void rebondissement(Vecteur balle, int positionImpact){
-        if (positionImpact == 0 || positionImpact == 4)
-            balle.setVecteurVitesseResultant(2,balle.getVecteurVitesseResultant()[2] * -1);
-        else if (positionImpact == 2 || positionImpact == 6)
-            balle.setVecteurVitesseResultant(0,balle.getVecteurVitesseResultant()[0] * -1);
+        if (positionImpact == 0 || positionImpact == 4) {
+            balle.setVecteurVitesseResultant(2, balle.getVecteurVitesseResultant()[2] * -0.75);
+            balle.setVecteurVitesseResultant(0,balle.getVecteurVitesseResultant()[0] * 0.75);
+        }
+        else if (positionImpact == 2 || positionImpact == 6) {
+            balle.setVecteurVitesseResultant(0, balle.getVecteurVitesseResultant()[0] * -0.75);
+            balle.setVecteurVitesseResultant(2, balle.getVecteurVitesseResultant()[2] * 0.75);
+        }
 
     }
 

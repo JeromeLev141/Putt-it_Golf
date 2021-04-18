@@ -50,9 +50,19 @@ public class Espace3D {
         for (FormeCordonneSommet mur : plateformeMur)
             for (int x = 0;x < tableau.length;x++)
                 if (mur.getAngleXZTableau()[0].angle(tableau[x], mur.getAngleXZTableau()[1]) <= 90 && mur.getAngleXZTableau()[0].angle(tableau[x], mur.getAngleXZTableau()[3]) <= 90)
-                    if (mur.getAngleXZTableau()[2].angle(tableau[x], mur.getAngleXZTableau()[1]) <= 90 && mur.getAngleXZTableau()[2].angle(tableau[x], mur.getAngleXZTableau()[3]) <= 90) {
-                        System.out.println("colision");
-                        return x;
+                    if (mur.getAngleXZTableau()[2].angle(tableau[x], mur.getAngleXZTableau()[1]) <= 90 && mur.getAngleXZTableau()[2].angle(tableau[x], mur.getAngleXZTableau()[3]) <= 90){
+                        Point2D positionXY = new Point2D(tableau[x].getX(),positionBalle.getY());
+                        //Point2D positionYZ = new Point2D(positionBalle.getY(),tableau[x].getY());
+                        if (mur.getAngleXYTableau()[0].angle(positionXY,mur.getAngleXYTableau()[1]) <= 90 &&  mur.getAngleXYTableau()[0].angle(positionXY,mur.getAngleXYTableau()[3]) <= 90)
+                            if (mur.getAngleXYTableau()[2].angle(positionXY,mur.getAngleXYTableau()[1]) <= 90 &&  mur.getAngleXYTableau()[2].angle(positionXY,mur.getAngleXYTableau()[3]) <= 90) {
+                                System.out.println("collision x");
+                                return x;
+                            }
+                        /*else if (mur.getAngleYZTableau()[0].angle(positionYZ,mur.getAngleYZTableau()[1]) <= 90 &&  mur.getAngleYZTableau()[0].angle(positionYZ,mur.getAngleYZTableau()[3]) <= 90)
+                            if (mur.getAngleYZTableau()[2].angle(positionYZ,mur.getAngleYZTableau()[1]) <= 90 &&  mur.getAngleYZTableau()[2].angle(positionYZ,mur.getAngleYZTableau()[3]) <= 90) {
+                                System.out.println("colision z");
+                                return x;
+                            }*/
                     }
         return  -1;
     }
