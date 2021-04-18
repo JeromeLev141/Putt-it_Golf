@@ -21,15 +21,15 @@ public class Plateforme {
                         "xooox\n" +
                         "xovox\n" +
                         "xooox\n" +
-                        "xooox\n" +
-                        "xo ox\n" +
-                        "xooox\n" +
-                        "xooox\n" +
-                        "x o x\n" +
-                        "xooox\n" +
-                        "xooox\n" +
-                        "xo ox\n" +
-                        "xooox\n" +
+                        "xo_ox\n" +
+                        "x| |x\n" +
+                        "xo_ox\n" +
+                        "x_o_x\n" +
+                        "x | x\n" +
+                        "x_o_x\n" +
+                        "xo_ox\n" +
+                        "x| |x\n" +
+                        "xo_ox\n" +
                         "xooox\n" +
                         "xotox\n" +
                         "xooox\n" +
@@ -43,5 +43,12 @@ public class Plateforme {
                         "xooox\n" +
                         "xxxxx";
         }
+    }
+
+    public static String getNiveau3(){
+        return "xooox\n" +
+                "xxxxxxoooxxxxx\n" +
+                "x      g     x\n" +
+                "xggggggg     x\n";
     }
 }

@@ -67,7 +67,7 @@ public class Jeux {
 
     public Jeux() {
         sonOn = true;
-        musicOn = true;
+        musicOn = false;
         distance = 50;
         couleur = Color.WHITE;
 
@@ -220,9 +220,7 @@ public class Jeux {
         timeline = new Timeline();
         timeline.setOnFinished(event -> {
             roule = false;
-            if (positions.get(positions.size()-1).getX() == 7 &&
-                    positions.get(positions.size()-1).getY() == 7 &&
-                    positions.get(positions.size()-1).getZ() == 7) {
+            if (positions.get(positions.size()-1) == null) {
                 try {
                     niveauSuivant();
                 } catch (IOException e) {
@@ -350,9 +348,21 @@ public class Jeux {
 
         Group group = new Group();
         for (int i = 0; i < description.length(); i ++) {
-            if (description.charAt(i) == 'o') {
+            if (description.charAt(i) == 'o' || description.charAt(i) == '|' || description.charAt(i) == '_' || description.charAt(i) == 'L') {
                 prepareMapForme(sol,x,y,z,0,0,4,64,64,64);
+                if (description.charAt(i) == '|')
+                    prepareMapForme(mur,x,y,z,0,0,4,48,79,80);
+                if (description.charAt(i) == '_')
+                    prepareMapForme(mur,x,y,z,0,0,4,80,79,48);
+                if (description.charAt(i) == 'L')
+                    prepareMapForme(mur,x,y,z,0,0,4,48,79,48);
                 Node bloc = prepareBox(x, y, z);
+                group.getChildren().add(bloc);
+                x++;
+            }
+            else if (description.charAt(i) == 'g') {
+                prepareMapForme(sol,x,0,z,0,0,5,64,64,64);
+                Node bloc = prepareBox(x,y, z);
                 group.getChildren().add(bloc);
                 x++;
             }
@@ -371,6 +381,7 @@ public class Jeux {
                 group.getChildren().add(bloc);
                 x++;
             }
+
             else if (description.charAt(i) == 'v') {
                 prepareMapForme(sol,x,y,z,0,0,4,64,64,64);
                 Box bloc = (Box) prepareBox(x, y, z);
@@ -382,11 +393,20 @@ public class Jeux {
                 x++;
             }
             else if (description.charAt(i) == 't') {
+                /*
                 prepareMapForme(sol,x - 1,y,z,0,0,4,104,64,64);
                 prepareMapForme(sol,x + 1,y,z,0,0,4,104,64,64);
                 prepareMapForme(sol,x,y,z - 1,0,0,4,64,64,104);
                 prepareMapForme(sol,x,y,z + 1,0,0,4,64,64,104);
-                prepareMapForme(sol,x-1,y,z-1,0,0,5,3*64,8,3*64);
+                prepareMapForme(sol,x-1,y,z-1,0,0,5,3*64,8,3*64);*/
+
+                prepareMapForme(sol,x,y,z,0,0,5,64,16,64);
+                prepareMapForme(sol,x,y,z,0,0,1,16,64,16);
+                prepareMapForme(sol,x,y,z,0,0,4,64,64,64);
+                prepareMapForme(mur,x+1,y,z,0,0,4,104,71,64);
+                prepareMapForme(mur,x,y,z+1,0,0,4,64,71,104);
+                prepareMapForme(mur,x-1,y,z,0,0,2,104,71 ,16);
+                prepareMapForme(mur,x,y,z-1,0,0,2,64,71 ,104);
                 Box bloc = (Box) prepareBox(x, y, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/patern.png"));
@@ -395,8 +415,10 @@ public class Jeux {
                 group.getChildren().add(bloc);
                 x++;
             }
-            else if (description.charAt(i) == '/')
+            else if (description.charAt(i) == '+')
                 y++;
+            else if (description.charAt(i) == '-')
+                y--;
             else {
                 prepareMapForme(sol,x,y,z,0,0,1,64,48,64);
                 Box bloc = (Box) prepareBox(x, y, z);
@@ -454,7 +476,7 @@ public class Jeux {
 
     public static void prepareMapForme(List<FormeCordonneSommet> liste, int x, int y, int z, int angleXZ, int angleXY, int sol, int widgh, int heigh, int depth){
 
-        FormeCordonneSommet box = new FormeCordonneSommet(new Point3D(x * 64,y,z * 64), widgh, heigh, depth, angleXZ,angleXY,sol );
+        FormeCordonneSommet box = new FormeCordonneSommet(new Point3D(x * 64,y*16,z * 64), widgh, heigh, depth, angleXZ,angleXY,sol );
         liste.add(box);
     }
 
@@ -463,40 +485,53 @@ public class Jeux {
         int fnPosition = vecteur.creeSection();
         vecteur.setVecteurVitesseResultant(vitesseinitial);
         List<Point3D> coordonne = new ArrayList<>();
+        coordonne.add(new Point3D(vecteur.getPossition()[0],vecteur.getPossition()[1],vecteur.getPossition()[2]));
 
+        int positionImpactAvant = -1;
         int decompte = 0;
         double forceFrottement = 0.0D;
 
         do {
+
             FormeCordonneSommet formeSol = espace3D.detectColisionDansQuelleFormeSol();
+
             int positionImpact = espace3D.detectionColisionDansQuelleFormeMur();
             double [] fg = Formule.forcegravitationnel(formeSol);
             vecteur.setForceX(fgPosition, fg[0]);
             vecteur.setForceY(fgPosition, fg[1]);
             vecteur.setForceZ(fgPosition, fg[2]);
 
-            if (formeSol == null){
-                vecteur.setForceY(fnPosition,-64 * 9.8);
+            if (formeSol == null || formeSol.getTypeSol().isTraversable()){
+                vecteur.setForceY(fnPosition, -25);
             }
-            else if (formeSol.getTypeSol().getFrottement() == 0) {
-                coordonne.add(new Point3D(7,7,7));
+            else if (formeSol.getTypeSol().getFrottement() == -1) {
+                System.out.println("But");
+                coordonne.add(null);
                 return coordonne;
             }
-            else if (formeSol.getTypeSol().isTraversable()) {
-                if (decompte == 10) {
+
+            //else if (formeSol.getTypeSol().getFrottement() == -2) {
+                /*
+                if (decompte == 20) {
                 Point3D nouvellePosition = coordonne.get(0);
                 espace3D.refreshPositionBalle(nouvellePosition);
                 coordonne.add(nouvellePosition);
                 coordonne.add(new Point3D(0,0,0));
                 return coordonne;
                 }
-                else decompte++;
-            }
+                else decompte++;*/
+            //}
             else{
+
+                if (positionImpact != -1){
+                    if (positionImpact != positionImpactAvant) {
+                        Formule.rebondissement(vecteur, positionImpact);
+                        positionImpactAvant = positionImpact;
+                    }
+                }
                 if (!formeSol.getTypeSol().isTraversable())
                     vecteur.setForceY(fnPosition, (Double)vecteur.getForceY().get(fgPosition) * -1.0D);
-                if (positionImpact != -1)
-                    Formule.rebondissement(vecteur,positionImpact);
+
                 if (vecteur.getVecteurVitesseResultant()[0] <= 0.2 && vecteur.getVecteurVitesseResultant()[0] >= -0.2 &&
                         vecteur.getVecteurVitesseResultant()[2] <= 0.2 && vecteur.getVecteurVitesseResultant()[2] >= -0.2) {
                     forceFrottement = 0.0D;
@@ -518,10 +553,21 @@ public class Jeux {
                 vecteur.getPossition()[x] = Formule.MRUA(vecteur.getPossition()[x], vecteur.getVecteurVitesseResultant()[x], vecteur.getVecteurAccelerationResultant()[x], 0.02);
                 vecteur.setVecteurVitesseResultant(x,Formule.MRUA_Vf(vecteur.getVecteurVitesseResultant()[x], vecteur.getVecteurAccelerationResultant()[x], 0.02));
             }
+
+
+
             Point3D nouvellePosition = new Point3D(vecteur.getPossition()[0],vecteur.getPossition()[1],vecteur.getPossition()[2]);
             espace3D.refreshPositionBalle(nouvellePosition);
             coordonne.add(nouvellePosition);
 
+            if (vecteur.getPossition()[1] <= -100) {
+                vecteur.setVecteurVitesseResultant(new double[]{0, 0, 0});
+                vecteur.getVecteurVitesseResultant()[1] = 0;
+                espace3D.refreshPositionBalle(coordonne.get(0));
+                coordonne.add(coordonne.get(0));
+                coordonne.add(coordonne.get(0));
+                return coordonne;
+            }
 
         } while(vecteur.getVecteurAccelerationResultant()[0] <= -0.1 || vecteur.getVecteurAccelerationResultant()[0] >= 0.1 ||
                 vecteur.getVecteurAccelerationResultant()[1] != 0 || vecteur.getVecteurAccelerationResultant()[2] >= 0.1 || vecteur.getVecteurAccelerationResultant()[2] <= -0.1);

@@ -83,11 +83,27 @@ public class Espace3DTest {
         //test2 vitesse x plus gros
         Vecteur vecteur2 = new Vecteur(positionBalle1);
         double []vitesse2 = new double[]{20.0,0,0};
+        double []vitesse2_1 = new double[]{25,0,-15};
+        double []vitesse2_2 = new double[]{0,0,20};
         Jeux.bougerBalleEspaceTemps(vitesse2,vecteur2,test1);
 
         assertEquals(10.2,vecteur2.getPossition()[0],0.01);
         assertEquals(40.0,vecteur2.getPossition()[1]);
         assertEquals(256.0,vecteur2.getPossition()[2]);
+
+        Jeux.bougerBalleEspaceTemps(vitesse2_1,vecteur2,test1);
+
+        assertEquals(28.8,vecteur2.getPossition()[0],0.01);
+        assertEquals(40.0,vecteur2.getPossition()[1]);
+        assertEquals(244.84,vecteur2.getPossition()[2],0.01);
+
+        Jeux.bougerBalleEspaceTemps(vitesse2_2,vecteur2,test1);
+
+        assertEquals(28.8,vecteur2.getPossition()[0],0.01);
+        assertEquals(40.0,vecteur2.getPossition()[1]);
+        assertEquals(255.04,vecteur2.getPossition()[2],0.01);
+
+
 
         //test3 vitesse z
         Vecteur vecteur3 = new Vecteur(positionBalle1);
@@ -106,7 +122,7 @@ public class Espace3DTest {
         Jeux.bougerBalleEspaceTemps(vitesse4,vecteur4,test1);
 
         assertEquals(0.0,vecteur4.getPossition()[0],0.01);
-        assertEquals(40.0,vecteur4.getPossition()[1],0.1);
+        assertEquals(40.0,vecteur4.getPossition()[1],0.2);
         assertEquals(256.0,vecteur4.getPossition()[2], 0.01);
 
         //test5 vitesse x et z
@@ -125,9 +141,18 @@ public class Espace3DTest {
         test1.refreshPositionBalle(positionBalle1);
         Jeux.bougerBalleEspaceTemps(vitesse6,vecteur6,test1);
 
-        assertEquals(-79.1,vecteur6.getPossition()[0],0.5);
+        assertEquals(-79.1,vecteur6.getPossition()[0],2);
         assertEquals(40.0,vecteur6.getPossition()[1],0.1);
         assertEquals(256.0,vecteur6.getPossition()[2], 0.01);
+
+        //test7
+        Vecteur vecteur7 = new Vecteur(positionBalle1);
+        double []vitesse7 = new double[]{-1,0,22.6};
+        test1.refreshPositionBalle(positionBalle1);
+        List<Point3D> liste = Jeux.bougerBalleEspaceTemps(vitesse7,vecteur7,test1);
+        System.out.println(liste.size());
+        for (Point3D point: liste)
+            System.out.println(point);
     }
 
 
