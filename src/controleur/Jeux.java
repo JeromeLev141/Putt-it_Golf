@@ -7,6 +7,7 @@ import javafx.geometry.Point3D;
 import javafx.geometry.VPos;
 import javafx.scene.*;
 import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -84,7 +85,7 @@ public class Jeux {
         timeline = new Timeline();
         eventProgress = 0;
 
-        Media hit = new Media(new File("src/ressources/Puzzle-Dreams.mp3").toURI().toString());
+        Media hit = new Media(new File("src/ressources/music1.mp3").toURI().toString());
         music = new MediaPlayer(hit);
         music.setVolume(0.2);
         music.setOnEndOfMedia(() -> music.seek(Duration.ZERO));
@@ -146,10 +147,10 @@ public class Jeux {
         });
 
         balle.addEventHandler(MouseEvent.MOUSE_RELEASED, mouseEvent -> {
-            if (!roule && eventProgress == 1) {
-                fleche.setVisible(false);
+                    if (!roule && eventProgress == 1) {
+                        fleche.setVisible(false);
 
-                if (force > 100)
+                        if (force > 100)
                     force = 100;
 
                 frapper(-force * 2.5 * Math.sin(Math.toRadians(angle)), force * 2.5 * Math.cos(Math.toRadians(angle)));
@@ -304,6 +305,7 @@ public class Jeux {
         niv++;
         coups = 0;
 
+        vecteur = null;
         sol = new ArrayList<>();
         mur = new ArrayList<>();
 
@@ -383,7 +385,6 @@ public class Jeux {
                 group.getChildren().add(bloc);
                 x++;
             }
-
             else if (description.charAt(i) == 'v') {
                 prepareMapForme(sol,x,y,z,0,0,4,64,64,64);
                 Box bloc = (Box) prepareBox(x, y, z);
