@@ -16,7 +16,7 @@ public class Sol {
     public Sol(int type){
         if (type == 1) {/*eau*/
             traversable = true;
-            frottement = -2;
+            frottement = 0;
         }
         else if (type == 2) {/*beton*/
             traversable = false;
@@ -33,6 +33,10 @@ public class Sol {
         else if (type == 5) {/*trou*/
             traversable = false;
             frottement = -1;
+        }
+        else if (type == 6){//reset
+            traversable = false;
+            frottement = -2;
         }
     }
 
