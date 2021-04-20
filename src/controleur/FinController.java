@@ -1,9 +1,5 @@
 package controleur;
 
-import controleur.Jeux;
-import controleur.ScoreChecker;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

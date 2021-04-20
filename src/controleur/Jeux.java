@@ -236,6 +236,7 @@ public class Jeux {
                     new KeyValue(balle.rotationAxisProperty(), getAxeRotation(i)),
                     new KeyValue(balle.rotateProperty(), getRotation(i))));
         }
+        sonCoup();
         timeline.play();
     }
 
@@ -251,6 +252,14 @@ public class Jeux {
             return balle.getRotationAxis();
         else return new Point3D(-(positions.get(i).getZ() - positions.get(i - 1).getZ()), 0,
                     positions.get(i).getX() - positions.get(i - 1).getX());
+    }
+
+    private void sonCoup() {
+        Media entre = new Media(new File("src/ressources/sons/coup.mp3").toURI().toString());
+        son = new MediaPlayer(entre);
+        son.setVolume(0.2);
+        son.setMute(!sonOn);
+        son.play();
     }
 
     public void sonEntre() {
@@ -294,6 +303,7 @@ public class Jeux {
             music = new MediaPlayer(hit);
             music.setVolume(0.2);
             music.setOnEndOfMedia(() -> music.seek(Duration.ZERO));
+            music.setMute(!musicOn);
             music.play();
         }
         else if (niv == 4) {
@@ -302,6 +312,7 @@ public class Jeux {
             music = new MediaPlayer(hit);
             music.setVolume(0.2);
             music.setOnEndOfMedia(() -> music.seek(Duration.ZERO));
+            music.setMute(!musicOn);
             music.play();
         }
         else if (niv == 6) {
@@ -310,6 +321,7 @@ public class Jeux {
             music = new MediaPlayer(hit);
             music.setVolume(0.2);
             music.setOnEndOfMedia(() -> music.seek(Duration.ZERO));
+            music.setMute(!musicOn);
             music.play();
         }
         else if (niv == 8) {
@@ -432,10 +444,10 @@ public class Jeux {
                 prepareMapForme(sol,x,y,z,0,0,5,64,16,64);
                 prepareMapForme(sol,x,y,z,0,0,1,16,64,16);
                 prepareMapForme(sol,x,y,z,0,0,4,64,64,64);
-                prepareMapForme(mur,x+1,y,z,0,0,4,104,71,64);
-                prepareMapForme(mur,x,y,z+1,0,0,4,64,71,104);
-                prepareMapForme(mur,x-1,y,z,0,0,2,104,71 ,16);
-                prepareMapForme(mur,x,y,z-1,0,0,2,64,71 ,104);
+                prepareMapForme(mur,x+1,y,z,0,0,4,104,64,64);
+                prepareMapForme(mur,x,y,z+1,0,0,4,64,64,104);
+                prepareMapForme(mur,x-1,y,z,0,0,2,104,64 ,64);
+                prepareMapForme(mur,x,y,z-1,0,0,2,64,64,104);
                 Box bloc = (Box) prepareBox(x, y, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/textures/patern.png"));
@@ -505,7 +517,7 @@ public class Jeux {
 
     public static void prepareMapForme(List<FormeCordonneSommet> liste, int x, int y, int z, int angleXZ, int angleXY, int sol, int widgh, int heigh, int depth){
 
-        FormeCordonneSommet box = new FormeCordonneSommet(new Point3D(x * 64,y*16,z * 64), widgh, heigh, depth, angleXZ,angleXY,sol );
+        FormeCordonneSommet box = new FormeCordonneSommet(new Point3D(x * 64,-y * 64,z * 64), widgh, heigh, depth, angleXZ,angleXY,sol );
         liste.add(box);
     }
 
@@ -531,7 +543,8 @@ public class Jeux {
             vecteur.setForceZ(fgPosition, fg[2]);
 
             if (formeSol == null || formeSol.getTypeSol().isTraversable()){
-                vecteur.setForceY(fnPosition, -25);
+                System.out.println("airborne");
+                vecteur.setForceY(fnPosition, -64);
             }
             else if (formeSol.getTypeSol().getFrottement() == -1) {
                 System.out.println("But");
@@ -583,13 +596,11 @@ public class Jeux {
                 vecteur.setVecteurVitesseResultant(x,Formule.MRUA_Vf(vecteur.getVecteurVitesseResultant()[x], vecteur.getVecteurAccelerationResultant()[x], 0.02));
             }
 
-
-
-            Point3D nouvellePosition = new Point3D(vecteur.getPossition()[0],vecteur.getPossition()[1],vecteur.getPossition()[2]);
+            Point3D nouvellePosition = new Point3D(vecteur.getPossition()[0], vecteur.getPossition()[1],vecteur.getPossition()[2]);
             espace3D.refreshPositionBalle(nouvellePosition);
             coordonne.add(nouvellePosition);
 
-            if (vecteur.getPossition()[1] <= -100) {
+            if (vecteur.getPossition()[1] <= -200) {
                 vecteur.setVecteurVitesseResultant(new double[]{0, 0, 0});
                 vecteur.getVecteurVitesseResultant()[1] = 0;
                 espace3D.refreshPositionBalle(coordonne.get(0));

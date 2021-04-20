@@ -81,6 +81,7 @@ public class Espace3D {
                 if (sol.getAngleXZTableau()[2].angle(positionBalleXZ,sol.getAngleXZTableau()[1]) <= 90 && sol.getAngleXZTableau()[2].angle(positionBalleXZ,sol.getAngleXZTableau()[3]) <= 90){
                     if (sol.getAngleXY() == 0 && (positionBalle.getY() - sol.getSommets()[0].getY()) <= 8)
                         return  sol;
+                    System.out.println("collision y");
                     Point2D pointXZ = FormeCordonneSommet.trouverPointFormeAngleXZ(sol, positionBalleXZ.getX(), positionBalleXZ.getY() - 8, (360 - sol.getAngleXZ()));
                     Point2D pointXY = new Point2D(pointXZ.getX(),positionBalle.getY() - 8);
 
