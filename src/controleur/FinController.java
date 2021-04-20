@@ -41,6 +41,8 @@ public class FinController {
 
     @FXML
     private void retour() throws IOException {
+        jeux.musicStop();
+
         String nb = String.valueOf(score);
         if (nb.length() == 2)
             nb = "0" + nb;

@@ -67,7 +67,7 @@ public class Jeux {
 
     public Jeux() {
         sonOn = true;
-        musicOn = false;
+        musicOn = true;
         distance = 50;
         couleur = Color.WHITE;
 
@@ -84,14 +84,9 @@ public class Jeux {
         timeline = new Timeline();
         eventProgress = 0;
 
-        Media hit = new Media(new File("src/ressources/Puzzle-Dreams.mp3").toURI().toString());
-        music = new MediaPlayer(hit);
-        music.setVolume(0.2);
-        music.setOnEndOfMedia(() -> music.seek(Duration.ZERO));
-
         balle = new Balle(8);
         PhongMaterial material = new PhongMaterial();
-        material.setDiffuseMap(new Image("ressources/images/texture.png"));
+        material.setDiffuseMap(new Image("ressources/images/textures/texture.png"));
         balle.setMaterial(material);
         balle.setTranslateY(-40);
         balle.setRotationAxis(Rotate.X_AXIS);
@@ -146,13 +141,15 @@ public class Jeux {
         });
 
         balle.addEventHandler(MouseEvent.MOUSE_RELEASED, mouseEvent -> {
-            if (!roule && eventProgress == 1) {
-                fleche.setVisible(false);
+                    if (!roule && eventProgress == 1) {
+                        fleche.setVisible(false);
 
-                if (force > 100)
+                        if (force > 100)
                     force = 100;
 
                 frapper(-force * 2.5 * Math.sin(Math.toRadians(angle)), force * 2.5 * Math.cos(Math.toRadians(angle)));
+                force = 0;
+                angle = 0;
 
                 fleche.getTransforms().clear();
                 fleche.getTransforms().add(new Rotate(90, Rotate.X_AXIS));
@@ -175,7 +172,12 @@ public class Jeux {
         sol = new ArrayList<>();
         mur = new ArrayList<>();
 
+        Media hit = new Media(new File("src/ressources/musics/music1.mp3").toURI().toString());
+        music = new MediaPlayer(hit);
+        music.setVolume(0.2);
+        music.setOnEndOfMedia(() -> music.seek(Duration.ZERO));
         music.setMute(!musicOn);
+        music.play();
 
         Group niveau = new Group(prepareMap(Plateforme.getNiveau(niv)));
         espace3D = new Espace3D(new Point3D(0,0,0), sol, mur);
@@ -197,8 +199,6 @@ public class Jeux {
         camera.translateZProperty().bind(balle.translateZProperty());
 
         niveau.getChildren().add(fleche);
-
-        music.play();
         return scene;
     }
 
@@ -288,7 +288,31 @@ public class Jeux {
             default : scores.get(8).setText("" + (Integer.parseInt(scores.get(8).getText()) + 10));
         }
 
-        if (niv == 8) {
+        if (niv == 2) {
+            music.stop();
+            Media hit = new Media(new File("src/ressources/musics/music2.mp3").toURI().toString());
+            music = new MediaPlayer(hit);
+            music.setVolume(0.2);
+            music.setOnEndOfMedia(() -> music.seek(Duration.ZERO));
+            music.play();
+        }
+        else if (niv == 4) {
+            music.stop();
+            Media hit = new Media(new File("src/ressources/musics/music3.mp3").toURI().toString());
+            music = new MediaPlayer(hit);
+            music.setVolume(0.2);
+            music.setOnEndOfMedia(() -> music.seek(Duration.ZERO));
+            music.play();
+        }
+        else if (niv == 6) {
+            music.stop();
+            Media hit = new Media(new File("src/ressources/musics/music4.mp3").toURI().toString());
+            music = new MediaPlayer(hit);
+            music.setVolume(0.2);
+            music.setOnEndOfMedia(() -> music.seek(Duration.ZERO));
+            music.play();
+        }
+        else if (niv == 8) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneFin.fxml"));
             Parent fin = loader.load();
 
@@ -302,6 +326,7 @@ public class Jeux {
         niv++;
         coups = 0;
 
+        vecteur = null;
         sol = new ArrayList<>();
         mur = new ArrayList<>();
 
@@ -327,17 +352,22 @@ public class Jeux {
     }
 
     private ImageView backround(Sphere balle) {
-        Image image = new Image("ressources/images/nuages.png");
+        Image image;
+        if (niv == 3 || niv == 4)
+            image = new Image("ressources/images/backs/montagnes.png");
+        else if (niv == 5 || niv == 6)
+            image = new Image("ressources/images/backs/techno.png");
+        else if (niv == 7 || niv == 8)
+            image = new Image("ressources/images/backs/yeux.png");
+        else
+            image = new Image("ressources/images/backs/nuages.png");
         ImageView iv = new ImageView(image);
         iv.setFitHeight(2400);
         iv.setFitWidth(2600);
-        //iv.setPreserveRatio(true);
         iv.getTransforms().add(new Translate(-2200, 1400, 1000));
         iv.getTransforms().addAll(new Rotate(-45, Rotate.Y_AXIS), new Rotate(-70, Rotate.X_AXIS), new Rotate(15, Rotate.Z_AXIS));
-
         iv.translateXProperty().bind(balle.translateXProperty());
         iv.translateZProperty().bind(balle.translateZProperty());
-
         return iv;
     }
 
@@ -375,18 +405,17 @@ public class Jeux {
                 Box bloc = (Box) prepareBox(x, y, z);
                 bloc.setHeight(128);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
-                mat.setDiffuseMap(new Image("ressources/images/patern.png"));
+                mat.setDiffuseMap(new Image("ressources/images/textures/patern.png"));
                 mat.setDiffuseColor(Color.DARKGREY);
                 bloc.setMaterial(mat);
                 group.getChildren().add(bloc);
                 x++;
             }
-
             else if (description.charAt(i) == 'v') {
                 prepareMapForme(sol,x,y,z,0,0,4,64,64,64);
                 Box bloc = (Box) prepareBox(x, y, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
-                mat.setDiffuseMap(new Image("ressources/images/patern.png"));
+                mat.setDiffuseMap(new Image("ressources/images/textures/patern.png"));
                 mat.setDiffuseColor(Color.LIGHTGOLDENRODYELLOW);
                 bloc.setMaterial(mat);
                 group.getChildren().add(bloc);
@@ -410,8 +439,8 @@ public class Jeux {
                 prepareMapForme(mur,x,y,z-1,0,0,2,64,70 ,64);
                 Box bloc = (Box) prepareBox(x, y, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
-                mat.setDiffuseMap(new Image("ressources/images/patern.png"));
-                mat.setBumpMap(new Image("ressources/images/trou.png"));
+                mat.setDiffuseMap(new Image("ressources/images/textures/patern.png"));
+                mat.setBumpMap(new Image("ressources/images/textures/trou.png"));
                 bloc.setMaterial(mat);
                 group.getChildren().add(bloc);
                 x++;
@@ -428,7 +457,7 @@ public class Jeux {
                 bloc.setTranslateY(bloc.getTranslateY() + 16);
                 bloc.setHeight(48);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
-                mat.setDiffuseMap(new Image("ressources/images/eau.gif"));
+                mat.setDiffuseMap(new Image("ressources/images/textures/eau.gif"));
                 mat.setDiffuseColor(Color.SKYBLUE);
                 bloc.setMaterial(mat);
                 group.getChildren().add(bloc);
@@ -440,7 +469,7 @@ public class Jeux {
 
     private Node prepareBox(int x, int y, int z) {
         PhongMaterial material = new PhongMaterial();
-        material.setDiffuseMap(new Image("ressources/images/patern.png"));
+        material.setDiffuseMap(new Image("ressources/images/textures/patern.png"));
         Box box = new Box(64, 64, 64);
         box.setMaterial(material);
         box.setTranslateX(x * 64);
