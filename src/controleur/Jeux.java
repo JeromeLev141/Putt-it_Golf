@@ -381,11 +381,11 @@ public class Jeux {
             if (description.charAt(i) == 'o' || description.charAt(i) == '|' || description.charAt(i) == '_' || description.charAt(i) == 'L') {
                 prepareMapForme(sol,x,y,z,0,0,4,64,64,64);
                 if (description.charAt(i) == '|')
-                    prepareMapForme(mur,x,y+1,z,0,0,4,48,140,80);
+                    prepareMapForme(mur,x,y,z,0,0,4,48,79,80);
                 if (description.charAt(i) == '_')
-                    prepareMapForme(mur,x,y+1,z,0,0,4,80,140,48);
+                    prepareMapForme(mur,x,y,z,0,0,4,80,79,48);
                 if (description.charAt(i) == 'L')
-                    prepareMapForme(mur,x,y+1,z,0,0,4,48,140,48);
+                    prepareMapForme(mur,x,y,z,0,0,4,48,79,48);
                 Node bloc = prepareBox(x, y, z);
                 group.getChildren().add(bloc);
                 x++;
@@ -431,12 +431,11 @@ public class Jeux {
 
                 prepareMapForme(sol,x,y,z,0,0,5,64,16,64);
                 prepareMapForme(sol,x,y,z,0,0,1,16,64,16);
-                prepareMapForme(sol,x,y,z,0,0,1,64,60,64);
                 prepareMapForme(sol,x,y,z,0,0,4,64,64,64);
-                prepareMapForme(mur,x+1,y,z,0,0,4,64,70,64);
-                prepareMapForme(mur,x,y,z+1,0,0,4,64,70,64);
-                prepareMapForme(mur,x-1,y,z,0,0,2,64,70 ,64);
-                prepareMapForme(mur,x,y,z-1,0,0,2,64,70 ,64);
+                prepareMapForme(mur,x+1,y,z,0,0,4,104,71,64);
+                prepareMapForme(mur,x,y,z+1,0,0,4,64,71,104);
+                prepareMapForme(mur,x-1,y,z,0,0,2,104,71 ,16);
+                prepareMapForme(mur,x,y,z-1,0,0,2,64,71 ,104);
                 Box bloc = (Box) prepareBox(x, y, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/textures/patern.png"));
@@ -450,9 +449,7 @@ public class Jeux {
             else if (description.charAt(i) == '-')
                 y--;
             else {
-                prepareMapForme(sol,x,y,x,0,0,6,80,32,80);
                 prepareMapForme(sol,x,y,z,0,0,1,64,48,64);
-
                 Box bloc = (Box) prepareBox(x, y, z);
                 bloc.setTranslateY(bloc.getTranslateY() + 16);
                 bloc.setHeight(48);
@@ -508,7 +505,7 @@ public class Jeux {
 
     public static void prepareMapForme(List<FormeCordonneSommet> liste, int x, int y, int z, int angleXZ, int angleXY, int sol, int widgh, int heigh, int depth){
 
-        FormeCordonneSommet box = new FormeCordonneSommet(new Point3D(x * 64,-y * 64,z * 64), widgh, heigh, depth, angleXZ,angleXY,sol );
+        FormeCordonneSommet box = new FormeCordonneSommet(new Point3D(x * 64,y*16,z * 64), widgh, heigh, depth, angleXZ,angleXY,sol );
         liste.add(box);
     }
 
@@ -527,40 +524,18 @@ public class Jeux {
 
             FormeCordonneSommet formeSol = espace3D.detectColisionDansQuelleFormeSol();
 
-
             int positionImpact = espace3D.detectionColisionDansQuelleFormeMur();
             double [] fg = Formule.forcegravitationnel(formeSol);
             vecteur.setForceX(fgPosition, fg[0]);
             vecteur.setForceY(fgPosition, fg[1]);
             vecteur.setForceZ(fgPosition, fg[2]);
 
-            if (formeSol != null && !formeSol.getTypeSol().isTraversable()){
-                vecteur.getVecteurVitesseResultant()[1] = 0;
-                vecteur.setForceY(fnPosition, (Double)vecteur.getForceY().get(fgPosition) * -1.0D);
-                vecteur.setForceX(fnPosition,0);
-                vecteur.setForceZ(fnPosition,0);
-                vecteur.refreshVecteurAccelerationResultant();
-            }
             if (formeSol == null || formeSol.getTypeSol().isTraversable()){
-                //System.out.println(" vole");
-                vecteur.setForceY(fnPosition, -50);
+                vecteur.setForceY(fnPosition, -25);
             }
             else if (formeSol.getTypeSol().getFrottement() == -1) {
                 System.out.println("But");
                 coordonne.add(null);
-                return coordonne;
-            }
-            else if (formeSol.getTypeSol().getFrottement() == -2){
-                System.out.println("eau");
-                vecteur.setVecteurVitesseResultant(new double[]{0, 0, 0});
-                vecteur.setForceY(fnPosition, (Double)vecteur.getForceY().get(fgPosition) * -1.0D);
-                vecteur.setForceX(fnPosition,0);
-                vecteur.setForceZ(fnPosition,0);
-                vecteur.refreshVecteurAccelerationResultant();
-                espace3D.refreshPositionBalle(coordonne.get(0));
-                positionImpactAvant = -1;
-                coordonne.add(coordonne.get(0));
-                coordonne.add(coordonne.get(0));
                 return coordonne;
             }
 
@@ -579,7 +554,6 @@ public class Jeux {
 
                 if (positionImpact != -1){
                     if (positionImpact != positionImpactAvant) {
-                        System.out.println("avant = " + positionImpactAvant + " nouvelle =" + positionImpact);
                         Formule.rebondissement(vecteur, positionImpact);
                         positionImpactAvant = positionImpact;
                     }
@@ -615,14 +589,10 @@ public class Jeux {
             espace3D.refreshPositionBalle(nouvellePosition);
             coordonne.add(nouvellePosition);
 
-            if (vecteur.getPossition()[1] <= -150) {
+            if (vecteur.getPossition()[1] <= -100) {
                 vecteur.setVecteurVitesseResultant(new double[]{0, 0, 0});
-                vecteur.setForceY(fnPosition, (Double)vecteur.getForceY().get(fgPosition) * -1.0D);
-                vecteur.setForceX(fnPosition,0);
-                vecteur.setForceZ(fnPosition,0);
-                vecteur.refreshVecteurAccelerationResultant();
+                vecteur.getVecteurVitesseResultant()[1] = 0;
                 espace3D.refreshPositionBalle(coordonne.get(0));
-                positionImpactAvant = -1;
                 coordonne.add(coordonne.get(0));
                 coordonne.add(coordonne.get(0));
                 return coordonne;
