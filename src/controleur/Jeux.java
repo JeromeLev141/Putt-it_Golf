@@ -57,6 +57,7 @@ public class Jeux {
     private Camera camera;
     private ImageView iv;
     private int rotationMap;
+    private Box spawn;
 
     private double xDebut;
     private double yDebut;
@@ -424,8 +425,14 @@ public class Jeux {
         roule = false;
         PhongMaterial mat = (PhongMaterial) balle.getMaterial();
         mat.setDiffuseColor(couleur);
-        balle.translateXProperty().set(0);
-        balle.translateZProperty().set(0);
+        if (spawn != null) {
+            balle.translateXProperty().set(spawn.getTranslateX());
+            balle.translateZProperty().set(spawn.getTranslateZ());
+        }
+        else {
+            balle.translateXProperty().set(0);
+            balle.translateZProperty().set(0);
+        }
         balle.translateYProperty().set(-40);
     }
 
@@ -491,12 +498,12 @@ public class Jeux {
             }
             else if (description.charAt(i) == 'v') {
                 prepareMapForme(sol,x,y,z,0,0,4,64,64,64);
-                Box bloc = (Box) prepareBox(x, y, z);
-                PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
+                spawn = (Box) prepareBox(x, y, z);
+                PhongMaterial mat = (PhongMaterial) spawn.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/textures/patern.png"));
                 mat.setDiffuseColor(Color.LIGHTGOLDENRODYELLOW);
-                bloc.setMaterial(mat);
-                group.getChildren().add(bloc);
+                spawn.setMaterial(mat);
+                group.getChildren().add(spawn);
                 x++;
             }
             else if (description.charAt(i) == 't') {
@@ -521,6 +528,8 @@ public class Jeux {
                 y++;
             else if (description.charAt(i) == '-')
                 y--;
+            else if (description.charAt(i) == '0')
+                x++;
             else {
                 prepareMapForme(sol,x,y,x,0,0,6,80,32,80);
                 prepareMapForme(sol,x,y,z,0,0,1,64,48,64);
@@ -687,7 +696,7 @@ public class Jeux {
             espace3D.refreshPositionBalle(nouvellePosition);
             coordonne.add(nouvellePosition);
 
-            if (vecteur.getPossition()[1] <= -150) {
+            if (vecteur.getPossition()[1] <= -300) {
                 vecteur.setVecteurVitesseResultant(new double[]{0, 0, 0});
                 vecteur.setForceY(fnPosition, (Double)vecteur.getForceY().get(fgPosition) * -1.0D);
                 vecteur.setForceX(fnPosition,0);
