@@ -6,9 +6,13 @@ import javafx.geometry.HPos;
 import javafx.geometry.Point3D;
 import javafx.geometry.VPos;
 import javafx.scene.*;
+import javafx.scene.chart.Axis;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -49,6 +53,10 @@ public class Jeux {
     private SubScene scene;
     private Balle balle;
     private VBox fleche;
+    private Group map;
+    private Camera camera;
+    private ImageView iv;
+    private int rotationMap;
 
     private double xDebut;
     private double yDebut;
@@ -122,7 +130,8 @@ public class Jeux {
 
         balle.addEventHandler(MouseEvent.MOUSE_DRAGGED, mouseEvent -> {
             if (!roule && eventProgress == 1) {
-                angle = Math.atan((mouseEvent.getSceneX() - xDebut) / (mouseEvent.getSceneY() - yDebut)) * 180 / Math.PI + 30;
+
+                angle = Math.atan((mouseEvent.getSceneX() - xDebut) / (mouseEvent.getSceneY() - yDebut)) * 180 / Math.PI + 30 + rotationMap;
                 if ((mouseEvent.getSceneX() - xDebut) < 0 && (mouseEvent.getSceneY() - yDebut) < 0) {
                     fleche.getTransforms().set(1, new Rotate(-180 + angle, Rotate.Z_AXIS));
                     angle -= 180;
@@ -179,17 +188,24 @@ public class Jeux {
         music.setMute(!musicOn);
         music.play();
 
-        Group niveau = new Group(prepareMap(Plateforme.getNiveau(niv)));
-        espace3D = new Espace3D(new Point3D(0,0,0), sol, mur);
-        niveau.getChildren().add(balle);
+        rotationMap = 0;
 
-        Camera camera = new PerspectiveCamera();
+        map = new Group(prepareMap(Plateforme.getNiveau(niv)));
+        map.getChildren().addAll(balle, fleche);
+        rotationMap = 0;
+
+        Group niveau = new Group(map);
+        espace3D = new Espace3D(new Point3D(0,0,0), sol, mur);
+
+        camera = new PerspectiveCamera();
         scene = new SubScene(niveau, 800, 600,true, SceneAntialiasing.BALANCED);
         scene.setCamera(camera);
 
         niveau.translateXProperty().set(400);
         niveau.translateYProperty().set(300);
-        niveau.getChildren().add(backround(balle));
+
+        iv = backround(balle);
+        niveau.getChildren().add(iv);
 
         camera.setTranslateX(camera.getTranslateX() + 150 - distance);
         camera.setTranslateY(camera.getTranslateY() - 150 + distance);
@@ -198,7 +214,46 @@ public class Jeux {
         camera.translateXProperty().bind(balle.translateXProperty());
         camera.translateZProperty().bind(balle.translateZProperty());
 
-        niveau.getChildren().add(fleche);
+        scene.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                if (!roule && eventProgress == 0) {
+                    Rotate rotate = new Rotate();
+                    rotate.setAxis(Rotate.Y_AXIS);
+                    rotate.setAngle(90);
+                    map.getTransforms().add(rotate);
+
+                    rotationMap += 90;
+                    if (rotationMap != 360) {
+                        if (rotationMap == 90) {
+                            camera.translateXProperty().bind(balle.translateZProperty());
+                            camera.translateZProperty().bind(balle.translateXProperty().negate());
+                            iv.translateXProperty().bind(balle.translateZProperty());
+                            iv.translateZProperty().bind(balle.translateXProperty().negate());
+                        }
+                        else if (rotationMap == 180) {
+                            camera.translateXProperty().bind(balle.translateXProperty().negate());
+                            camera.translateZProperty().bind(balle.translateZProperty().negate());
+                            iv.translateXProperty().bind(balle.translateXProperty().negate());
+                            iv.translateZProperty().bind(balle.translateZProperty().negate());
+                        }
+                        else {
+                            camera.translateXProperty().bind(balle.translateZProperty().negate());
+                            camera.translateZProperty().bind(balle.translateXProperty());
+                            iv.translateXProperty().bind(balle.translateZProperty().negate());
+                            iv.translateZProperty().bind(balle.translateXProperty());
+                        }
+                    }
+                    else {
+                        rotationMap = 0;
+                        camera.translateXProperty().bind(balle.translateXProperty());
+                        camera.translateZProperty().bind(balle.translateZProperty());
+                        iv.translateXProperty().bind(balle.translateXProperty());
+                        iv.translateZProperty().bind(balle.translateZProperty());
+                    }
+                }
+            }
+        });
+
         return scene;
     }
 
@@ -342,18 +397,29 @@ public class Jeux {
         sol = new ArrayList<>();
         mur = new ArrayList<>();
 
-        Group niveau = new Group(prepareMap(Plateforme.getNiveau(niv)));
+        rotationMap = 0;
+
+        map = new Group(prepareMap(Plateforme.getNiveau(niv)));
+        map.getChildren().addAll(balle, fleche);
+        Group niveau = new Group(map);
+
         espace3D = new Espace3D(new Point3D(0,0,0), sol, mur);
-        niveau.getChildren().addAll(balle, fleche);
         niveau.translateXProperty().set(400);
         niveau.translateYProperty().set(300);
-        niveau.getChildren().add(backround(balle));
+
+        iv = backround(balle);
+        niveau.getChildren().add(iv);
+
+        camera.translateXProperty().bind(balle.translateXProperty());
+        camera.translateZProperty().bind(balle.translateZProperty());
+        iv.translateXProperty().bind(balle.translateXProperty());
+        iv.translateZProperty().bind(balle.translateZProperty());
 
         resetBalle();
         scene.setRoot(niveau);
     }
 
-    private void resetBalle() {
+    public void resetBalle() {
         timeline.stop();
         roule = false;
         PhongMaterial mat = (PhongMaterial) balle.getMaterial();

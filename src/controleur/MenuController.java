@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -40,6 +42,13 @@ public class MenuController {
         JeuxController jeuxController = loader.getController();
 
         Stage stage = (Stage) node1.getScene().getWindow();
+
+        stage.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.R) {
+                jeux.resetBalle();
+            }
+        });
+
         jeux.setStage(stage);
 
         jeuxController.transfert(jeux, stage);
