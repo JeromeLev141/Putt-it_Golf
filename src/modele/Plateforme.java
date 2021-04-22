@@ -40,20 +40,20 @@ public class Plateforme {
                         "xovox\n" +
                         "x___x\n+" +
                         "xooox\n" +
-                        "xooox\n" +
+                        "xbbbx\n" +
                         "xoxox\n" +
                         "x___x\n+" +
                         "xooox+xxxx\n" +
-                        "-xooo|+ooox\n" +
-                        "-xoxo|+o+t-ox\n" +
-                        "-xooo|+ooox\n" +
+                        "-xbbb|+o_ox\n" +
+                        "-xoxb|+|+t-|x\n" +
+                        "-xoob|+o_ox\n" +
                         "-xxxxx+xxxx";
             case 4 :
                 return  "0000xxxxxxx\n" +
                         "xxxxx     xxxxx\n" +
-                        "xooo|   |_|ooox\n" +
-                        "xovo|_| | |otox\n" +
-                        "xooo| | | |ooox\n" +
+                        "xbbb|   |_|bbbx\n" +
+                        "xbvb|_| | |btbx\n" +
+                        "xbbb| | | |bbbx\n" +
                         "xxxxx |_| xxxxx\n" +
                         "0000xxxxxxx";
             default:

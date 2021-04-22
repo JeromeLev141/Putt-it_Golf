@@ -6,12 +6,9 @@ import javafx.geometry.HPos;
 import javafx.geometry.Point3D;
 import javafx.geometry.VPos;
 import javafx.scene.*;
-import javafx.scene.chart.Axis;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -58,6 +55,8 @@ public class Jeux {
     private ImageView iv;
     private int rotationMap;
     private Box spawn;
+    private Color themeSol;
+    private Color themeMur;
 
     private double xDebut;
     private double yDebut;
@@ -190,6 +189,8 @@ public class Jeux {
         music.play();
 
         rotationMap = 0;
+        themeSol = Color.WHITE;
+        themeMur = Color.DARKGREY;
 
         map = new Group(prepareMap(Plateforme.getNiveau(niv)));
         map.getChildren().addAll(balle, fleche);
@@ -361,6 +362,9 @@ public class Jeux {
             music.setOnEndOfMedia(() -> music.seek(Duration.ZERO));
             music.setMute(!musicOn);
             music.play();
+
+            themeSol = Color.BISQUE;
+            themeMur = Color.DARKGREEN;
         }
         else if (niv == 4) {
             music.stop();
@@ -370,6 +374,9 @@ public class Jeux {
             music.setOnEndOfMedia(() -> music.seek(Duration.ZERO));
             music.setMute(!musicOn);
             music.play();
+
+            themeSol = Color.SKYBLUE;
+            themeMur = Color.BLACK;
         }
         else if (niv == 6) {
             music.stop();
@@ -379,6 +386,9 @@ public class Jeux {
             music.setOnEndOfMedia(() -> music.seek(Duration.ZERO));
             music.setMute(!musicOn);
             music.play();
+
+            themeSol = Color.ORANGE;
+            themeMur = Color.RED;
         }
         else if (niv == 8) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneFin.fxml"));
@@ -443,13 +453,13 @@ public class Jeux {
         else if (niv == 5 || niv == 6)
             image = new Image("ressources/images/backs/techno.png");
         else if (niv == 7 || niv == 8)
-            image = new Image("ressources/images/backs/yeux.png");
+            image = new Image("ressources/images/backs/wasteland.png");
         else
             image = new Image("ressources/images/backs/nuages.png");
         ImageView iv = new ImageView(image);
-        iv.setFitHeight(2400);
+        iv.setFitHeight(2000);
         iv.setFitWidth(2600);
-        iv.getTransforms().add(new Translate(-2200, 1400, 1000));
+        iv.getTransforms().add(new Translate(-2000, 1500, 700));
         iv.getTransforms().addAll(new Rotate(-45, Rotate.Y_AXIS), new Rotate(-70, Rotate.X_AXIS), new Rotate(15, Rotate.Z_AXIS));
         iv.translateXProperty().bind(balle.translateXProperty());
         iv.translateZProperty().bind(balle.translateZProperty());
@@ -463,15 +473,24 @@ public class Jeux {
 
         Group group = new Group();
         for (int i = 0; i < description.length(); i ++) {
-            if (description.charAt(i) == 'o' || description.charAt(i) == '|' || description.charAt(i) == '_' || description.charAt(i) == 'L') {
-                prepareMapForme(sol,x,y,z,0,0,4,64,64,64);
+            if (description.charAt(i) == 'o' || description.charAt(i) == '|' || description.charAt(i) == '_' || description.charAt(i) == 'L'
+            || description.charAt(i) == 'b') {
+                Box bloc = (Box) prepareBox(x, y, z);
+
+                if (description.charAt(i) == 'b') {
+                    PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
+                    mat.setDiffuseColor(Color.SADDLEBROWN);
+                    bloc.setMaterial(mat);
+                    prepareMapForme(sol,x,y,z,0,0,3,64,64,64);
+                }
+                else prepareMapForme(sol,x,y,z,0,0,4,64,64,64);
                 if (description.charAt(i) == '|')
                     prepareMapForme(mur,x,y+1,z,0,0,4,48,140,80);
                 if (description.charAt(i) == '_')
                     prepareMapForme(mur,x,y+1,z,0,0,4,80,140,48);
                 if (description.charAt(i) == 'L')
                     prepareMapForme(mur,x,y+1,z,0,0,4,48,140,48);
-                Node bloc = prepareBox(x, y, z);
+
                 group.getChildren().add(bloc);
                 x++;
             }
@@ -491,7 +510,7 @@ public class Jeux {
                 bloc.setHeight(128);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/textures/patern.png"));
-                mat.setDiffuseColor(Color.DARKGREY);
+                mat.setDiffuseColor(themeMur);
                 bloc.setMaterial(mat);
                 group.getChildren().add(bloc);
                 x++;
@@ -550,6 +569,7 @@ public class Jeux {
 
     private Node prepareBox(int x, int y, int z) {
         PhongMaterial material = new PhongMaterial();
+        material.setDiffuseColor(themeSol);
         material.setDiffuseMap(new Image("ressources/images/textures/patern.png"));
         Box box = new Box(64, 64, 64);
         box.setMaterial(material);
