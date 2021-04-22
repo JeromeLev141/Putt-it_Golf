@@ -479,6 +479,7 @@ public class Jeux {
 
                 if (description.charAt(i) == 'b') {
                     PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
+                    mat.setDiffuseMap(new Image("ressources/images/textures/boost.gif"));
                     mat.setDiffuseColor(Color.SADDLEBROWN);
                     bloc.setMaterial(mat);
                     prepareMapForme(sol,x,y,z,0,0,3,64,64,64);

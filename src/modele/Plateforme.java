@@ -67,11 +67,4 @@ public class Plateforme {
                         "xxxxx";
         }
     }
-
-    public static String getNiveau3(){
-        return "xooox\n" +
-                "xxxxxxoooxxxxx\n" +
-                "x      g     x\n" +
-                "xggggggg     x\n";
-    }
 }

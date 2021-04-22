@@ -22,9 +22,9 @@ public class Sol {
             traversable = false;
             frottement = 0.9;
         }
-        else if (type == 3) {/*bois*/
+        else if (type == 3) {/*boost*/
             traversable = false;
-            frottement = 0.5;
+            frottement = -1.5;
         }
         else if (type == 4) {/*gazon*/
             traversable = false;
