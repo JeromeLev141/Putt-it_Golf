@@ -18,7 +18,7 @@ public class Sol {
             traversable = true;
             frottement = 0;
         }
-        else if (type == 2) {/*g*/
+        else if (type == 2) {/*glace*/
             traversable = false;
             frottement = 0.1;
         }
