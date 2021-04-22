@@ -474,7 +474,7 @@ public class Jeux {
         Group group = new Group();
         for (int i = 0; i < description.length(); i ++) {
             if (description.charAt(i) == 'o' || description.charAt(i) == '|' || description.charAt(i) == '_' || description.charAt(i) == 'L'
-            || description.charAt(i) == 'b') {
+            || description.charAt(i) == 'b' || description.charAt(i) == 'g') {
                 Box bloc = (Box) prepareBox(x, y, z);
 
                 if (description.charAt(i) == 'b') {
@@ -484,6 +484,13 @@ public class Jeux {
                     bloc.setMaterial(mat);
                     prepareMapForme(sol,x,y,z,0,0,3,64,64,64);
                 }
+                else if (description.charAt(i) == 'g') {
+                    PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
+                    mat.setDiffuseMap(new Image("ressources/images/textures/glace.png"));
+                    mat.setDiffuseColor(Color.ALICEBLUE);
+                    bloc.setMaterial(mat);
+                    prepareMapForme(sol,x,y,z,0,0,2,64,64,64);
+                }
                 else prepareMapForme(sol,x,y,z,0,0,4,64,64,64);
                 if (description.charAt(i) == '|')
                     prepareMapForme(mur,x,y+1,z,0,0,4,48,140,80);
@@ -492,12 +499,6 @@ public class Jeux {
                 if (description.charAt(i) == 'L')
                     prepareMapForme(mur,x,y+1,z,0,0,4,48,140,48);
 
-                group.getChildren().add(bloc);
-                x++;
-            }
-            else if (description.charAt(i) == 'g') {
-                prepareMapForme(sol,x,0,z,0,0,5,64,64,64);
-                Node bloc = prepareBox(x,y, z);
                 group.getChildren().add(bloc);
                 x++;
             }

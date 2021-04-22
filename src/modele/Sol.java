@@ -18,9 +18,9 @@ public class Sol {
             traversable = true;
             frottement = 0;
         }
-        else if (type == 2) {/*beton*/
+        else if (type == 2) {/*g*/
             traversable = false;
-            frottement = 0.9;
+            frottement = 0.1;
         }
         else if (type == 3) {/*boost*/
             traversable = false;

@@ -61,6 +61,14 @@ public class Plateforme {
                         "xooox\n" +
                         "xovox\n" +
                         "xooox\n" +
+                        "xgggx\n" +
+                        "xgggx\n" +
+                        "xgggx\n" +
+                        "xgggx\n" +
+                        "xgggx\n" +
+                        "xgggx\n" +
+                        "xgggx\n" +
+                        "xgggx\n" +
                         "xooox\n" +
                         "xotox\n" +
                         "xooox\n" +
