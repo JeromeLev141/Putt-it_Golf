@@ -459,7 +459,7 @@ public class Jeux {
         ImageView iv = new ImageView(image);
         iv.setFitHeight(2000);
         iv.setFitWidth(2600);
-        iv.getTransforms().add(new Translate(-2000, 1500, 700));
+        iv.getTransforms().add(new Translate(-2100, 1500, 700));
         iv.getTransforms().addAll(new Rotate(-45, Rotate.Y_AXIS), new Rotate(-70, Rotate.X_AXIS), new Rotate(15, Rotate.Z_AXIS));
         iv.translateXProperty().bind(balle.translateXProperty());
         iv.translateZProperty().bind(balle.translateZProperty());
