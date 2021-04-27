@@ -19,7 +19,7 @@ public class Vecteur {
         acceleration = new Point3D(0, Formule.forcegravitationnel(),0);
     }
     */
-    private double[] possition;
+    private double[] position;
     private double[] vecteurForceResultant;
     private Vector<Double> forceX,forceY,forceZ;
     private double[] vecteurVitesseResultant;
@@ -27,7 +27,7 @@ public class Vecteur {
     private double angleXZ;
 
     public Vecteur(Point3D positionBalle){
-        possition =  new double[]{positionBalle.getX(),positionBalle.getY(),positionBalle.getZ()};
+        position =  new double[]{positionBalle.getX(),positionBalle.getY(),positionBalle.getZ()};
         vecteurForceResultant = new double[]{0,0,0};
         vecteurVitesseResultant = new double[]{0,0,0};
         vecteurAccelerationResultant = new double[]{0,0,0};
@@ -99,8 +99,14 @@ public class Vecteur {
         refreshForce();
     }
 
-    public double[] getPossition() {
-        return possition;
+    public void setForce(int positionForce, double[] force){
+        setForceX(positionForce,force[0]);
+        setForceY(positionForce,force[1]);
+        setForceZ(positionForce,force[2]);
+    }
+
+    public double[] getPosition() {
+        return position;
     }
 
     public double[] getVecteurForceResultant() {
@@ -109,7 +115,7 @@ public class Vecteur {
 
     public void refreshVecteurAccelerationResultant(){
         for (int x = 0; x < vecteurAccelerationResultant.length; x++)
-            vecteurAccelerationResultant[x] = Formule.forceAAcceleration(vecteurForceResultant[x]);
+            vecteurAccelerationResultant[x] = Formule.forceAcceleration(vecteurForceResultant[x]);
     }
 
     public double[] getVecteurVitesseResultant() {

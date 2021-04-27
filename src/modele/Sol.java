@@ -24,7 +24,7 @@ public class Sol {
         }
         else if (type == 3) {/*boost*/
             traversable = false;
-            frottement = -1.5;
+            frottement = -5;
         }
         else if (type == 4) {/*gazon*/
             traversable = false;

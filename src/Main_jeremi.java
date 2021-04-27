@@ -18,7 +18,7 @@ public class Main_jeremi{
         vecteur.refreshVecteurAccelerationResultant();
         System.out.println(vecteur.getVecteurForceResultant()[0] + " : " + vecteur.getVecteurForceResultant()[1] + " : " + vecteur.getVecteurForceResultant()[2]);
 
-        FormeCordonneSommet forme = new FormeCordonneSommet(new Point3D(5,-0.5,10),10,1,20, 15,41,4);
+        FormeCordonneSommet forme = new FormeCordonneSommet(new Point3D(5,-0.5,10),10,1,20, 15,41,4,false);
         List<FormeCordonneSommet> liste = new ArrayList<>();
         liste.add(forme);
         Espace3D plateforme = new Espace3D(new Point3D(5,0.0039,10),liste,null);// position parfait 0.29
