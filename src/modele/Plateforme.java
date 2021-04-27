@@ -4,7 +4,7 @@ public class Plateforme {
 
     public static String getNiveau(int niv) {
         switch (niv) {
-            case 5 :
+            case 1 :
                 return "xxxxx\n" +
                         "xooox\n" +
                         "xovox\n" +
@@ -56,7 +56,7 @@ public class Plateforme {
                         "xbbb| | | |bbbx\n" +
                         "xxxxx |_| xxxxx\n" +
                         "0000xxxxxxx";
-            case 1 :
+            case 5 :
                 return"xxxxxxxxxxxxx-xxxxxx\n+" +
                         "xoooooooooooor- |oox\n+" +
                         "xovobbbbbbbbbr- |oox\n+" +
