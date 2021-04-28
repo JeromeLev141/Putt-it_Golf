@@ -511,30 +511,34 @@ public class Jeux {
                     bloc.setTranslateZ(bloc.getTranslateZ() + 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(-45, Rotate.X_AXIS));
+                    prepareMapForme(sol,x,y,z,0,45,4,64,64,64,false);
                 }
 
                 //vers l'arriere
-                if (description.charAt(i) == '3') {
+                else if (description.charAt(i) == '3') {
                     bloc.setHeight(96);
                     bloc.setTranslateZ(bloc.getTranslateZ() - 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(45, Rotate.X_AXIS));
+                    prepareMapForme(sol,x,y,z,180,45,4,64,64,64,false);
                 }
 
                 //vers la droite
-                if (description.charAt(i) == '2') {
+                else if (description.charAt(i) == '2') {
                     bloc.setWidth(96);
                     bloc.setTranslateX(bloc.getTranslateX() + 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(-45, Rotate.Z_AXIS));
+                    prepareMapForme(sol,x,y,z,90,45,4,64,64,64,false);
                 }
 
                 //vers la gauche
-                if (description.charAt(i) == '4') {
+                else if (description.charAt(i) == '4') {
                     bloc.setWidth(96);
                     bloc.setTranslateX(bloc.getTranslateX() - 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(45, Rotate.Z_AXIS));
+                    prepareMapForme(sol,x,y,z,270,45,4,64,64,64,false);
                 }
 
                 group.getChildren().add(bloc);

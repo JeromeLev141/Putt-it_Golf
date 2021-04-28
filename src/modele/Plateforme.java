@@ -50,11 +50,11 @@ public class Plateforme {
                         "-xxxxx+xxxx";
             case 4 :
                 return  "0000xxxxxxx\n" +
-                        "xxxx3      4 xxxx\n" +
-                        "x3bbb|   |_|bb4bx\n" +
-                        "xbvb|_| | |btbx\n" +
+                        "xxxx3|     4|xxxx\n" +
+                        "x3bbb|   L_|bb4bx\n" +
+                        "xbvb|_L | |btbx\n" +
                         "x2bbb| | | |bb1bx\n" +
-                        "xxxx2  |_| 1 xxxx\n" +
+                        "xxxx2| |_| 1|xxxx\n" +
                         "0000xxxxxxx";
             default:
                 return "xxxxx\n" +
