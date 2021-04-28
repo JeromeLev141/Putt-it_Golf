@@ -502,6 +502,44 @@ public class Jeux {
                 group.getChildren().add(bloc);
                 x++;
             }
+            else if (description.charAt(i) == 'j') {
+                Box bloc = (Box) prepareBox(x, y, z);
+                i++;
+                //vers l'avant
+                if (description.charAt(i) == '1') {
+                    bloc.setHeight(96);
+                    bloc.setTranslateZ(bloc.getTranslateZ() + 20);
+                    bloc.setTranslateY(bloc.getTranslateY() - 40);
+                    bloc.getTransforms().add(new Rotate(-45, Rotate.X_AXIS));
+                }
+
+                //vers l'arriere
+                if (description.charAt(i) == '3') {
+                    bloc.setHeight(96);
+                    bloc.setTranslateZ(bloc.getTranslateZ() - 20);
+                    bloc.setTranslateY(bloc.getTranslateY() - 40);
+                    bloc.getTransforms().add(new Rotate(45, Rotate.X_AXIS));
+                }
+
+                //vers la droite
+                if (description.charAt(i) == '2') {
+                    bloc.setWidth(96);
+                    bloc.setTranslateX(bloc.getTranslateX() + 20);
+                    bloc.setTranslateY(bloc.getTranslateY() - 40);
+                    bloc.getTransforms().add(new Rotate(-45, Rotate.Z_AXIS));
+                }
+
+                //vers la gauche
+                if (description.charAt(i) == '4') {
+                    bloc.setWidth(96);
+                    bloc.setTranslateX(bloc.getTranslateX() - 20);
+                    bloc.setTranslateY(bloc.getTranslateY() - 40);
+                    bloc.getTransforms().add(new Rotate(45, Rotate.Z_AXIS));
+                }
+
+                group.getChildren().add(bloc);
+                x++;
+            }
             else if (description.charAt(i) == '\n') {
                 z++;
                 x = -2;
@@ -551,6 +589,47 @@ public class Jeux {
                 y--;
             else if (description.charAt(i) == '0')
                 x++;
+            else if (description.charAt(i) == '1' || description.charAt(i) == '2' ||
+                    description.charAt(i) == '3' || description.charAt(i) == '4') {
+
+                Box bloc = (Box) prepareBox(x, y, z);
+                PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
+                mat.setDiffuseColor(themeMur);
+                bloc.setMaterial(mat);
+                bloc.setDepth(90);
+                bloc.setHeight(112);
+
+
+                //coin haut droite
+                if (description.charAt(i) == '1') {
+                    bloc.setTranslateZ(bloc.getTranslateZ() + 24);
+                    bloc.setTranslateX(bloc.getTranslateX() + 24);
+                    bloc.getTransforms().add(new Rotate(-45, Rotate.Y_AXIS));
+                }
+
+                //coin haut gauche
+                if (description.charAt(i) == '2') {
+                    bloc.setTranslateZ(bloc.getTranslateZ() + 24);
+                    bloc.setTranslateX(bloc.getTranslateX() - 24);
+                    bloc.getTransforms().add(new Rotate(45, Rotate.Y_AXIS));
+                }
+
+                //coin bas gauche
+                if (description.charAt(i) == '3') {
+                    bloc.setTranslateZ(bloc.getTranslateZ() - 24);
+                    bloc.setTranslateX(bloc.getTranslateX() - 24);
+                    bloc.getTransforms().add(new Rotate(-45, Rotate.Y_AXIS));
+                }
+
+                //coin bas droite
+                if (description.charAt(i) == '4') {
+                    bloc.setTranslateZ(bloc.getTranslateZ() - 24);
+                    bloc.setTranslateX(bloc.getTranslateX() + 24);
+                    bloc.getTransforms().add(new Rotate(45, Rotate.Y_AXIS));
+                }
+
+                group.getChildren().add(bloc);
+            }
             else {
                 prepareMapForme(sol,x,y,x,0,0,6,80,32,80);
                 prepareMapForme(sol,x,y,z,0,0,1,64,48,64);
