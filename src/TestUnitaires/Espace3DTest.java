@@ -76,9 +76,9 @@ public class Espace3DTest {
         double []vitesse1 = new double[]{10.0,0,0};
         Jeux.bougerBalleEspaceTemps(vitesse1,vecteur1,test1);
 
-        assertEquals(2.55,vecteur1.getPossition()[0],0.01);
-        assertEquals(40.0,vecteur1.getPossition()[1]);
-        assertEquals(256.0,vecteur1.getPossition()[2]);
+        assertEquals(2.55,vecteur1.getPosition()[0],0.01);
+        assertEquals(40.0,vecteur1.getPosition()[1]);
+        assertEquals(256.0,vecteur1.getPosition()[2]);
 
         //test2 vitesse x plus gros
         Vecteur vecteur2 = new Vecteur(positionBalle1);
@@ -87,21 +87,21 @@ public class Espace3DTest {
         double []vitesse2_2 = new double[]{0,0,20};
         Jeux.bougerBalleEspaceTemps(vitesse2,vecteur2,test1);
 
-        assertEquals(10.2,vecteur2.getPossition()[0],0.01);
-        assertEquals(40.0,vecteur2.getPossition()[1]);
-        assertEquals(256.0,vecteur2.getPossition()[2]);
+        assertEquals(10.2,vecteur2.getPosition()[0],0.01);
+        assertEquals(40.0,vecteur2.getPosition()[1]);
+        assertEquals(256.0,vecteur2.getPosition()[2]);
 
         Jeux.bougerBalleEspaceTemps(vitesse2_1,vecteur2,test1);
 
-        assertEquals(28.8,vecteur2.getPossition()[0],0.01);
-        assertEquals(40.0,vecteur2.getPossition()[1]);
-        assertEquals(244.84,vecteur2.getPossition()[2],0.01);
+        assertEquals(28.8,vecteur2.getPosition()[0],0.01);
+        assertEquals(40.0,vecteur2.getPosition()[1]);
+        assertEquals(244.84,vecteur2.getPosition()[2],0.01);
 
         Jeux.bougerBalleEspaceTemps(vitesse2_2,vecteur2,test1);
 
-        assertEquals(28.8,vecteur2.getPossition()[0],0.01);
-        assertEquals(40.0,vecteur2.getPossition()[1]);
-        assertEquals(255.04,vecteur2.getPossition()[2],0.01);
+        assertEquals(28.8,vecteur2.getPosition()[0],0.01);
+        assertEquals(40.0,vecteur2.getPosition()[1]);
+        assertEquals(255.04,vecteur2.getPosition()[2],0.01);
 
 
 
@@ -110,9 +110,9 @@ public class Espace3DTest {
         double []vitesse3 = new double[]{0,0,20};
         Jeux.bougerBalleEspaceTemps(vitesse3,vecteur3,test1);
 
-        assertEquals(0.0,vecteur3.getPossition()[0],0.01);
-        assertEquals(40.0,vecteur3.getPossition()[1]);
-        assertEquals(266.2,vecteur3.getPossition()[2], 0.01);
+        assertEquals(0.0,vecteur3.getPosition()[0],0.01);
+        assertEquals(40.0,vecteur3.getPosition()[1]);
+        assertEquals(266.2,vecteur3.getPosition()[2], 0.01);
 
         //test4 balle tombe et touche le sol
         Point3D positionBalle2 = new Point3D(0,50,256);
@@ -121,9 +121,9 @@ public class Espace3DTest {
         test1.refreshPositionBalle(positionBalle2);
         Jeux.bougerBalleEspaceTemps(vitesse4,vecteur4,test1);
 
-        assertEquals(0.0,vecteur4.getPossition()[0],0.01);
-        assertEquals(40.0,vecteur4.getPossition()[1],0.2);
-        assertEquals(256.0,vecteur4.getPossition()[2], 0.01);
+        assertEquals(0.0,vecteur4.getPosition()[0],0.01);
+        assertEquals(40.0,vecteur4.getPosition()[1],0.2);
+        assertEquals(256.0,vecteur4.getPosition()[2], 0.01);
 
         //test5 vitesse x et z
         Vecteur vecteur5 = new Vecteur(positionBalle1);
@@ -131,9 +131,9 @@ public class Espace3DTest {
         test1.refreshPositionBalle(positionBalle1);
         Jeux.bougerBalleEspaceTemps(vitesse5,vecteur5,test1);
 
-        assertEquals(18.6,vecteur5.getPossition()[0],0.01);
-        assertEquals(40.0,vecteur5.getPossition()[1],0.1);
-        assertEquals(244.84,vecteur5.getPossition()[2], 0.01);
+        assertEquals(18.6,vecteur5.getPosition()[0],0.01);
+        assertEquals(40.0,vecteur5.getPosition()[1],0.1);
+        assertEquals(244.84,vecteur5.getPosition()[2], 0.01);
 
         //test6
         Vecteur vecteur6 = new Vecteur(positionBalle1);
@@ -141,9 +141,9 @@ public class Espace3DTest {
         test1.refreshPositionBalle(positionBalle1);
         Jeux.bougerBalleEspaceTemps(vitesse6,vecteur6,test1);
 
-        assertEquals(-79.1,vecteur6.getPossition()[0],2);
-        assertEquals(40.0,vecteur6.getPossition()[1],0.1);
-        assertEquals(256.0,vecteur6.getPossition()[2], 0.01);
+        assertEquals(-79.1,vecteur6.getPosition()[0],2);
+        assertEquals(40.0,vecteur6.getPosition()[1],0.1);
+        assertEquals(256.0,vecteur6.getPosition()[2], 0.01);
 
         //test7
         Vecteur vecteur7 = new Vecteur(positionBalle1);
@@ -163,7 +163,7 @@ public class Espace3DTest {
 
         for (int i = 0; i < description.length(); i ++) {
             if (description.charAt(i) == 'o') {
-                Jeux.prepareMapForme(sol,x,0,z,0,0,4,64,64,64);
+                Jeux.prepareMapForme(sol,x,0,z,0,0,4,64,64,64,false);
                 x++;
             }
             else if (description.charAt(i) == '\n') {
@@ -171,15 +171,15 @@ public class Espace3DTest {
                 x = -2;
             }
             else if (description.charAt(i) == 'x') {
-                Jeux.prepareMapForme(mur,x,0,z,0,0,4,64,128,64);
+                Jeux.prepareMapForme(mur,x,0,z,0,0,4,64,128,64,false);
                 x++;
             }
             else if (description.charAt(i) == 'v') {
-                Jeux.prepareMapForme(sol,x,0,z,0,0,4,64,64,64);
+                Jeux.prepareMapForme(sol,x,0,z,0,0,4,64,64,64,false);
                 x++;
             }
             else {
-                Jeux.prepareMapForme(sol,x,0,z,0,0,4,64,32,64);
+                Jeux.prepareMapForme(sol,x,0,z,0,0,4,64,32,64,false);
                 x++;
             }
         }

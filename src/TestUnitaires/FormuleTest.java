@@ -93,11 +93,11 @@ public class FormuleTest {
 
     @Test
     public void fgTest(){
-        Forme numero1 = new Forme(new Point3D(0,0,0),40,10,40,0,0,4);
-        Forme numero2 = new Forme(new Point3D(0,0,0),40,10,40,45,0,4);
-        Forme numero3 = new Forme(new Point3D(0,0,0),40,10,40,0,90,4);
-        Forme numero4 = new Forme(new Point3D(0,0,0),40,10,40,45,180,4);
-        Forme numero5 = new Forme(new Point3D(0,0,0),40,10,40,45,90,4);
+        Forme numero1 = new Forme(new Point3D(0,0,0),40,10,40,0,0,4,false);
+        Forme numero2 = new Forme(new Point3D(0,0,0),40,10,40,45,0,4,false);
+        Forme numero3 = new Forme(new Point3D(0,0,0),40,10,40,0,90,4,false);
+        Forme numero4 = new Forme(new Point3D(0,0,0),40,10,40,45,180,4,false);
+        Forme numero5 = new Forme(new Point3D(0,0,0),40,10,40,45,90,4,false);
 
         double[] force1 = Formule.forcegravitationnel(numero1);
         assertEquals(0.0,force1[0]);

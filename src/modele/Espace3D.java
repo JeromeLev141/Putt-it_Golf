@@ -83,11 +83,13 @@ public class Espace3D {
                         //System.out.println(" colosion sol");
                         return sol;
                     }
-                    Point2D pointXZ = FormeCordonneSommet.trouverPointFormeAngleXZ(sol, positionBalleXZ.getX(), positionBalleXZ.getY() - 8, (360 - sol.getAngleXZ()));
+                    Point2D pointXZ = FormeCordonneSommet.trouverPointFormeAngleXZ(sol, positionBalleXZ.getX(), positionBalleXZ.getY(), (360 - sol.getAngleXZ()));
                     Point2D pointXY = new Point2D(pointXZ.getX(),positionBalle.getY() - 8);
+                    double angleA = sol.getAngleXYTableau()[0].angle(sol.getAngleXYTableau()[3],sol.getAngleXYTableau()[1]);
+                    double angleB = sol.getAngleXYTableau()[2].angle(sol.getAngleXYTableau()[3], sol.getAngleXYTableau()[1]);
 
-                    if (sol.getAngleXYTableau()[0].angle(pointXY,sol.getAngleXYTableau()[1]) <= 90 && sol.getAngleXYTableau()[0].angle(pointXY,sol.getAngleXYTableau()[3]) <= 90)
-                        if (sol.getAngleXYTableau()[2].angle(pointXY, sol.getAngleXYTableau()[1]) <= 90 && sol.getAngleXYTableau()[2].angle(pointXY, sol.getAngleXYTableau()[3]) <= 90)
+                    if (sol.getAngleXYTableau()[0].angle(pointXY,sol.getAngleXYTableau()[1]) <= angleA && sol.getAngleXYTableau()[0].angle(pointXY,sol.getAngleXYTableau()[3]) <= angleA)
+                        if (sol.getAngleXYTableau()[2].angle(pointXY, sol.getAngleXYTableau()[1]) <= angleB && sol.getAngleXYTableau()[2].angle(pointXY, sol.getAngleXYTableau()[3]) <= angleB)
                             return sol;
                 }
         }

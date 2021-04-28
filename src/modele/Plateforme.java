@@ -51,11 +51,18 @@ public class Plateforme {
             case 4 :
                 return  "0000xxxxxxx\n" +
                         "xxxxx     xxxxx\n" +
-                        "xbbb|   |_|bbbx\n" +
-                        "xbvb|_| | |btbx\n" +
+                        "xbbb|   L_|bbbx\n" +
+                        "xbvb|_L | |btbx\n" +
                         "xbbb| | | |bbbx\n" +
                         "xxxxx |_| xxxxx\n" +
                         "0000xxxxxxx";
+            case 5 :
+                return"xxxxxxxxxxxxx-xxxxxx\n+" +
+                        "xoooooooooooor- |oox\n+" +
+                        "xovobbbbbbbbbr- |oox\n+" +
+                        "xoooooooooooor- |oox\n+" +
+                        "xxxxxxxxxxxxx-xxxxxx\n";
+
             default:
                 return "xxxxx\n" +
                         "xooox\n" +

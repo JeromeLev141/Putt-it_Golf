@@ -15,8 +15,8 @@ public class FormeCordonneSommet extends Forme {
     private Point2D[] angleXZTableau;
     private Point2D[] angleYZTableau;
 
-    public FormeCordonneSommet(Point3D position1,double x, double y, double z,double angleXY1,double angleXZ1,int sol){
-        super(position1,x,y,z,angleXY1,angleXZ1,sol);
+    public FormeCordonneSommet(Point3D position1,double x, double y, double z,double angleXY1,double angleXZ1,int sol,boolean triangle){
+        super(position1,x,y,z,angleXY1,angleXZ1,sol,triangle);
 
 
         double formeX = getPositionEspace().getX();
@@ -27,47 +27,52 @@ public class FormeCordonneSommet extends Forme {
         double height = getHeight()/2;
         double depth = getDepth()/2;
 
-        Point3D numero1 = trouverPointFormeAngle3D(formeX - width,formeY + height,formeZ - depth);
-        Point3D numero2 = trouverPointFormeAngle3D(formeX + width,formeY + height,formeZ - depth);
-        Point3D numero3 = trouverPointFormeAngle3D(formeX + width,formeY + height,formeZ + depth);
-        Point3D numero4 = trouverPointFormeAngle3D(formeX - width,formeY + height,formeZ + depth);
-        Point3D numero5 = trouverPointFormeAngle3D(formeX - width,formeY - height,formeZ - depth);
-        Point3D numero6 = trouverPointFormeAngle3D(formeX + width,formeY - height,formeZ - depth);
-        Point3D numero7 = trouverPointFormeAngle3D(formeX + width,formeY - height,formeZ + depth);
-        Point3D numero8 = trouverPointFormeAngle3D(formeX - width,formeY - height,formeZ + depth);
-/*
-        System.out.println("-----------------------------");
-        System.out.println(numero1);
-        System.out.println(numero2);
-        System.out.println(numero3);
-        System.out.println(numero4);
-        System.out.println(numero5);
-        System.out.println(numero6);
-        System.out.println(numero7);
-        System.out.println(numero8);
-        System.out.println("-----------------------------");
-*/
+        if (isTriangle()){
 
-        Point2D pointXZ1 = new Point2D(numero1.getX(),numero1.getZ());
-        Point2D pointXZ2 = new Point2D(numero2.getX(),numero2.getZ());
-        Point2D pointXZ3 = new Point2D(numero3.getX(),numero3.getZ());
-        Point2D pointXZ4 = new Point2D(numero4.getX(),numero4.getZ());
+        }
+        else{
+            Point3D numero1 = trouverPointFormeAngle3D(formeX - width,formeY + height,formeZ - depth,true);
+            Point3D numero2 = trouverPointFormeAngle3D(formeX + width,formeY + height,formeZ - depth,false);
+            Point3D numero3 = trouverPointFormeAngle3D(formeX + width,formeY + height,formeZ + depth,false);
+            Point3D numero4 = trouverPointFormeAngle3D(formeX - width,formeY + height,formeZ + depth,true);
+            Point3D numero5 = trouverPointFormeAngle3D(formeX - width,formeY - height,formeZ - depth,true);
+            Point3D numero6 = trouverPointFormeAngle3D(formeX + width,formeY - height,formeZ - depth,false);
+            Point3D numero7 = trouverPointFormeAngle3D(formeX + width,formeY - height,formeZ + depth,false);
+            Point3D numero8 = trouverPointFormeAngle3D(formeX - width,formeY - height,formeZ + depth,true);
+    /*
+            System.out.println("-----------------------------");
+            System.out.println(numero1);
+            System.out.println(numero2);
+            System.out.println(numero3);
+            System.out.println(numero4);
+            System.out.println(numero5);
+            System.out.println(numero6);
+            System.out.println(numero7);
+            System.out.println(numero8);
+            System.out.println("-----------------------------");
+    */
 
-        Point2D pointXY1 = trouverPointFormeAngleXY(formeX - width,formeY + height);
-        Point2D pointXY2 = trouverPointFormeAngleXY(formeX + width,formeY + height);
-        Point2D pointXY3 = trouverPointFormeAngleXY(formeX + width,formeY - height);
-        Point2D pointXY4 = trouverPointFormeAngleXY(formeX - width,formeY - height);
+            Point2D pointXZ1 = new Point2D(numero1.getX(),numero1.getZ());
+            Point2D pointXZ2 = new Point2D(numero2.getX(),numero2.getZ());
+            Point2D pointXZ3 = new Point2D(numero3.getX(),numero3.getZ());
+            Point2D pointXZ4 = new Point2D(numero4.getX(),numero4.getZ());
 
-        Point2D pointYZ1 = new Point2D(formeZ - depth, numero2.getY());
-        Point2D pointYZ2 = new Point2D(formeZ + depth, numero3.getY());
-        Point2D pointYZ3 = new Point2D(formeZ - depth, numero6.getY());
-        Point2D pointYZ4 = new Point2D(formeZ + depth, numero7.getY());
+            Point2D pointXY1 = trouverPointFormeAngleXY(formeX - width,formeY + height,true);
+            Point2D pointXY2 = trouverPointFormeAngleXY(formeX + width,formeY + height,false);
+            Point2D pointXY3 = trouverPointFormeAngleXY(formeX + width,formeY - height,false);
+            Point2D pointXY4 = trouverPointFormeAngleXY(formeX - width,formeY - height,true);
+    /*
+            Point2D pointYZ1 = new Point2D(formeZ - depth, numero2.getY());
+            Point2D pointYZ2 = new Point2D(formeZ + depth, numero3.getY());
+            Point2D pointYZ3 = new Point2D(formeZ - depth, numero6.getY());
+            Point2D pointYZ4 = new Point2D(formeZ + depth, numero7.getY());
+    */
 
-
-        sommets = new Point3D[]{numero1,numero2,numero3,numero4,numero5,numero6,numero7,numero8};
-        angleXZTableau = new Point2D[]{pointXZ1,pointXZ2,pointXZ3,pointXZ4};
-        angleXYTableau = new Point2D[]{pointXY1,pointXY2,pointXY3,pointXY4};
-        angleYZTableau = new Point2D[]{pointYZ1,pointYZ2,pointXZ3,pointYZ4};
+            sommets = new Point3D[]{numero1,numero2,numero3,numero4,numero5,numero6,numero7,numero8};
+            angleXZTableau = new Point2D[]{pointXZ1,pointXZ2,pointXZ3,pointXZ4};
+            angleXYTableau = new Point2D[]{pointXY1,pointXY2,pointXY3,pointXY4};
+            //angleYZTableau = new Point2D[]{pointYZ1,pointYZ2,pointXZ3,pointYZ4};
+        }
 /*
             System.out.println(numero1.distance(numero2) + " , " + numero2.distance(numero3));
             System.out.println(numero2.distance(numero3) + " , " + numero3.distance(numero4));
@@ -79,13 +84,20 @@ public class FormeCordonneSommet extends Forme {
             */
     }
 
-    private Point2D trouverPointFormeAngleXY(double x, double y){
-        double hypoXY = Math.sqrt(Math.pow(getPositionEspace().getX() - x, 2) + Math.pow(getPositionEspace().getY() - y, 2));
-        double angleXY = resolutionangle(x -getPositionEspace().getX(),y - getPositionEspace().getY());
-        y = arroudir((hypoXY * Math.sin(Math.toRadians(getAngleXY() + angleXY))) + getPositionEspace().getY());
-        x = arroudir((hypoXY * Math.cos(Math.toRadians(getAngleXY() + angleXY))) + getPositionEspace().getX());
+    private Point2D trouverPointFormeAngleXY(double x, double y,boolean gauche){
+        if (gauche){
+            return new Point2D(x,y);
+        }
+        else {
 
-        return new Point2D(x,y);
+            double elevation = getWidth() * Math.tan(Math.toRadians(getAngleXY()));
+        /*
+            double hypoXY = Math.sqrt(Math.pow(getPositionEspace().getX() - x, 2) + Math.pow(getPositionEspace().getY() - y, 2));
+            double angleXY = resolutionangle(x - getPositionEspace().getX(), y - getPositionEspace().getY());
+            y = arroudir((hypoXY * Math.sin(Math.toRadians(getAngleXY() + angleXY))) + getPositionEspace().getY());
+*/
+            return new Point2D(x, y + elevation);
+        }
     }
 
     public static Point2D trouverPointFormeAngleXZ(FormeCordonneSommet forme, double x, double z, double angle){
@@ -99,10 +111,10 @@ public class FormeCordonneSommet extends Forme {
         return new Point2D(x,z);
     }
 
-    private Point3D trouverPointFormeAngle3D(double x, double y, double z){
+    private Point3D trouverPointFormeAngle3D(double x, double y, double z,boolean gauche){
         //System.out.println("\n" + x + " , " + y + " , " + z);
 
-        Point2D pointXY = trouverPointFormeAngleXY(x,y);
+        Point2D pointXY = trouverPointFormeAngleXY(x,y,gauche);
         x = pointXY.getX();
         y = pointXY.getY();
         Point2D pointXZ = trouverPointFormeAngleXZ(this,x,z,this.getAngleXZ());
