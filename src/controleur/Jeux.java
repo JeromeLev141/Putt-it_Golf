@@ -459,7 +459,7 @@ public class Jeux {
         ImageView iv = new ImageView(image);
         iv.setFitHeight(2000);
         iv.setFitWidth(2600);
-        iv.getTransforms().add(new Translate(-2000, 1500, 700));
+        iv.getTransforms().add(new Translate(-2100, 1500, 700));
         iv.getTransforms().addAll(new Rotate(-45, Rotate.Y_AXIS), new Rotate(-70, Rotate.X_AXIS), new Rotate(15, Rotate.Z_AXIS));
         iv.translateXProperty().bind(balle.translateXProperty());
         iv.translateZProperty().bind(balle.translateZProperty());
@@ -498,6 +498,44 @@ public class Jeux {
                     prepareMapForme(mur,x,y+1,z,0,0,4,80,140,48,false);
                 if (description.charAt(i) == 'L')
                     prepareMapForme(mur,x,y+1,z,0,0,4,48,140,48,false);
+
+                group.getChildren().add(bloc);
+                x++;
+            }
+            else if (description.charAt(i) == 'j') {
+                Box bloc = (Box) prepareBox(x, y, z);
+                i++;
+                //vers l'avant
+                if (description.charAt(i) == '1') {
+                    bloc.setHeight(96);
+                    bloc.setTranslateZ(bloc.getTranslateZ() + 20);
+                    bloc.setTranslateY(bloc.getTranslateY() - 40);
+                    bloc.getTransforms().add(new Rotate(-45, Rotate.X_AXIS));
+                }
+
+                //vers l'arriere
+                if (description.charAt(i) == '3') {
+                    bloc.setHeight(96);
+                    bloc.setTranslateZ(bloc.getTranslateZ() - 20);
+                    bloc.setTranslateY(bloc.getTranslateY() - 40);
+                    bloc.getTransforms().add(new Rotate(45, Rotate.X_AXIS));
+                }
+
+                //vers la droite
+                if (description.charAt(i) == '2') {
+                    bloc.setWidth(96);
+                    bloc.setTranslateX(bloc.getTranslateX() + 20);
+                    bloc.setTranslateY(bloc.getTranslateY() - 40);
+                    bloc.getTransforms().add(new Rotate(-45, Rotate.Z_AXIS));
+                }
+
+                //vers la gauche
+                if (description.charAt(i) == '4') {
+                    bloc.setWidth(96);
+                    bloc.setTranslateX(bloc.getTranslateX() - 20);
+                    bloc.setTranslateY(bloc.getTranslateY() - 40);
+                    bloc.getTransforms().add(new Rotate(45, Rotate.Z_AXIS));
+                }
 
                 group.getChildren().add(bloc);
                 x++;
@@ -555,6 +593,47 @@ public class Jeux {
                 y--;
             else if (description.charAt(i) == '0')
                 x++;
+            else if (description.charAt(i) == '1' || description.charAt(i) == '2' ||
+                    description.charAt(i) == '3' || description.charAt(i) == '4') {
+
+                Box bloc = (Box) prepareBox(x, y, z);
+                PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
+                mat.setDiffuseColor(themeMur);
+                bloc.setMaterial(mat);
+                bloc.setDepth(90);
+                bloc.setHeight(112);
+
+
+                //coin haut droite
+                if (description.charAt(i) == '1') {
+                    bloc.setTranslateZ(bloc.getTranslateZ() + 24);
+                    bloc.setTranslateX(bloc.getTranslateX() + 24);
+                    bloc.getTransforms().add(new Rotate(-45, Rotate.Y_AXIS));
+                }
+
+                //coin haut gauche
+                if (description.charAt(i) == '2') {
+                    bloc.setTranslateZ(bloc.getTranslateZ() + 24);
+                    bloc.setTranslateX(bloc.getTranslateX() - 24);
+                    bloc.getTransforms().add(new Rotate(45, Rotate.Y_AXIS));
+                }
+
+                //coin bas gauche
+                if (description.charAt(i) == '3') {
+                    bloc.setTranslateZ(bloc.getTranslateZ() - 24);
+                    bloc.setTranslateX(bloc.getTranslateX() - 24);
+                    bloc.getTransforms().add(new Rotate(-45, Rotate.Y_AXIS));
+                }
+
+                //coin bas droite
+                if (description.charAt(i) == '4') {
+                    bloc.setTranslateZ(bloc.getTranslateZ() - 24);
+                    bloc.setTranslateX(bloc.getTranslateX() + 24);
+                    bloc.getTransforms().add(new Rotate(45, Rotate.Y_AXIS));
+                }
+
+                group.getChildren().add(bloc);
+            }
             else {
                 prepareMapForme(sol,x,y,x,0,0,6,80,32,80,false);
                 prepareMapForme(sol,x,y,z,0,0,1,64,48,64,false);
