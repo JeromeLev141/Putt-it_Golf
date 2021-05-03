@@ -511,7 +511,7 @@ public class Jeux {
                     bloc.setTranslateZ(bloc.getTranslateZ() + 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(-45, Rotate.X_AXIS));
-                    prepareMapForme(sol,x,y,z,0,45,4,64,64,64,false);
+                    prepareMapForme(sol,x,y,z,-90,45,4,64,64,64,false);
                 }
 
                 //vers l'arriere
@@ -520,7 +520,7 @@ public class Jeux {
                     bloc.setTranslateZ(bloc.getTranslateZ() - 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(45, Rotate.X_AXIS));
-                    prepareMapForme(sol,x,y,z,180,45,4,64,64,64,false);
+                    prepareMapForme(sol,x,y,z,90,45,4,64,64,64,false);
                 }
 
                 //vers la droite
@@ -529,7 +529,7 @@ public class Jeux {
                     bloc.setTranslateX(bloc.getTranslateX() + 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(-45, Rotate.Z_AXIS));
-                    prepareMapForme(sol,x,y,z,90,45,4,64,64,64,false);
+                    prepareMapForme(sol,x,y,z,0,45,4,64,64,64,false);
                 }
 
                 //vers la gauche
@@ -538,7 +538,7 @@ public class Jeux {
                     bloc.setTranslateX(bloc.getTranslateX() - 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(45, Rotate.Z_AXIS));
-                    prepareMapForme(sol,x,y,z,270,45,4,64,64,64,false);
+                    prepareMapForme(sol,x,y,z,180,45,4,64,64,64,false);
                 }
 
                 group.getChildren().add(bloc);
@@ -602,6 +602,7 @@ public class Jeux {
 
                 Box bloc = (Box) prepareBox(x, y, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
+                mat.setDiffuseMap(new Image("ressources/images/textures/corner.png"));
                 mat.setDiffuseColor(themeMur);
                 bloc.setMaterial(mat);
                 bloc.setDepth(90);
@@ -639,6 +640,9 @@ public class Jeux {
                 group.getChildren().add(bloc);
             }
             else {
+                if (description.charAt(i) == 'i')
+                    prepareMapForme(sol,x,y,z,0,0,4,64,64,64,false);
+                
                 prepareMapForme(sol,x,y,x,0,0,6,80,32,80,false);
                 prepareMapForme(sol,x,y,z,0,0,1,64,48,64,false);
 
