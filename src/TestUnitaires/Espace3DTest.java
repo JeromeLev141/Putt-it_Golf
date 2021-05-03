@@ -160,10 +160,11 @@ public class Espace3DTest {
     private void prepareMap(String description ,List<FormeCordonneSommet> sol, List<FormeCordonneSommet> mur){
         int x = -2;
         int z = 2;
+        int[] decal = new int[]{0,0,0};
 
         for (int i = 0; i < description.length(); i ++) {
             if (description.charAt(i) == 'o') {
-                Jeux.prepareMapForme(sol,x,0,z,0,0,4,64,64,64,false);
+                Jeux.prepareMapForme(sol,x,0,z,0,0,4,64,64,64,false,decal);
                 x++;
             }
             else if (description.charAt(i) == '\n') {
@@ -171,15 +172,15 @@ public class Espace3DTest {
                 x = -2;
             }
             else if (description.charAt(i) == 'x') {
-                Jeux.prepareMapForme(mur,x,0,z,0,0,4,64,128,64,false);
+                Jeux.prepareMapForme(mur,x,0,z,0,0,4,64,128,64,false,decal);
                 x++;
             }
             else if (description.charAt(i) == 'v') {
-                Jeux.prepareMapForme(sol,x,0,z,0,0,4,64,64,64,false);
+                Jeux.prepareMapForme(sol,x,0,z,0,0,4,64,64,64,false,decal);
                 x++;
             }
             else {
-                Jeux.prepareMapForme(sol,x,0,z,0,0,4,64,32,64,false);
+                Jeux.prepareMapForme(sol,x,0,z,0,0,4,64,32,64,false,decal);
                 x++;
             }
         }

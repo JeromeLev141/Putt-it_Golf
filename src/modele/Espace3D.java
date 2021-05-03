@@ -49,25 +49,34 @@ public class Espace3D {
         Point2D position6 = new Point2D(positionBalle.getX() - 4,positionBalle.getZ() + 4);
         Point2D position7 = new Point2D(positionBalle.getX() ,positionBalle.getZ() + 8);
         Point2D position8 = new Point2D(positionBalle.getX() + 4,positionBalle.getZ() + 4);
-        Point2D [] tableau = new Point2D[]{position7,position8,position1,position2,position3,position4,position5,position6};
+        Point2D [] tableaudroit = new Point2D[]{position7,position1,position3,position6};
+        Point2D [] tableauangle = new Point2D[]{position8,position2,position4,position5};
+
 
         for (FormeCordonneSommet mur : plateformeMur)
-            for (int x = 0;x < tableau.length;x++)
-                if (mur.getAngleXZTableau()[0].angle(tableau[x], mur.getAngleXZTableau()[1]) <= 90 && mur.getAngleXZTableau()[0].angle(tableau[x], mur.getAngleXZTableau()[3]) <= 90)
-                    if (mur.getAngleXZTableau()[2].angle(tableau[x], mur.getAngleXZTableau()[1]) <= 90 && mur.getAngleXZTableau()[2].angle(tableau[x], mur.getAngleXZTableau()[3]) <= 90){
-                        Point2D positionXY = new Point2D(tableau[x].getX(),positionBalle.getY());
-                        //Point2D positionYZ = new Point2D(positionBalle.getY(),tableau[x].getY());
-                        if (mur.getAngleXYTableau()[0].angle(positionXY,mur.getAngleXYTableau()[1]) <= 90 &&  mur.getAngleXYTableau()[0].angle(positionXY,mur.getAngleXYTableau()[3]) <= 90)
-                            if (mur.getAngleXYTableau()[2].angle(positionXY,mur.getAngleXYTableau()[1]) <= 90 &&  mur.getAngleXYTableau()[2].angle(positionXY,mur.getAngleXYTableau()[3]) <= 90) {
-                                System.out.println("collision x");
-                                return x;
-                            }
-                        /*else if (mur.getAngleYZTableau()[0].angle(positionYZ,mur.getAngleYZTableau()[1]) <= 90 &&  mur.getAngleYZTableau()[0].angle(positionYZ,mur.getAngleYZTableau()[3]) <= 90)
-                            if (mur.getAngleYZTableau()[2].angle(positionYZ,mur.getAngleYZTableau()[1]) <= 90 &&  mur.getAngleYZTableau()[2].angle(positionYZ,mur.getAngleYZTableau()[3]) <= 90) {
-                                System.out.println("colision z");
-                                return x;
-                            }*/
-                    }
+            if (mur.getAngleXZ() == 0) {
+                for (int x = 0; x < tableaudroit.length; x++)
+                    if (mur.getAngleXZTableau()[0].angle(tableaudroit[x], mur.getAngleXZTableau()[1]) <= 90 && mur.getAngleXZTableau()[0].angle(tableaudroit[x], mur.getAngleXZTableau()[3]) <= 90)
+                        if (mur.getAngleXZTableau()[2].angle(tableaudroit[x], mur.getAngleXZTableau()[1]) <= 90 && mur.getAngleXZTableau()[2].angle(tableaudroit[x], mur.getAngleXZTableau()[3]) <= 90) {
+                            Point2D positionXY = new Point2D(tableaudroit[x].getX(), positionBalle.getY());
+                            if (mur.getAngleXYTableau()[0].angle(positionXY, mur.getAngleXYTableau()[1]) <= 90 && mur.getAngleXYTableau()[0].angle(positionXY, mur.getAngleXYTableau()[3]) <= 90)
+                                if (mur.getAngleXYTableau()[2].angle(positionXY, mur.getAngleXYTableau()[1]) <= 90 && mur.getAngleXYTableau()[2].angle(positionXY, mur.getAngleXYTableau()[3]) <= 90) {
+                                    System.out.println("collision x");
+                                    return x;
+                                }
+                        }
+            }
+            else
+                for (int x = 0; x < tableaudroit.length; x++)
+                    if (mur.getAngleXZTableau()[0].angle(tableauangle[x], mur.getAngleXZTableau()[1]) <= 90 && mur.getAngleXZTableau()[0].angle(tableauangle[x], mur.getAngleXZTableau()[3]) <= 90)
+                        if (mur.getAngleXZTableau()[2].angle(tableauangle[x], mur.getAngleXZTableau()[1]) <= 90 && mur.getAngleXZTableau()[2].angle(tableauangle[x], mur.getAngleXZTableau()[3]) <= 90) {
+                            Point2D positionXY = new Point2D(tableaudroit[x].getX(), positionBalle.getY());
+                            if (mur.getAngleXYTableau()[0].angle(positionXY, mur.getAngleXYTableau()[1]) <= 90 && mur.getAngleXYTableau()[0].angle(positionXY, mur.getAngleXYTableau()[3]) <= 90)
+                                if (mur.getAngleXYTableau()[2].angle(positionXY, mur.getAngleXYTableau()[1]) <= 90 && mur.getAngleXYTableau()[2].angle(positionXY, mur.getAngleXYTableau()[3]) <= 90) {
+                                    System.out.println("collision z");
+                                    return x+4;
+                                }
+                        }
         return  -1;
     }
 

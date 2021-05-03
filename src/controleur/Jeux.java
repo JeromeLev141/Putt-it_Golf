@@ -470,6 +470,7 @@ public class Jeux {
         int x = -2;
         int y = 0;
         int z = -2;
+        int[] decal = new int[]{0,0,0};
 
         Group group = new Group();
         for (int i = 0; i < description.length(); i ++) {
@@ -511,7 +512,7 @@ public class Jeux {
                     bloc.setTranslateZ(bloc.getTranslateZ() + 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(-45, Rotate.X_AXIS));
-                    prepareMapForme(sol,x,y,z,-90,45,4,64,64,64,false);
+                    prepareMapForme(sol,x,y,z,0,45,4,64,64,64,false);
                 }
 
                 //vers l'arriere
@@ -520,7 +521,7 @@ public class Jeux {
                     bloc.setTranslateZ(bloc.getTranslateZ() - 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(45, Rotate.X_AXIS));
-                    prepareMapForme(sol,x,y,z,90,45,4,64,64,64,false);
+                    prepareMapForme(sol,x,y,z,180,45,4,64,64,64,false);
                 }
 
                 //vers la droite
@@ -529,7 +530,7 @@ public class Jeux {
                     bloc.setTranslateX(bloc.getTranslateX() + 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(-45, Rotate.Z_AXIS));
-                    prepareMapForme(sol,x,y,z,0,45,4,64,64,64,false);
+                    prepareMapForme(sol,x,y,z,90,45,4,64,64,64,false);
                 }
 
                 //vers la gauche
@@ -538,7 +539,7 @@ public class Jeux {
                     bloc.setTranslateX(bloc.getTranslateX() - 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(45, Rotate.Z_AXIS));
-                    prepareMapForme(sol,x,y,z,180,45,4,64,64,64,false);
+                    prepareMapForme(sol,x,y,z,270,45,4,64,64,64,false);
                 }
 
                 group.getChildren().add(bloc);
@@ -611,6 +612,7 @@ public class Jeux {
 
                 //coin haut droite
                 if (description.charAt(i) == '1') {
+                    prepareMapForme(mur,x,y,z,45,0,4,64,112,90,false,new int[]{24,0,24});
                     bloc.setTranslateZ(bloc.getTranslateZ() + 24);
                     bloc.setTranslateX(bloc.getTranslateX() + 24);
                     bloc.getTransforms().add(new Rotate(-45, Rotate.Y_AXIS));
@@ -618,6 +620,7 @@ public class Jeux {
 
                 //coin haut gauche
                 if (description.charAt(i) == '2') {
+                    prepareMapForme(mur,x,y,z,135,0,4,64,112,90,false,new int[]{-24,0,24});
                     bloc.setTranslateZ(bloc.getTranslateZ() + 24);
                     bloc.setTranslateX(bloc.getTranslateX() - 24);
                     bloc.getTransforms().add(new Rotate(45, Rotate.Y_AXIS));
@@ -625,6 +628,7 @@ public class Jeux {
 
                 //coin bas gauche
                 if (description.charAt(i) == '3') {
+                    prepareMapForme(mur,x,y,z,45,0,4,64,112,90,false,new int[]{-24,0,-24});
                     bloc.setTranslateZ(bloc.getTranslateZ() - 24);
                     bloc.setTranslateX(bloc.getTranslateX() - 24);
                     bloc.getTransforms().add(new Rotate(-45, Rotate.Y_AXIS));
@@ -632,6 +636,7 @@ public class Jeux {
 
                 //coin bas droite
                 if (description.charAt(i) == '4') {
+                    prepareMapForme(mur,x,y,z,135,0,4,64,112,90,false,new int[]{24,0,-24});
                     bloc.setTranslateZ(bloc.getTranslateZ() - 24);
                     bloc.setTranslateX(bloc.getTranslateX() + 24);
                     bloc.getTransforms().add(new Rotate(45, Rotate.Y_AXIS));
@@ -642,9 +647,11 @@ public class Jeux {
             else {
                 if (description.charAt(i) == 'i')
                     prepareMapForme(sol,x,y,z,0,0,4,64,64,64,false);
-                
+
                 prepareMapForme(sol,x,y,x,0,0,6,80,32,80,false);
                 prepareMapForme(sol,x,y,z,0,0,1,64,48,64,false);
+                prepareMapForme(sol,x,y,x,0,0,6,80,32,80,false,decal);
+                prepareMapForme(sol,x,y,z,0,0,1,64,48,64,false,decal);
 
                 Box bloc = (Box) prepareBox(x, y, z);
                 bloc.setTranslateY(bloc.getTranslateY() + 16);
@@ -700,9 +707,9 @@ public class Jeux {
         return sol;
     }
 
-    public static void prepareMapForme(List<FormeCordonneSommet> liste, int x, int y, int z, int angleXZ, int angleXY, int sol, int widgh, int heigh, int depth,boolean triangle){
+    public static void prepareMapForme(List<FormeCordonneSommet> liste, int x, int y, int z, int angleXZ, int angleXY, int sol, int widgh, int heigh, int depth,boolean triangle,int[] decal){
 
-        FormeCordonneSommet box = new FormeCordonneSommet(new Point3D(x * 64,-y*64,z * 64), widgh, heigh, depth, angleXY,angleXZ,sol,triangle );
+        FormeCordonneSommet box = new FormeCordonneSommet(new Point3D(x * 64 + decal[0],-y*64 - decal[1],z * 64 + decal[2]), widgh, heigh, depth, angleXY,angleXZ,sol,triangle );
         liste.add(box);
     }
 
@@ -792,8 +799,8 @@ public class Jeux {
             }
             else{
                 if (positionImpact != -1){
+                    System.out.println("avant = " + positionImpactAvant + " nouvelle =" + positionImpact);
                     if (positionImpact != positionImpactAvant) {
-                        System.out.println("avant = " + positionImpactAvant + " nouvelle =" + positionImpact);
                         Formule.rebondissement(vecteur, positionImpact);
                         positionImpactAvant = positionImpact;
                     }
