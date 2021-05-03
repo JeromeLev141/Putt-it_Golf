@@ -483,22 +483,22 @@ public class Jeux {
                     mat.setDiffuseMap(new Image("ressources/images/textures/boost.gif"));
                     mat.setDiffuseColor(Color.SADDLEBROWN);
                     bloc.setMaterial(mat);
-                    prepareMapForme(sol,x,y,z,0,0,3,64,64,64,false);
+                    prepareMapForme(sol,x,y,z,0,0,3,64,64,64,false,decal);
                 }
                 else if (description.charAt(i) == 'g') {
                     PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                     mat.setDiffuseMap(new Image("ressources/images/textures/glace.png"));
                     mat.setDiffuseColor(Color.ALICEBLUE);
                     bloc.setMaterial(mat);
-                    prepareMapForme(sol,x,y,z,0,0,2,64,64,64,false);
+                    prepareMapForme(sol,x,y,z,0,0,2,64,64,64,false,decal);
                 }
-                else prepareMapForme(sol,x,y,z,0,0,4,64,64,64,false);
+                else prepareMapForme(sol,x,y,z,0,0,4,64,64,64,false,decal);
                 if (description.charAt(i) == '|')
-                    prepareMapForme(mur,x,y+1,z,0,0,4,48,140,80,false);
+                    prepareMapForme(mur,x,y+1,z,0,0,4,48,140,80,false,decal);
                 if (description.charAt(i) == '_')
-                    prepareMapForme(mur,x,y+1,z,0,0,4,80,140,48,false);
+                    prepareMapForme(mur,x,y+1,z,0,0,4,80,140,48,false,decal);
                 if (description.charAt(i) == 'L')
-                    prepareMapForme(mur,x,y+1,z,0,0,4,48,140,48,false);
+                    prepareMapForme(mur,x,y+1,z,0,0,4,48,140,48,false,decal);
 
                 group.getChildren().add(bloc);
                 x++;
@@ -512,7 +512,7 @@ public class Jeux {
                     bloc.setTranslateZ(bloc.getTranslateZ() + 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(-45, Rotate.X_AXIS));
-                    prepareMapForme(sol,x,y,z,0,45,4,64,64,64,false);
+                    prepareMapForme(sol,x,y,z,0,45,4,64,64,64,false,decal);
                 }
 
                 //vers l'arriere
@@ -521,7 +521,7 @@ public class Jeux {
                     bloc.setTranslateZ(bloc.getTranslateZ() - 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(45, Rotate.X_AXIS));
-                    prepareMapForme(sol,x,y,z,180,45,4,64,64,64,false);
+                    prepareMapForme(sol,x,y,z,180,45,4,64,64,64,false,decal);
                 }
 
                 //vers la droite
@@ -530,7 +530,7 @@ public class Jeux {
                     bloc.setTranslateX(bloc.getTranslateX() + 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(-45, Rotate.Z_AXIS));
-                    prepareMapForme(sol,x,y,z,90,45,4,64,64,64,false);
+                    prepareMapForme(sol,x,y,z,90,45,4,64,64,64,false,decal);
                 }
 
                 //vers la gauche
@@ -539,7 +539,7 @@ public class Jeux {
                     bloc.setTranslateX(bloc.getTranslateX() - 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(45, Rotate.Z_AXIS));
-                    prepareMapForme(sol,x,y,z,270,45,4,64,64,64,false);
+                    prepareMapForme(sol,x,y,z,270,45,4,64,64,64,false,decal);
                 }
 
                 group.getChildren().add(bloc);
@@ -550,11 +550,11 @@ public class Jeux {
                 x = -2;
             }
             else if (description.charAt(i) == 'r'){
-                prepareMapForme(sol,x,y,z,0,45,4,64,64,64,false);
+                prepareMapForme(sol,x,y,z,0,45,4,64,64,64,false,decal);
                 x++;
             }
             else if (description.charAt(i) == 'x') {
-                prepareMapForme(mur,x,y,z,0,0,4,64,128,64,false);
+                prepareMapForme(mur,x,y,z,0,0,4,64,128,64,false,decal);
                 Box bloc = (Box) prepareBox(x, y, z);
                 bloc.setHeight(128);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
@@ -565,7 +565,7 @@ public class Jeux {
                 x++;
             }
             else if (description.charAt(i) == 'v') {
-                prepareMapForme(sol,x,y,z,0,0,4,64,64,64,false);
+                prepareMapForme(sol,x,y,z,0,0,4,64,64,64,false,decal);
                 spawn = (Box) prepareBox(x, y, z);
                 PhongMaterial mat = (PhongMaterial) spawn.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/textures/patern.png"));
@@ -576,14 +576,14 @@ public class Jeux {
             }
             else if (description.charAt(i) == 't') {
 
-                prepareMapForme(sol,x,y,z,0,0,5,64,16,64,false);
-                prepareMapForme(sol,x,y,z,0,0,1,16,64,16,false);
-                prepareMapForme(sol,x,y,z,0,0,1,64,60,64,false);
-                prepareMapForme(sol,x,y,z,0,0,4,64,64,64,false);
-                prepareMapForme(mur,x+1,y,z,0,0,4,64,76,64,false);
-                prepareMapForme(mur,x,y,z+1,0,0,4,64,76,64,false);
-                prepareMapForme(mur,x-1,y,z,0,0,2,64,76 ,64,false);
-                prepareMapForme(mur,x,y,z-1,0,0,2,64,76 ,64,false);
+                prepareMapForme(sol,x,y,z,0,0,5,64,16,64,false,decal);
+                prepareMapForme(sol,x,y,z,0,0,1,16,64,16,false,decal);
+                prepareMapForme(sol,x,y,z,0,0,1,64,60,64,false,decal);
+                prepareMapForme(sol,x,y,z,0,0,4,64,64,64,false,decal);
+                prepareMapForme(mur,x+1,y,z,0,0,4,64,76,64,false,decal);
+                prepareMapForme(mur,x,y,z+1,0,0,4,64,76,64,false,decal);
+                prepareMapForme(mur,x-1,y,z,0,0,2,64,76 ,64,false,decal);
+                prepareMapForme(mur,x,y,z-1,0,0,2,64,76 ,64,false,decal);
                 Box bloc = (Box) prepareBox(x, y, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                 mat.setDiffuseMap(new Image("ressources/images/textures/patern.png"));
@@ -646,10 +646,8 @@ public class Jeux {
             }
             else {
                 if (description.charAt(i) == 'i')
-                    prepareMapForme(sol,x,y,z,0,0,4,64,64,64,false);
+                    prepareMapForme(sol,x,y,z,0,0,4,64,64,64,false,decal);
 
-                prepareMapForme(sol,x,y,x,0,0,6,80,32,80,false);
-                prepareMapForme(sol,x,y,z,0,0,1,64,48,64,false);
                 prepareMapForme(sol,x,y,x,0,0,6,80,32,80,false,decal);
                 prepareMapForme(sol,x,y,z,0,0,1,64,48,64,false,decal);
 
