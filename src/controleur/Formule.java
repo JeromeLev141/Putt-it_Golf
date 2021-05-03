@@ -38,15 +38,75 @@ public class Formule {
 
     public static void rebondissement(Vecteur balle, int positionImpact){
         double coefficient = 0.85;
-        if (positionImpact == 0 || positionImpact == 4) {
+
+
+
+        //Top et bottom
+        if (positionImpact == 0 || positionImpact == 2) {
             balle.setVecteurVitesseResultant(2, balle.getVecteurVitesseResultant()[2] * -coefficient);
             balle.setVecteurVitesseResultant(0,balle.getVecteurVitesseResultant()[0] * coefficient);
         }
-        else if (positionImpact == 2 || positionImpact == 6) {
+        //droite gauche
+        else if (positionImpact == 1 || positionImpact == 3) {
             balle.setVecteurVitesseResultant(0, balle.getVecteurVitesseResultant()[0] * -coefficient);
             balle.setVecteurVitesseResultant(2, balle.getVecteurVitesseResultant()[2] * coefficient);
+        }//jerome
+        else {
+            double angleFinal;
+            double diff;
+            if (positionImpact == 7) {
+                diff = balle.getAngleXZ() - 135;
+                angleFinal = 315 - diff;
+            }
+            else if (positionImpact == 4) {
+                diff = balle.getAngleXZ() - 45;
+                angleFinal = 225 - diff;
+            }
+            else if (positionImpact == 6) {
+                diff = balle.getAngleXZ() - 225;
+                angleFinal = 45 - diff;
+            }
+            else {
+                diff = balle.getAngleXZ() - 315;
+                angleFinal = 135 - diff;
+            }
+            nouvelleVitesseAngle(balle.getVecteurVitesseResultant(), angleFinal,coefficient);
+            balle.setAngleXZ(angleFinal);
+        }
+/*
+        //bas gauche
+        else if (positionImpact == 6){
+            double angle = balle.getAngleXZ();
+            if (angle > 225 && angle < 315) {
+                angle = 2 * (315 - balle.getAngleXZ()) + balle.getAngleXZ();
+                angle = ajustementAngle(angle);
+
+            }
+            else if (angle == 225)
+                angle = 45;
+            else if (angle > 135 && angle < 225)
+                angle = -2 * (balle.getAngleXZ() - 135) + balle.getAngleXZ();
+
+            nouvelleVitesseAngle(balle.getVecteurVitesseResultant(), angle,coefficient);
+            balle.setAngleXZ(angle);
         }
 
+        //haut droit
+        else if (positionImpact == 4){
+            double angle = balle.getAngleXZ();
+            if (angle == 45)
+                angle = 225;
+            else if (angle < 45 || angle > 315){
+                if (angle < 45)
+                    angle = 225 + (90 - angle + 45);
+                if (angle > 315)
+                    angle = 225 + (45 - (360-angle));
+            }
+
+
+            nouvelleVitesseAngle(balle.getVecteurVitesseResultant(),angle,coefficient);
+            balle.setAngleXZ(angle);
+        }*/
     }
 
     public static double[] forcegravitationnel(Forme forme){
@@ -74,5 +134,19 @@ public class Formule {
         return coefficienFrottement * forceNormal;
     }
 
-    //public static double
+    private static double ajustementAngle(double angle){
+        if (angle >= 360)
+            return angle - 360;
+        else if (angle < 0){
+            return angle + 360;
+        }
+        else
+            return angle;
+    }
+
+    private static void nouvelleVitesseAngle(double [] vitesse, double angleXZ, double coefficient){
+        double hypo = Math.sqrt(Math.pow(vitesse[0],2) + Math.pow(vitesse[2],2));
+        vitesse[0] = hypo * Math.cos(Math.toRadians(angleXZ)) * coefficient;
+        vitesse[2] = hypo * Math.sin(Math.toRadians(angleXZ)) * coefficient;
+    }
 }

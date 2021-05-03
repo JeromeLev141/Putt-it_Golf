@@ -39,18 +39,6 @@ public class FormeCordonneSommet extends Forme {
             Point3D numero6 = trouverPointFormeAngle3D(formeX + width,formeY - height,formeZ - depth,false);
             Point3D numero7 = trouverPointFormeAngle3D(formeX + width,formeY - height,formeZ + depth,false);
             Point3D numero8 = trouverPointFormeAngle3D(formeX - width,formeY - height,formeZ + depth,true);
-    /*
-            System.out.println("-----------------------------");
-            System.out.println(numero1);
-            System.out.println(numero2);
-            System.out.println(numero3);
-            System.out.println(numero4);
-            System.out.println(numero5);
-            System.out.println(numero6);
-            System.out.println(numero7);
-            System.out.println(numero8);
-            System.out.println("-----------------------------");
-    */
 
             Point2D pointXZ1 = new Point2D(numero1.getX(),numero1.getZ());
             Point2D pointXZ2 = new Point2D(numero2.getX(),numero2.getZ());
@@ -61,27 +49,12 @@ public class FormeCordonneSommet extends Forme {
             Point2D pointXY2 = trouverPointFormeAngleXY(formeX + width,formeY + height,false);
             Point2D pointXY3 = trouverPointFormeAngleXY(formeX + width,formeY - height,false);
             Point2D pointXY4 = trouverPointFormeAngleXY(formeX - width,formeY - height,true);
-    /*
-            Point2D pointYZ1 = new Point2D(formeZ - depth, numero2.getY());
-            Point2D pointYZ2 = new Point2D(formeZ + depth, numero3.getY());
-            Point2D pointYZ3 = new Point2D(formeZ - depth, numero6.getY());
-            Point2D pointYZ4 = new Point2D(formeZ + depth, numero7.getY());
-    */
 
             sommets = new Point3D[]{numero1,numero2,numero3,numero4,numero5,numero6,numero7,numero8};
             angleXZTableau = new Point2D[]{pointXZ1,pointXZ2,pointXZ3,pointXZ4};
             angleXYTableau = new Point2D[]{pointXY1,pointXY2,pointXY3,pointXY4};
-            //angleYZTableau = new Point2D[]{pointYZ1,pointYZ2,pointXZ3,pointYZ4};
+
         }
-/*
-            System.out.println(numero1.distance(numero2) + " , " + numero2.distance(numero3));
-            System.out.println(numero2.distance(numero3) + " , " + numero3.distance(numero4));
-            System.out.println(numero1.angle(numero2,numero4));
-            System.out.println(numero1.angle(numero4,numero2));
-            System.out.println(numero2.angle(numero1,numero3));
-            System.out.println(numero3.angle(numero2,numero4));
-            System.out.println(numero4.angle(numero3,numero1));
-            */
     }
 
     private Point2D trouverPointFormeAngleXY(double x, double y,boolean gauche){

@@ -67,8 +67,8 @@ public class Plateforme {
                         "xooox\n" +
                         "x+j3j3j3-x+\n" +
                         "xooox\n" +
-                        "xotox\n" +
                         "xooox\n" +
+                        "xotox\n" +
                         "x2oo1ox\n" +
                         "xxxxx";
         }
