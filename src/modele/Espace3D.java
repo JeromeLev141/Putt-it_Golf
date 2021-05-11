@@ -49,8 +49,8 @@ public class Espace3D {
         Point2D position6 = new Point2D(positionBalle.getX() - 4,positionBalle.getZ() + 4);
         Point2D position7 = new Point2D(positionBalle.getX() ,positionBalle.getZ() + 8);
         Point2D position8 = new Point2D(positionBalle.getX() + 4,positionBalle.getZ() + 4);
-        Point2D [] tableaudroit = new Point2D[]{position7,position1,position3,position6};
-        Point2D [] tableauangle = new Point2D[]{position8,position2,position4,position5};
+        Point2D [] tableaudroit = new Point2D[]{position7,position1,position3,position5};
+        Point2D [] tableauangle = new Point2D[]{position8,position2,position4,position6};
 
 
         for (FormeCordonneSommet mur : plateformeMur)
@@ -61,7 +61,6 @@ public class Espace3D {
                             Point2D positionXY = new Point2D(tableaudroit[x].getX(), positionBalle.getY());
                             if (mur.getAngleXYTableau()[0].angle(positionXY, mur.getAngleXYTableau()[1]) <= 90 && mur.getAngleXYTableau()[0].angle(positionXY, mur.getAngleXYTableau()[3]) <= 90)
                                 if (mur.getAngleXYTableau()[2].angle(positionXY, mur.getAngleXYTableau()[1]) <= 90 && mur.getAngleXYTableau()[2].angle(positionXY, mur.getAngleXYTableau()[3]) <= 90) {
-                                    System.out.println("collision x");
                                     return x;
                                 }
                         }
@@ -69,13 +68,15 @@ public class Espace3D {
             else
                 for (int x = 0; x < tableaudroit.length; x++)
                     if (mur.getAngleXZTableau()[0].angle(tableauangle[x], mur.getAngleXZTableau()[1]) <= 90 && mur.getAngleXZTableau()[0].angle(tableauangle[x], mur.getAngleXZTableau()[3]) <= 90)
-                        if (mur.getAngleXZTableau()[2].angle(tableauangle[x], mur.getAngleXZTableau()[1]) <= 90 && mur.getAngleXZTableau()[2].angle(tableauangle[x], mur.getAngleXZTableau()[3]) <= 90) {
+                        if (mur.getAngleXZTableau()[2].angle(tableauangle[x], mur.getAngleXZTableau()[1]) <= 90 && mur.getAngleXZTableau()[2].angle(tableauangle[x], mur.getAngleXZTableau()[3]) <= 90){
+                            /* bug dans le code mais sert a detecter la colision avec le mur en hauteur
+                            Point2D positionXY = FormeCordonneSommet.trouverPointFormeAngleXZ(mur,tableaudroit[x].getX(),positionBalle.getY(),360 - mur.getAngleXY());
                             Point2D positionXY = new Point2D(tableaudroit[x].getX(), positionBalle.getY());
                             if (mur.getAngleXYTableau()[0].angle(positionXY, mur.getAngleXYTableau()[1]) <= 90 && mur.getAngleXYTableau()[0].angle(positionXY, mur.getAngleXYTableau()[3]) <= 90)
-                                if (mur.getAngleXYTableau()[2].angle(positionXY, mur.getAngleXYTableau()[1]) <= 90 && mur.getAngleXYTableau()[2].angle(positionXY, mur.getAngleXYTableau()[3]) <= 90) {
-                                    System.out.println("collision z");
+                                if (mur.getAngleXYTableau()[2].angle(positionXY, mur.getAngleXYTableau()[1]) <= 90 && mur.getAngleXYTableau()[2].angle(positionXY, mur.getAngleXYTableau()[3]) <= 90)
+                            */
                                     return x+4;
-                                }
+
                         }
         return  -1;
     }
