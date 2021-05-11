@@ -27,34 +27,29 @@ public class FormeCordonneSommet extends Forme {
         double height = getHeight()/2;
         double depth = getDepth()/2;
 
-        if (isTriangle()){
+        Point3D numero1 = trouverPointFormeAngle3D(formeX - width,formeY + height,formeZ - depth,true);
+        Point3D numero2 = trouverPointFormeAngle3D(formeX + width,formeY + height,formeZ - depth,false);
+        Point3D numero3 = trouverPointFormeAngle3D(formeX + width,formeY + height,formeZ + depth,false);
+        Point3D numero4 = trouverPointFormeAngle3D(formeX - width,formeY + height,formeZ + depth,true);
+        Point3D numero5 = trouverPointFormeAngle3D(formeX - width,formeY - height,formeZ - depth,true);
+        Point3D numero6 = trouverPointFormeAngle3D(formeX + width,formeY - height,formeZ - depth,false);
+        Point3D numero7 = trouverPointFormeAngle3D(formeX + width,formeY - height,formeZ + depth,false);
+        Point3D numero8 = trouverPointFormeAngle3D(formeX - width,formeY - height,formeZ + depth,true);
 
-        }
-        else{
-            Point3D numero1 = trouverPointFormeAngle3D(formeX - width,formeY + height,formeZ - depth,true);
-            Point3D numero2 = trouverPointFormeAngle3D(formeX + width,formeY + height,formeZ - depth,false);
-            Point3D numero3 = trouverPointFormeAngle3D(formeX + width,formeY + height,formeZ + depth,false);
-            Point3D numero4 = trouverPointFormeAngle3D(formeX - width,formeY + height,formeZ + depth,true);
-            Point3D numero5 = trouverPointFormeAngle3D(formeX - width,formeY - height,formeZ - depth,true);
-            Point3D numero6 = trouverPointFormeAngle3D(formeX + width,formeY - height,formeZ - depth,false);
-            Point3D numero7 = trouverPointFormeAngle3D(formeX + width,formeY - height,formeZ + depth,false);
-            Point3D numero8 = trouverPointFormeAngle3D(formeX - width,formeY - height,formeZ + depth,true);
+        Point2D pointXZ1 = new Point2D(numero1.getX(),numero1.getZ());
+        Point2D pointXZ2 = new Point2D(numero2.getX(),numero2.getZ());
+        Point2D pointXZ3 = new Point2D(numero3.getX(),numero3.getZ());
+        Point2D pointXZ4 = new Point2D(numero4.getX(),numero4.getZ());
 
-            Point2D pointXZ1 = new Point2D(numero1.getX(),numero1.getZ());
-            Point2D pointXZ2 = new Point2D(numero2.getX(),numero2.getZ());
-            Point2D pointXZ3 = new Point2D(numero3.getX(),numero3.getZ());
-            Point2D pointXZ4 = new Point2D(numero4.getX(),numero4.getZ());
+        Point2D pointXY1 = trouverPointFormeAngleXY(formeX - width,formeY + height,true);
+        Point2D pointXY2 = trouverPointFormeAngleXY(formeX + width,formeY + height,false);
+        Point2D pointXY3 = trouverPointFormeAngleXY(formeX + width,formeY - height,false);
+        Point2D pointXY4 = trouverPointFormeAngleXY(formeX - width,formeY - height,true);
 
-            Point2D pointXY1 = trouverPointFormeAngleXY(formeX - width,formeY + height,true);
-            Point2D pointXY2 = trouverPointFormeAngleXY(formeX + width,formeY + height,false);
-            Point2D pointXY3 = trouverPointFormeAngleXY(formeX + width,formeY - height,false);
-            Point2D pointXY4 = trouverPointFormeAngleXY(formeX - width,formeY - height,true);
+        sommets = new Point3D[]{numero1,numero2,numero3,numero4,numero5,numero6,numero7,numero8};
+        angleXZTableau = new Point2D[]{pointXZ1,pointXZ2,pointXZ3,pointXZ4};
+        angleXYTableau = new Point2D[]{pointXY1,pointXY2,pointXY3,pointXY4};
 
-            sommets = new Point3D[]{numero1,numero2,numero3,numero4,numero5,numero6,numero7,numero8};
-            angleXZTableau = new Point2D[]{pointXZ1,pointXZ2,pointXZ3,pointXZ4};
-            angleXYTableau = new Point2D[]{pointXY1,pointXY2,pointXY3,pointXY4};
-
-        }
     }
 
     private Point2D trouverPointFormeAngleXY(double x, double y,boolean gauche){
@@ -64,11 +59,6 @@ public class FormeCordonneSommet extends Forme {
         else {
 
             double elevation = getWidth() * Math.tan(Math.toRadians(getAngleXY()));
-        /*
-            double hypoXY = Math.sqrt(Math.pow(getPositionEspace().getX() - x, 2) + Math.pow(getPositionEspace().getY() - y, 2));
-            double angleXY = resolutionangle(x - getPositionEspace().getX(), y - getPositionEspace().getY());
-            y = arroudir((hypoXY * Math.sin(Math.toRadians(getAngleXY() + angleXY))) + getPositionEspace().getY());
-*/
             return new Point2D(x, y + elevation);
         }
     }
@@ -133,9 +123,6 @@ public class FormeCordonneSommet extends Forme {
         return angleXZTableau;
     }
 
-    public Point2D[] getAngleYZTableau() {
-        return angleYZTableau;
-    }
 
 }
 

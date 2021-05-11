@@ -55,12 +55,12 @@ public class Formule {
             double angleFinal;
             double diff;
             if (positionImpact == 7) {
-                diff = balle.getAngleXZ() - 135;
-                angleFinal = 315 - diff;
+                    diff = balle.getAngleXZ() - 135;
+                    angleFinal = 315 - diff;
             }
             else if (positionImpact == 4) {
-                diff = balle.getAngleXZ() - 45;
-                angleFinal = 225 - diff;
+                    diff = balle.getAngleXZ() - 45;
+                    angleFinal = 225 - diff;
             }
             else if (positionImpact == 6) {
                 diff = balle.getAngleXZ() - 225;
@@ -70,6 +70,7 @@ public class Formule {
                 diff = balle.getAngleXZ() - 315;
                 angleFinal = 135 - diff;
             }
+            System.out.println("avant : " + balle.getAngleXZ() + "  Apres : " + angleFinal);
             nouvelleVitesseAngle(balle.getVecteurVitesseResultant(), angleFinal,coefficient);
             balle.setAngleXZ(angleFinal);
         }
@@ -134,7 +135,7 @@ public class Formule {
         return coefficienFrottement * forceNormal;
     }
 
-    private static double ajustementAngle(double angle){
+    public static double ajustementAngle(double angle){
         if (angle >= 360)
             return angle - 360;
         else if (angle < 0){

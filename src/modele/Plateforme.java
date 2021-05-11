@@ -21,15 +21,15 @@ public class Plateforme {
                         "x3oo4ox\n" +
                         "xovox\n" +
                         "xooox\n" +
-                        "xo_ox\n" +
-                        "x| |x\n" +
-                        "xo_ox\n" +
-                        "x_o_x\n" +
-                        "x | x\n" +
-                        "x_o_x\n" +
-                        "xo_ox\n" +
-                        "x| |x\n" +
-                        "xo_ox\n" +
+                        "xo_oox\n" +
+                        "x|o |ox\n" +
+                        "xo_oox\n" +
+                        "x_oo_ox\n" +
+                        "x |o x\n" +
+                        "x_oo_ox\n" +
+                        "xo_oox\n" +
+                        "x|o |ox\n" +
+                        "xo_oox\n" +
                         "xooox\n" +
                         "xotox\n" +
                         "x2oo1ox\n" +
@@ -38,24 +38,52 @@ public class Plateforme {
                 return "xxxxx\n" +
                         "x3oo4ox\n" +
                         "xovox\n" +
-                        "x___x\n+" +
+                        "x_o_o_ox\n+" +
                         "xooox\n" +
                         "xbbbx\n" +
                         "xoxox\n" +
-                        "x___x\n+" +
+                        "x_o_o_ox\n+" +
                         "xooox+xxxx\n" +
-                        "-xbbb|+o_4ox\n" +
-                        "-xoxb|+|+t-|x\n" +
-                        "-x2oob|+o_1ox\n" +
+                        "-xbbb|o+o_o4ox\n" +
+                        "-xoxb|o+|o+t-|ox\n" +
+                        "-x2oob|o+o_o1ox\n" +
                         "-xxxxx+xxxx";
             case 4 :
                 return  "0000xxxxxxx\n" +
-                        "xxxx3|     4|xxxx\n" +
-                        "x3bbb|   L_|bb4bx\n" +
-                        "xbvb|_L | |btbx\n" +
-                        "x2bbb| | | |bb1bx\n" +
-                        "xxxx2| |_| 1|xxxx\n" +
+                        "xxxx3|o     4|oxxxx\n" +
+                        "x3bbb|o   Lo_o|obb4bx\n" +
+                        "xbvb|o_oLo |o |obtbx\n" +
+                        "x2bbb|o |o |o |obb1bx\n" +
+                        "xxxx2|o |o_o|o 1|oxxxx\n" +
                         "0000xxxxxxx";
+
+            case 5 :
+                return  "000xxxxxxxx\n" +
+                        "00xx      x\n" +
+                        "00x3ggggggg4g\n" +
+                        "00xoxxxxx2bb4bx\n" +
+                        "00|xo|x0000xggx\n" +
+                        "xx3_b1_bx0000xggx\n" +
+                        "x |g x00003gb1gx\n" +
+                        "x |g x0003oo1o\n" +
+                        "xxtxx0032ovox\n" +
+                        "x |g x0002oo4o\n" +
+                        "x |g x00002gg4gx\n" +
+                        "xx2_b_4ox0000xoox\n" +
+                        "00|xo|x0000xoox\n" +
+                        "00xoxxxxx3oo1ox\n" +
+                        "00x2ooooooo1o\n" +
+                        "00xx      x\n" +
+                        "000xxxxxxxx\n";
+            case 6 :
+                return  "xxxxxxxxx\n" +
+                        "xooooooox\n" +
+                        "xooovooox\n" +
+                        "xooooooox\n" +
+                        "xooo1oooox\n" +
+                        "xooooooox\n" +
+                        "xooooooox\n" +
+                        "xxxxxxxxx\n";
             default:
                 return "xxxxx\n" +
                         "x3oo4ox\n" +
