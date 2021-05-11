@@ -50,12 +50,38 @@ public class Plateforme {
                         "-xxxxx+xxxx";
             case 4 :
                 return  "0000xxxxxxx\n" +
-                        "xxxx3|iiii 4|xxxx\n" +
+                        "xxxx3|     4|xxxx\n" +
                         "x3bbb|   L_|bb4bx\n" +
                         "xbvb|_L | |btbx\n" +
                         "x2bbb| | | |bb1bx\n" +
                         "xxxx2| |_| 1|xxxx\n" +
                         "0000xxxxxxx";
+            case 5 :
+                return "xxxxx\n" +
+                        "x3oo4ox\n" +
+                        "xovox\n" +
+                        "xooox\n" +
+                        "xbbbx\n" +
+                        "xbbbx\n" +
+                        "xbbbx\n" +
+                        "xooox\n" +
+                        "-x+j1j1j1-x\n" +
+                        "x   x\n" +
+                        "x   x\n" +
+                        "x+j3j3j3-x+\n" +
+                        "xooox\n" +
+                        "xooox\n" +
+                        "xotox\n" +
+                        "x2oo1ox\n" +
+                        "xxxxx";
+            case 6 :
+                return "xxxxxxxxxxxxxxxxxxx\n" +
+                        "xooogggggggggggggx\n" +
+                        "xooox         xxxx\n" +
+                        "xovoggggggggggotox\n" +
+                        "xooox         xxxx\n" +
+                        "xooogggggggggggggx\n" +
+                        "xxxxxxxxxxxxxxxxxx";
             default:
                 return "xxxxx\n" +
                         "x3oo4ox\n" +
