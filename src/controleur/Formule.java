@@ -120,7 +120,7 @@ public class Formule {
         }else {
             double angle = forme.getAngleXY();
             resultat[1] = (Balle.getMasse() * -9.8) * Math.sin(Math.toRadians(angle));
-            double hyp = (/*Balle.getMasse() * -9.8*/-2) * Math.cos(Math.toRadians(angle));
+            double hyp = (/*Balle.getMasse() * -9.8*/-1.441) * Math.cos(Math.toRadians(angle));
             resultat[0] = hyp * Math.cos(Math.toRadians(forme.getAngleXZ()));
             resultat[2] = hyp * Math.sin(Math.toRadians(forme.getAngleXZ()));
             return resultat;

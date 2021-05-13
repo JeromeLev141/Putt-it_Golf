@@ -74,16 +74,32 @@ public class Plateforme {
                         "00xoxxxxx3oo1ox\n" +
                         "00x2ooooooo1o\n" +
                         "00xx      x\n" +
-                        "000xxxxxxxx\n";
-            case 6 :
-                return  "xxxxxxxxx\n" +
-                        "xooooooox\n" +
-                        "xooovooox\n" +
-                        "xooooooox\n" +
-                        "xooo1oooox\n" +
-                        "xooooooox\n" +
-                        "xooooooox\n" +
-                        "xxxxxxxxx\n";
+                        "000xxxxxxxx";
+            case 8 :
+                return  "xxxxx--xxxxxxx+xxxxx+xxxx\n" +
+                        "x3oo4ox--x3gg|g  +j4bbbb+j4bo4o\n" +
+                        "xovox--j4btg_b_b+j4bbbb+j4bbo4o\n" +
+                        "xooox--x2gg|g  +j4bbbb+j4bbbo4ox\n" +
+                        "xooox--xxxxxxx+xxxxx+xxxxxx\n" +
+                        "xbbbx0---000000000000xbbbx+++\n" +
+                        "-x+j1j1j1-x+--0000000000000-x+j3j3j3-x-+++\n" +
+                        "xbbbx0-000000000000xbbbx+\n" +
+                        "xbbbx0-000000000000xbbbx+\n" +
+                        "xbbbx0-000000000000xbbbx+\n" +
+                        "xbbbx0-000000000000xbbbx+\n" +
+                        "-x+j1j1j1-x+0000000000000-x+j3j3j3-x+-\n" +
+                        "xbbbx00+00000000000xbbbx-\n" +
+                        "xbbbx00+00000000000xbbbx-\n" +
+                        "xbbbx00+00000000000xbbbx-\n" +
+                        "xbbbx00+00000000000xbbbx-\n" +
+                        "-x+j1j1j1-x00+00000+00000+0-x+j3j3j3-x+---\n" +
+                        "xbbbx00+00000+00000+0xbbbx\n" +
+                        "xxxxxx-xxxxx-xxxxx-xx+++xbbox---+++\n" +
+                        "x2oobbbj2-bbbbj2-bbbbj2-b+++xbo1ox---+++\n" +
+                        "002oobbj2-bbbbj2-bbbbj2-b+++xo1o---+++\n" +
+                        "0002oobj2-bbbbj2-bbbbj2-b+++x1o---+++\n" +
+                        "000xxx-xxxxx-xxxxx-xx+++xx";
+
             default:
                 return "xxxxx\n" +
                         "x3oo4ox\n" +

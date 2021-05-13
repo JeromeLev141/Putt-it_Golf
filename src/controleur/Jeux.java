@@ -825,7 +825,7 @@ public class Jeux {
 */
             if (formeSol != null && formeSol.getAngleXY() == 0 && !formeSol.getTypeSol().isTraversable() && vecteur.getVecteurVitesseResultant()[1] == 0){
                 double positionY = formeSol.getPositionEspace().getY() + formeSol.getHeight()/2;
-                if (positionY > (vecteur.getPosition()[1] - 8) && positionY - (vecteur.getPosition()[1] - 8) < 3){
+                if (positionY > (vecteur.getPosition()[1] - 8) && positionY - (vecteur.getPosition()[1] - 8) < 4){
                     vecteur.getPosition()[1] = positionY + 8;
                 }
 
