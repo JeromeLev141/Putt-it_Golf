@@ -74,31 +74,64 @@ public class Plateforme {
                         "00xoxxxxx3oo1ox\n" +
                         "00x2ooooooo1o\n" +
                         "00xx      x\n" +
-                        "000xxxxxxxx\n";
+                        "000xxxxxxxx";
             case 6 :
-                return  "xxxxxxxxx\n" +
-                        "xooooooox\n" +
-                        "xooovooox\n" +
-                        "xooooooox\n" +
-                        "xooo1oooox\n" +
-                        "xooooooox\n" +
-                        "xooooooox\n" +
-                        "xxxxxxxxx\n";
+                return "xxxxxxxxxxxxxx\n" +
+                        "x3obboggggggg4gxxxxxxxxx\n" +
+                        "xboox       gxx     4ox\n" +
+                        "xbvooggggggg1gx3gggggotx\n" +
+                        "xboox       xxg     1ox\n" +
+                        "x2obboggggggggg1gxxxxxxx\n" +
+                        "xxxxxxxxxxxxxxxx";
+            case 7 :
+                return "00000000xxxxx\n" +
+                        "00000000x3oo4ox\n" +
+                        "00000000xovox\n" +
+                        "00000000xooox\n" +
+                        "00000000xooox\n" +
+                        "00000000xbbbx\n" +
+                        "00000000xbbbx\n" +
+                        "00000000xbbbx\n" +
+                        "00000000-x+j1j1j1-x\n" +
+                        "00000000xj1j1j1x\n" +
+                        "00000000x-j1j1j1+x\n" +
+                        "+++++++++xxxx---------++x-x-xxxxxx\n" +
+                        "+++++++++x   ---------++j2-j2-bbboox\n" +
+                        "+++++++++x t ---------++j2-j2-bbbo1ox\n" +
+                        "+++++++++x   ---------++j2-j2-bbb1o\n" +
+                        "+++++++++xxxx---------++x-x-xxxx\n";
+            case 8 :
+                return  "xxxxx--xxxxxxx+xxxxx+xxx\n" +
+                        "x3oo4ox--x3gg|g  +j4bbbb+j4bo4o\n" +
+                        "xovox-- |gt|g_b_b+j4bbbb+j4bbo4o\n" +
+                        "xooox--x2gg|g  +j4bbbb+j4bbbo4ox\n" +
+                        "xooox--xxxxxxx+xxxxx+xxxxxx\n" +
+                        "xbbbx0---000000000000xbbbx+++\n" +
+                        "-x+j1j1j1-x+--0000000000000-x+j3j3j3-x-+++\n" +
+                        "xbbbx0-000000000000xbbbx+\n" +
+                        "xbbbx0-000000000000xbbbx+\n" +
+                        "xbbbx0-000000000000xbbbx+\n" +
+                        "xbbbx0-000000000000xbbbx+\n" +
+                        "-x+j1j1j1-x+0000000000000-x+j3j3j3-x+-\n" +
+                        "xbbbx00+00000000000xbbbx-\n" +
+                        "xbbbx00+00000000000xbbbx-\n" +
+                        "xbbbx00+00000000000xbbbx-\n" +
+                        "xbbbx00+00000000000xbbbx-\n" +
+                        "-x+j1j1j1-x00+00000+00000+0-x+j3j3j3-x+---\n" +
+                        "xbbbx00+00000+00000+0xbbbx\n" +
+                        "xxxxxx-xxxxx-xxxxx-xx+++xbbox---+++\n" +
+                        "x2oobbbj2-bbbbj2-bbbbj2-b+++xbo1ox---+++\n" +
+                        "002oobbj2-bbbbj2-bbbbj2-b+++xo1o---+++\n" +
+                        "0002oobj2-bbbbj2-bbbbj2-b+++x1o---+++\n" +
+                        "000xxx-xxxxx-xxxxx-xx+++xx";
+
             default:
-                return "xxxxx\n" +
-                        "x3oo4ox\n" +
-                        "xovox\n" +
-                        "xooox\n" +
-                        "-x+j1j1j1-x\n" +
-                        "xooox\n" +
-                        "xooox\n" +
-                        "xooox\n" +
-                        "x+j3j3j3-x+\n" +
-                        "xooox\n" +
-                        "xooox\n" +
-                        "xotox\n" +
-                        "x2oo1ox\n" +
-                        "xxxxx";
+                return "xxxxxxxx\n" +
+                        "xoooooox\n" +
+                        "xovootox\n" +
+                        "xoooooox\n" +
+                        "xxxxxxxx";
         }
     }
 }
+
