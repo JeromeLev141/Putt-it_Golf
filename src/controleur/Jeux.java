@@ -486,7 +486,7 @@ public class Jeux {
                 if (description.charAt(i) == 'b') {
                     PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                     mat.setDiffuseMap(new Image("ressources/images/textures/boost.gif"));
-                    mat.setDiffuseColor(Color.SADDLEBROWN);
+                    mat.setDiffuseColor(themeSol.darker());
                     bloc.setMaterial(mat);
                     prepareMapForme(sol,x,y,z,0,0,3,64,64,64,false,decal);
                 }
@@ -512,7 +512,7 @@ public class Jeux {
                     bloc.setTranslateZ(bloc.getTranslateZ() + 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(-45, Rotate.X_AXIS));
-                    prepareMapForme(sol,x,y,z,0,45,4,64,64,64,false,decal);
+                    prepareMapForme(sol,x,y,z,90,45,4,64,64,64,false,decal);
                 }
 
                 //vers l'arriere
@@ -521,7 +521,7 @@ public class Jeux {
                     bloc.setTranslateZ(bloc.getTranslateZ() - 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(45, Rotate.X_AXIS));
-                    prepareMapForme(sol,x,y,z,180,45,4,64,64,64,false,decal);
+                    prepareMapForme(sol,x,y,z,270,45,4,64,64,64,false,decal);
                 }
 
                 //vers la droite
@@ -530,7 +530,7 @@ public class Jeux {
                     bloc.setTranslateX(bloc.getTranslateX() + 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(-45, Rotate.Z_AXIS));
-                    prepareMapForme(sol,x,y,z,90,45,4,64,64,64,false,decal);
+                    prepareMapForme(sol,x,y,z,0,45,4,64,64,64,false,decal);
                 }
 
                 //vers la gauche
@@ -539,7 +539,7 @@ public class Jeux {
                     bloc.setTranslateX(bloc.getTranslateX() - 20);
                     bloc.setTranslateY(bloc.getTranslateY() - 40);
                     bloc.getTransforms().add(new Rotate(45, Rotate.Z_AXIS));
-                    prepareMapForme(sol,x,y,z,270,45,4,64,64,64,false,decal);
+                    prepareMapForme(sol,x,y,z,180,45,4,64,64,64,false,decal);
                 }
 
                 group.getChildren().add(bloc);
@@ -829,7 +829,7 @@ public class Jeux {
 */
             if (formeSol != null && formeSol.getAngleXY() == 0 && !formeSol.getTypeSol().isTraversable() && vecteur.getVecteurVitesseResultant()[1] == 0){
                 double positionY = formeSol.getPositionEspace().getY() + formeSol.getHeight()/2;
-                if (positionY > (vecteur.getPosition()[1] - 8) && positionY - (vecteur.getPosition()[1] - 8) < 3){
+                if (positionY > (vecteur.getPosition()[1] - 8) && positionY - (vecteur.getPosition()[1] - 8) < 4){
                     vecteur.getPosition()[1] = positionY + 8;
                 }
 
@@ -842,7 +842,7 @@ public class Jeux {
                 avantNull = true;
             }
 
-            if (vecteur.getPosition()[1] <= -300) {
+            if (vecteur.getPosition()[1] <= -640) {
                 vecteur.setVecteurVitesseResultant(new double[]{0, 0, 0});
                 vecteur.setForceY(fnPosition, (Double)vecteur.getForceY().get(fgPosition) * -1.0D);
                 vecteur.setForceX(fnPosition,0);
