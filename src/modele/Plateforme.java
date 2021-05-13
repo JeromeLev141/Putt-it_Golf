@@ -77,11 +77,11 @@ public class Plateforme {
                         "000xxxxxxxx\n";
             case 6 :
                 return "xxxxxxxxxxxxxx\n" +
-                        "x3obboggggggg4gxxxxxxxxx\n" +
+                        "x3obbogggoggg4gxxxxxxxxx\n" +
                         "xboox       gxx     4ox\n" +
-                        "xbvooggggggg1gx3gggggotx\n" +
+                        "xbvoogggoggg1gx3ggoggotx\n" +
                         "xboox       xxg     1ox\n" +
-                        "x2obboggggggggg1gxxxxxxx\n" +
+                        "x2obbogggogoggg1gxxxxxxx\n" +
                         "xxxxxxxxxxxxxxxx";
             case 7 :
                 return "00000000xxxxx\n" +
