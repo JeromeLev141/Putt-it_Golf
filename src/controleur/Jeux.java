@@ -486,7 +486,7 @@ public class Jeux {
                 if (description.charAt(i) == 'b') {
                     PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
                     mat.setDiffuseMap(new Image("ressources/images/textures/boost.gif"));
-                    mat.setDiffuseColor(Color.SADDLEBROWN);
+                    mat.setDiffuseColor(themeSol.darker());
                     bloc.setMaterial(mat);
                     prepareMapForme(sol,x,y,z,0,0,3,64,64,64,false,decal);
                 }
@@ -603,6 +603,7 @@ public class Jeux {
 
                 Box bloc = (Box) prepareBox(x, y, z);
                 PhongMaterial mat = (PhongMaterial) bloc.getMaterial();
+                mat.setDiffuseMap(new Image("ressources/images/textures/corner.png"));
                 mat.setDiffuseColor(themeMur);
                 bloc.setMaterial(mat);
                 bloc.setDepth(90);
@@ -644,6 +645,9 @@ public class Jeux {
                 group.getChildren().add(bloc);
             }
             else {
+                if (description.charAt(i) == 'i')
+                    prepareMapForme(sol,x,y,z,0,0,4,64,64,64,false,decal);
+
                 prepareMapForme(sol,x,y,x,0,0,6,80,32,80,false,decal);
                 prepareMapForme(sol,x,y,z,0,0,1,64,48,64,false,decal);
 
@@ -838,7 +842,7 @@ public class Jeux {
                 avantNull = true;
             }
 
-            if (vecteur.getPosition()[1] <= -300) {
+            if (vecteur.getPosition()[1] <= -640) {
                 vecteur.setVecteurVitesseResultant(new double[]{0, 0, 0});
                 vecteur.setForceY(fnPosition, (Double)vecteur.getForceY().get(fgPosition) * -1.0D);
                 vecteur.setForceX(fnPosition,0);

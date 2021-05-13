@@ -54,6 +54,7 @@ public class JeuxController {
     @FXML
     private void retour() throws IOException {
         jeux.musicStop();
+        jeux.sonRetour();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneMenu.fxml"));
         Parent option = loader.load();
