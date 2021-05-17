@@ -1,5 +1,4 @@
 package controleur;
-import javafx.geometry.Point3D;
 import modele.Balle;
 import modele.Forme;
 import modele.Vecteur;
@@ -37,9 +36,8 @@ public class Formule {
     }
 
     public static void rebondissement(Vecteur balle, int positionImpact){
+
         double coefficient = 0.85;
-
-
 
         //Top et bottom
         if (positionImpact == 0 || positionImpact == 2) {
@@ -74,40 +72,6 @@ public class Formule {
             nouvelleVitesseAngle(balle.getVecteurVitesseResultant(), angleFinal,coefficient);
             balle.setAngleXZ(angleFinal);
         }
-/*
-        //bas gauche
-        else if (positionImpact == 6){
-            double angle = balle.getAngleXZ();
-            if (angle > 225 && angle < 315) {
-                angle = 2 * (315 - balle.getAngleXZ()) + balle.getAngleXZ();
-                angle = ajustementAngle(angle);
-
-            }
-            else if (angle == 225)
-                angle = 45;
-            else if (angle > 135 && angle < 225)
-                angle = -2 * (balle.getAngleXZ() - 135) + balle.getAngleXZ();
-
-            nouvelleVitesseAngle(balle.getVecteurVitesseResultant(), angle,coefficient);
-            balle.setAngleXZ(angle);
-        }
-
-        //haut droit
-        else if (positionImpact == 4){
-            double angle = balle.getAngleXZ();
-            if (angle == 45)
-                angle = 225;
-            else if (angle < 45 || angle > 315){
-                if (angle < 45)
-                    angle = 225 + (90 - angle + 45);
-                if (angle > 315)
-                    angle = 225 + (45 - (360-angle));
-            }
-
-
-            nouvelleVitesseAngle(balle.getVecteurVitesseResultant(),angle,coefficient);
-            balle.setAngleXZ(angle);
-        }*/
     }
 
     public static double[] forcegravitationnel(Forme forme){
@@ -120,7 +84,7 @@ public class Formule {
         }else {
             double angle = forme.getAngleXY();
             resultat[1] = (Balle.getMasse() * -9.8) * Math.sin(Math.toRadians(angle));
-            double hyp = (/*Balle.getMasse() * -9.8*/-1.441) * Math.cos(Math.toRadians(angle));
+            double hyp = (-1.441) * Math.cos(Math.toRadians(angle));
             resultat[0] = hyp * Math.cos(Math.toRadians(forme.getAngleXZ()));
             resultat[2] = hyp * Math.sin(Math.toRadians(forme.getAngleXZ()));
             return resultat;

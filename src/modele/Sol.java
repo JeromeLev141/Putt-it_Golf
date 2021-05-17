@@ -36,4 +36,11 @@ public class Sol {
 
     public double getFrottement() { return frottement; }
 
+    @Override
+    public String toString() {
+        return "Sol{" +
+                "traversable=" + traversable +
+                ", frottement=" + frottement +
+                '}';
+    }
 }

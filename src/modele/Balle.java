@@ -15,9 +15,12 @@ public class Balle extends Sphere {
         this.setRadius(radius);
     }
 
-    public Point3D getPosition() { return position; }
-
-    public void setPosition(Point3D position) { this.position = position; }
-
     public static double getMasse() { return 0.045; }
+
+    @Override
+    public String toString() {
+        return "Balle{" +
+                "position=" + position +
+                '}';
+    }
 }
