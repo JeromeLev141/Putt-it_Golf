@@ -164,7 +164,7 @@ public class Espace3DTest {
 
         for (int i = 0; i < description.length(); i ++) {
             if (description.charAt(i) == 'o') {
-                Jeux.prepareMapForme(sol,x,0,z,0,0,4,64,64,64,false,decal);
+                Jeux.prepareMapForme(sol,x,0,z,0,0,4,64,64,64,decal);
                 x++;
             }
             else if (description.charAt(i) == '\n') {
@@ -172,15 +172,15 @@ public class Espace3DTest {
                 x = -2;
             }
             else if (description.charAt(i) == 'x') {
-                Jeux.prepareMapForme(mur,x,0,z,0,0,4,64,128,64,false,decal);
+                Jeux.prepareMapForme(mur,x,0,z,0,0,4,64,128,64,decal);
                 x++;
             }
             else if (description.charAt(i) == 'v') {
-                Jeux.prepareMapForme(sol,x,0,z,0,0,4,64,64,64,false,decal);
+                Jeux.prepareMapForme(sol,x,0,z,0,0,4,64,64,64,decal);
                 x++;
             }
             else {
-                Jeux.prepareMapForme(sol,x,0,z,0,0,4,64,32,64,false,decal);
+                Jeux.prepareMapForme(sol,x,0,z,0,0,4,64,32,64,decal);
                 x++;
             }
         }

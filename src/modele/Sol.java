@@ -1,8 +1,5 @@
 package modele;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Sol {
 
     private boolean traversable;
@@ -44,4 +41,11 @@ public class Sol {
 
     public double getFrottement() { return frottement; }
 
+    @Override
+    public String toString() {
+        return "Sol{" +
+                "traversable=" + traversable +
+                ", frottement=" + frottement +
+                '}';
+    }
 }

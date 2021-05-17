@@ -3,22 +3,11 @@ package modele;
 import controleur.Formule;
 import javafx.geometry.Point3D;
 
+import java.util.Arrays;
 import java.util.Vector;
 
 public class Vecteur {
-    /*
-    private Point3D position;
-    private Point3D force;
-    private Point3D vitesse;
-    private Point3D acceleration;
 
-    public Vecteur(Point3D positionBalle){
-        position = positionBalle;
-        force = new Point3D(0,0,0);
-        vitesse = new Point3D(0,0,0);
-        acceleration = new Point3D(0, Formule.forcegravitationnel(),0);
-    }
-    */
     private double[] position;
     private double[] vecteurForceResultant;
     private Vector<Double> forceX,forceY,forceZ;
@@ -155,5 +144,19 @@ public class Vecteur {
 
     public void setAngleXZ(double angleXZ) {
         this.angleXZ = angleXZ;
+    }
+
+    @Override
+    public String toString() {
+        return "Vecteur{" +
+                "position=" + Arrays.toString(position) +
+                ", vecteurForceResultant=" + Arrays.toString(vecteurForceResultant) +
+                ", forceX=" + forceX +
+                ", forceY=" + forceY +
+                ", forceZ=" + forceZ +
+                ", vecteurVitesseResultant=" + Arrays.toString(vecteurVitesseResultant) +
+                ", vecteurAccelerationResultant=" + Arrays.toString(vecteurAccelerationResultant) +
+                ", angleXZ=" + angleXZ +
+                '}';
     }
 }
