@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="vBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" spacing="20.0" style="-fx-background-image: url(/ressources/images/backs/backblurred.png);" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.FinController">
+<VBox fx:id="vBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" spacing="20.0" style="-fx-background-image: url(/ressources/images/backs/backblurred.png);" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.FinController">
    <children>
       <Button accessibleRole="TEXT" focusTraversable="false" mnemonicParsing="false" prefHeight="50.0" prefWidth="400.0" style="-fx-background-insets: 1; -fx-background-color: white; -fx-border-color: black; -fx-border-radius: 4; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 ); -fx-border-width: 5;" text="Bien joué!">
          <font>

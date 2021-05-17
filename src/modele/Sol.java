@@ -1,17 +1,9 @@
 package modele;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Sol {
 
     private boolean traversable;
     private double frottement;
-
-    public Sol(Boolean traversable, double frottement) {
-        this.traversable = traversable;
-        this.frottement = frottement;
-    }
 
     public Sol(int type){
         if (type == 1) {/*eau*/
