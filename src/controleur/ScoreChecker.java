@@ -37,6 +37,7 @@ public class ScoreChecker {
             top5.addAll(scores);
             return top5;
 
+            //top 5 seulement
             /*for (int i = 0; i < 5; i++) {
                 if (i < scores.size())
                     top5.add(scores.get(i));
