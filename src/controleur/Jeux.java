@@ -170,7 +170,6 @@ public class Jeux {
     }
 
     public SubScene jouer() {
-        resetBalle();
         niv = 1;
         coups = 0;
         for (int i = 0; i < 9; i++) {
@@ -256,6 +255,7 @@ public class Jeux {
             }
         });
 
+        resetBalle();
         return scene;
     }
 
@@ -444,6 +444,7 @@ public class Jeux {
             balle.translateZProperty().set(0);
         }
         balle.translateYProperty().set(-40);
+        fleche.setVisible(false);
     }
 
     private ImageView backround(Sphere balle) {
