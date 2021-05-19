@@ -1,13 +1,9 @@
 package controleur;
 
-import controleur.Jeux;
-import controleur.MenuController;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -16,18 +12,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class JeuxController {
+public class JeuxController extends RetourController{
 
-    @FXML
-    private Node node1;
     @FXML
     private Node node2;
     @FXML
     private StackPane stp;
     @FXML
     private GridPane grid;
-
-    private Jeux jeux;
 
     public void transfert(Jeux jeux, Stage stage) {
         this.jeux = jeux;
@@ -52,19 +44,9 @@ public class JeuxController {
     }
 
     @FXML
-    private void retour() throws IOException {
+    private void retourPrep() throws IOException {
         jeux.musicStop();
-        jeux.sonRetour();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneMenu.fxml"));
-        Parent option = loader.load();
-
-        MenuController menuController = loader.getController();
-        menuController.transfert(jeux);
-
-        Scene scene = new Scene(option, 800, 600);
-        Stage stage = (Stage) node1.getScene().getWindow();
-        stage.setScene(scene);
+        retour();
     }
 
     @FXML

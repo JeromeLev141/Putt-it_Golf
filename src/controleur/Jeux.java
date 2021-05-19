@@ -267,10 +267,8 @@ public class Jeux {
         coups++;
         scores.get(niv - 1).setText("" + coups);
 
-        System.out.println("---" + positions.size());
         roule = true;
         avancer();
-        System.out.println("fini");
     }
 
     private void avancer() {
@@ -391,7 +389,7 @@ public class Jeux {
             themeMur = Color.RED;
         }
         else if (niv == 8) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneFin.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/SceneFin.fxml"));
             Parent fin = loader.load();
 
             FinController finController = loader.getController();

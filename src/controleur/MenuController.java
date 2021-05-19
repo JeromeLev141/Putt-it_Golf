@@ -1,6 +1,5 @@
 package controleur;
 
-import controleur.Jeux;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -36,7 +35,7 @@ public class MenuController {
     private void jouer() throws Exception {
         jeux.sonEntre();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneJeux.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/SceneJeux.fxml"));
         Parent jouer = loader.load();
 
         JeuxController jeuxController = loader.getController();
@@ -58,7 +57,7 @@ public class MenuController {
     private void scoreboard() throws IOException {
         jeux.sonEntre();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneScore.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/SceneScore.fxml"));
         Parent scoreboard = loader.load();
 
         ScoreController scoreController = loader.getController();
@@ -73,7 +72,7 @@ public class MenuController {
     private void option() throws IOException {
         jeux.sonEntre();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneOption.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/SceneOption.fxml"));
         Parent option = loader.load();
 
         OptionController optionController = loader.getController();

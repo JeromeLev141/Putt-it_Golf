@@ -1,44 +1,19 @@
 package controleur;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ListView;
-import javafx.stage.Stage;
 
-import java.io.IOException;
+public class ScoreController extends RetourController {
 
-public class ScoreController {
-
-    @FXML
-    private Node node1;
     @FXML
     private ListView<String> node2;
-
-    private Jeux jeux;
 
     public void transfert(Jeux jeux) {
         this.jeux = jeux;
 
         node2.setItems(ScoreChecker.topScores());
         node2.getStylesheets().add("ressources/listCell.css");
-    }
-
-    @FXML
-    private void retour() throws IOException {
-        jeux.sonRetour();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneMenu.fxml"));
-        Parent option = loader.load();
-
-        MenuController menuController = loader.getController();
-        menuController.transfert(jeux);
-
-        Scene scene = new Scene(option, 800, 600);
-        Stage stage = (Stage) node1.getScene().getWindow();
-        stage.setScene(scene);
     }
 
     @FXML

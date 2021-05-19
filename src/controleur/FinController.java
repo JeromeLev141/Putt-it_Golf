@@ -1,25 +1,17 @@
 package controleur;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import java.io.IOException;
 
-public class FinController {
+public class FinController extends RetourController{
 
-    @FXML
-    private VBox vBox;
     @FXML
     private Label node1;
     @FXML
     private TextField node2;
 
-    private Jeux jeux;
     private int score;
 
     public void transfert(Jeux jeux, int score) {
@@ -36,7 +28,7 @@ public class FinController {
     }
 
     @FXML
-    private void retour() throws IOException {
+    private void retourPrep() throws IOException {
         jeux.musicStop();
 
         String nb = String.valueOf(score);
@@ -48,16 +40,6 @@ public class FinController {
             nom = "noname";
 
         ScoreChecker.ecrire(nb + " - " + nom);
-        jeux.sonRetour();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneMenu.fxml"));
-        Parent option = loader.load();
-
-        MenuController menuController = loader.getController();
-        menuController.transfert(jeux);
-
-        Scene scene = new Scene(option, 800, 600);
-        Stage stage = (Stage) node1.getScene().getWindow();
-        stage.setScene(scene);
+        retour();
     }
 }

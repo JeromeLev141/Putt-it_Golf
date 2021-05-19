@@ -1,4 +1,4 @@
-package TestUnitaires;
+package testUnitaires;
 
 import controleur.Jeux;
 import javafx.geometry.Point3D;
@@ -8,8 +8,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class Espace3DTest {
 
@@ -29,8 +29,8 @@ public class Espace3DTest {
         FormeCordonneSommet cordonneSommetSol1 = test1.detectColisionDansQuelleFormeSol();
         int cordonneSommetMur1 = test1.detectionColisionDansQuelleFormeMur();
 
-        assertEquals(0.0,cordonneSommetSol1.getPositionEspace().getX());
-        assertEquals(256.0,cordonneSommetSol1.getPositionEspace().getZ());
+        assertEquals(0.0,cordonneSommetSol1.getPositionEspace().getX(), 0);
+        assertEquals(256.0,cordonneSommetSol1.getPositionEspace().getZ(), 0);
         assertEquals(-1,cordonneSommetMur1);
 
         // Pas De Colision avec le sol
@@ -44,16 +44,16 @@ public class Espace3DTest {
         Espace3D test3 = new Espace3D(new Point3D(-88, 40,192),sol1,mur1);
         FormeCordonneSommet cordonneSommetsol3 = test3.detectColisionDansQuelleFormeSol();
         int cordonneSommetMur3 = test3.detectionColisionDansQuelleFormeMur();
-        assertEquals(-64.0,cordonneSommetsol3.getPositionEspace().getX());
-        assertEquals(192.0,cordonneSommetsol3.getPositionEspace().getZ());
+        assertEquals(-64.0,cordonneSommetsol3.getPositionEspace().getX(), 0);
+        assertEquals(192.0,cordonneSommetsol3.getPositionEspace().getZ(), 0);
         assertEquals(6,cordonneSommetMur3);
 
         //pas de colision avec le mur
         Espace3D test4 = new Espace3D(new Point3D(-87, 40,192),sol1,mur1);
         FormeCordonneSommet cordonneSommetsol4 = test4.detectColisionDansQuelleFormeSol();
         int cordonneSommetMur4 = test4.detectionColisionDansQuelleFormeMur();
-        assertEquals(-64.0,cordonneSommetsol4.getPositionEspace().getX());
-        assertEquals(192.0,cordonneSommetsol4.getPositionEspace().getZ());
+        assertEquals(-64.0,cordonneSommetsol4.getPositionEspace().getX(), 0);
+        assertEquals(192.0,cordonneSommetsol4.getPositionEspace().getZ(), 0);
         assertEquals(-1 ,cordonneSommetMur4);
     }
 
@@ -77,8 +77,8 @@ public class Espace3DTest {
         Jeux.bougerBalleEspaceTemps(vitesse1,vecteur1,test1);
 
         assertEquals(2.55,vecteur1.getPosition()[0],0.01);
-        assertEquals(40.0,vecteur1.getPosition()[1]);
-        assertEquals(256.0,vecteur1.getPosition()[2]);
+        assertEquals(40.0,vecteur1.getPosition()[1], 0);
+        assertEquals(256.0,vecteur1.getPosition()[2], 0);
 
         //test2 vitesse x plus gros
         Vecteur vecteur2 = new Vecteur(positionBalle1);
@@ -88,19 +88,19 @@ public class Espace3DTest {
         Jeux.bougerBalleEspaceTemps(vitesse2,vecteur2,test1);
 
         assertEquals(10.2,vecteur2.getPosition()[0],0.01);
-        assertEquals(40.0,vecteur2.getPosition()[1]);
-        assertEquals(256.0,vecteur2.getPosition()[2]);
+        assertEquals(40.0,vecteur2.getPosition()[1], 0);
+        assertEquals(256.0,vecteur2.getPosition()[2], 0);
 
         Jeux.bougerBalleEspaceTemps(vitesse2_1,vecteur2,test1);
 
         assertEquals(28.8,vecteur2.getPosition()[0],0.01);
-        assertEquals(40.0,vecteur2.getPosition()[1]);
+        assertEquals(40.0,vecteur2.getPosition()[1], 0);
         assertEquals(244.84,vecteur2.getPosition()[2],0.01);
 
         Jeux.bougerBalleEspaceTemps(vitesse2_2,vecteur2,test1);
 
         assertEquals(28.8,vecteur2.getPosition()[0],0.01);
-        assertEquals(40.0,vecteur2.getPosition()[1]);
+        assertEquals(40.0,vecteur2.getPosition()[1], 0);
         assertEquals(255.04,vecteur2.getPosition()[2],0.01);
 
 
@@ -111,7 +111,7 @@ public class Espace3DTest {
         Jeux.bougerBalleEspaceTemps(vitesse3,vecteur3,test1);
 
         assertEquals(0.0,vecteur3.getPosition()[0],0.01);
-        assertEquals(40.0,vecteur3.getPosition()[1]);
+        assertEquals(40.0,vecteur3.getPosition()[1], 0);
         assertEquals(266.2,vecteur3.getPosition()[2], 0.01);
 
         //test4 balle tombe et touche le sol

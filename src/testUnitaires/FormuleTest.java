@@ -1,4 +1,4 @@
-package TestUnitaires;
+package testUnitaires;
 
 import controleur.Formule;
 import javafx.geometry.Point3D;
@@ -6,28 +6,28 @@ import modele.Forme;
 import modele.Vecteur;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 public class FormuleTest {
 
     @Test
     public void MRUATest() {
-        assertEquals(50.0, Formule.MRUA(0, 5, 0, 10));
-        assertEquals(60.0, Formule.MRUA(10, 5, 0, 10));
-        assertEquals(250.0, Formule.MRUA(0, 5, 4, 10));
+        assertEquals(50.0, Formule.MRUA(0, 5, 0, 10), 0);
+        assertEquals(60.0, Formule.MRUA(10, 5, 0, 10), 0);
+        assertEquals(250.0, Formule.MRUA(0, 5, 4, 10), 0);
 
-        assertEquals(-50.0, Formule.MRUA(0, -5, 0, 10));
-        assertEquals(40.0, Formule.MRUA(-10, 5, 0, 10));
-        assertEquals(-150.0, Formule.MRUA(0, 5, -4, 10));
+        assertEquals(-50.0, Formule.MRUA(0, -5, 0, 10), 0);
+        assertEquals(40.0, Formule.MRUA(-10, 5, 0, 10), 0);
+        assertEquals(-150.0, Formule.MRUA(0, 5, -4, 10), 0);
 
-        assertEquals(22.559375, Formule.MRUA(7.82, 8.32, -2.10, 5.25));
+        assertEquals(22.559375, Formule.MRUA(7.82, 8.32, -2.10, 5.25), 0);
     }
 
     @Test
     public void MRUA_VFTest(){
-        assertEquals(50.0,Formule.MRUA_Vf(0,5,10));
-        assertEquals(-20.0,Formule.MRUA_Vf(30,-5,10));
-        assertEquals(-4.42,Formule.MRUA_Vf(-4.68,2.6,0.1));
+        assertEquals(50.0,Formule.MRUA_Vf(0,5,10), 0);
+        assertEquals(-20.0,Formule.MRUA_Vf(30,-5,10), 0);
+        assertEquals(-4.42,Formule.MRUA_Vf(-4.68,2.6,0.1), 0);
     }
 
     @Test
@@ -77,18 +77,18 @@ public class FormuleTest {
         Vecteur l = new Vecteur(new Point3D(0,0,0));
         l.setAngleXZ(90);
 
-        assertEquals(345.0, Formule.rebondissement(a, h));
-        assertEquals(250.0, Formule.rebondissement(b, h));
-        assertEquals(165.0, Formule.rebondissement(c, h));
-        assertEquals(55.0, Formule.rebondissement(d, h));
+        assertEquals(345.0, Formule.rebondissement(a, h), 0);
+        assertEquals(250.0, Formule.rebondissement(b, h), 0);
+        assertEquals(165.0, Formule.rebondissement(c, h), 0);
+        assertEquals(55.0, Formule.rebondissement(d, h), 0);
 
-        assertEquals(165.0, Formule.rebondissement(a, l));
-        assertEquals(70.0, Formule.rebondissement(b, l));
-        assertEquals(345.0, Formule.rebondissement(c, l));
-        assertEquals(235.0, Formule.rebondissement(d, l));
+        assertEquals(165.0, Formule.rebondissement(a, l), 0);
+        assertEquals(70.0, Formule.rebondissement(b, l), 0);
+        assertEquals(345.0, Formule.rebondissement(c, l), 0);
+        assertEquals(235.0, Formule.rebondissement(d, l), 0);
 
-        assertEquals(180.0, Formule.rebondissement(h, l));
-        assertEquals(270.0, Formule.rebondissement(l, h));
+        assertEquals(180.0, Formule.rebondissement(h, l), 0);
+        assertEquals(270.0, Formule.rebondissement(l, h), 0);
     }
 
     @Test
@@ -100,9 +100,9 @@ public class FormuleTest {
         Forme numero5 = new Forme(new Point3D(0,0,0),40,10,40,45,90,4);
 
         double[] force1 = Formule.forcegravitationnel(numero1);
-        assertEquals(0.0,force1[0]);
-        assertEquals(-0.441,force1[1]);
-        assertEquals(0.0,force1[2]);
+        assertEquals(0.0,force1[0], 0);
+        assertEquals(-0.441,force1[1], 0);
+        assertEquals(0.0,force1[2], 0);
 
         double[] force2 = Formule.forcegravitationnel(numero2);
         assertEquals(-0.3118,force2[1],0.0001);
@@ -110,9 +110,9 @@ public class FormuleTest {
         assertEquals(0.0,force2[2],0.0001);
 
         double[] force3 = Formule.forcegravitationnel(numero3);
-        assertEquals(0.0,force3[0]);
-        assertEquals(-0.441,force3[1]);
-        assertEquals(0.0,force3[2]);
+        assertEquals(0.0,force3[0], 0);
+        assertEquals(-0.441,force3[1], 0);
+        assertEquals(0.0,force3[2], 0);
 
         double[] force4 = Formule.forcegravitationnel(numero4);
         assertEquals(-0.3118,force4[1],0.0001);
@@ -125,8 +125,8 @@ public class FormuleTest {
         assertEquals(-0.3118,force5[2],0.0001);
 
         double[] force6 = Formule.forcegravitationnel(null);
-        assertEquals(0.0,force6[0]);
-        assertEquals(-0.441,force6[1]);
-        assertEquals(0.0,force6[2]);
+        assertEquals(0.0,force6[0], 0);
+        assertEquals(-0.441,force6[1], 0);
+        assertEquals(0.0,force6[2], 0);
     }
 }

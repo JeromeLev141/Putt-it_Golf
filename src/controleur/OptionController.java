@@ -1,22 +1,12 @@
 package controleur;
 
-import controleur.Jeux;
-import controleur.MenuController;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Slider;
-import javafx.stage.Stage;
 
-import java.io.IOException;
+public class OptionController extends RetourController{
 
-public class OptionController {
-
-    @FXML
-    private Node node1;
     @FXML
     private Node node2;
     @FXML
@@ -25,8 +15,6 @@ public class OptionController {
     private Node node4;
     @FXML
     private Node node5;
-
-    private Jeux jeux;
 
     public void transfert(Jeux jeux) {
         this.jeux = jeux;
@@ -43,21 +31,6 @@ public class OptionController {
       sld.setValue(jeux.getDistance());
       ColorPicker cp =  (ColorPicker) node4;
       cp.setValue(jeux.getCouleur());
-    }
-
-    @FXML
-    private void retour() throws IOException {
-        jeux.sonRetour();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SceneMenu.fxml"));
-        Parent option = loader.load();
-
-        MenuController menuController = loader.getController();
-        menuController.transfert(jeux);
-
-        Scene scene = new Scene(option, 800, 600);
-        Stage stage = (Stage) node1.getScene().getWindow();
-        stage.setScene(scene);
     }
 
     @FXML
