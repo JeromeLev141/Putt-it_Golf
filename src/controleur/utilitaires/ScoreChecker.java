@@ -1,4 +1,4 @@
-package controleur;
+package controleur.utilitaires;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -1,4 +1,4 @@
-package controleur;
+package controleur.utilitaires;
 import modele.Balle;
 import modele.Forme;
 import modele.Vecteur;
@@ -68,7 +68,6 @@ public class Formule {
                 diff = balle.getAngleXZ() - 315;
                 angleFinal = 135 - diff;
             }
-            System.out.println("avant : " + balle.getAngleXZ() + "  Apres : " + angleFinal);
             nouvelleVitesseAngle(balle.getVecteurVitesseResultant(), angleFinal,coefficient);
             balle.setAngleXZ(angleFinal);
         }

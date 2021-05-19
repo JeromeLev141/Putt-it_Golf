@@ -1,6 +1,6 @@
 package modele;
 
-import controleur.Formule;
+import controleur.utilitaires.Formule;
 import javafx.geometry.Point3D;
 
 import java.util.Arrays;
@@ -117,8 +117,7 @@ public class Vecteur {
     }
 
     public void setVecteurVitesseResultant(double[] vitesse){
-        for (int x = 0; x<3 ;x++)
-            vecteurVitesseResultant[x] = vitesse[x];
+        System.arraycopy(vitesse, 0, vecteurVitesseResultant, 0, 3);
         refreshAngleXZ();
     }
 

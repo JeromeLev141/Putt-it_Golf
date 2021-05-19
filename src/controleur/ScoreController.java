@@ -1,5 +1,6 @@
 package controleur;
 
+import controleur.utilitaires.ScoreChecker;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;

@@ -12,12 +12,12 @@ import java.io.IOException;
 public class RetourController {
 
     @FXML
-    public Node node1;
+    protected Node node1;
 
-    public Jeux jeux;
+    protected Jeux jeux;
 
     @FXML
-    public void retour() throws IOException {
+    protected void retour() throws IOException {
         jeux.sonRetour();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/SceneMenu.fxml"));

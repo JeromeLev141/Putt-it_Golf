@@ -1,5 +1,6 @@
 package controleur;
 
+import controleur.utilitaires.ScoreChecker;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
