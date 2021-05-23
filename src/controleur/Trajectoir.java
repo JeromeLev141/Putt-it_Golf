@@ -70,14 +70,7 @@ public class Trajectoir {
                     return coordonne;
                 }
                 else if (formeSol.getTypeSol().getFrottement() == -2) {
-                    vecteur.setVecteurVitesseResultant(new double[]{0, 0, 0});
-                    vecteur.setForceY(fnPosition, vecteur.getForceY().get(fgPosition) * -1.0D);
-                    vecteur.setForceX(fnPosition, 0);
-                    vecteur.setForceZ(fnPosition, 0);
-                    vecteur.refreshVecteurAccelerationResultant();
-                    espace3D.refreshPositionBalle(coordonne.get(0));
-                    coordonne.add(coordonne.get(0));
-                    coordonne.add(coordonne.get(0));
+                    resetBalle(vecteur,fnPosition,fgPosition,espace3D,coordonne);
                     return coordonne;
                 }
                 else {
@@ -133,14 +126,7 @@ public class Trajectoir {
             }
 
             if (vecteur.getPosition()[1] <= -640) {
-                vecteur.setVecteurVitesseResultant(new double[]{0, 0, 0});
-                vecteur.setForceY(fnPosition, vecteur.getForceY().get(fgPosition) * -1.0D);
-                vecteur.setForceX(fnPosition,0);
-                vecteur.setForceZ(fnPosition,0);
-                vecteur.refreshVecteurAccelerationResultant();
-                espace3D.refreshPositionBalle(coordonne.get(0));
-                coordonne.add(coordonne.get(0));
-                coordonne.add(coordonne.get(0));
+                resetBalle(vecteur,fnPosition,fgPosition,espace3D,coordonne);
                 return coordonne;
             }
 
@@ -162,5 +148,16 @@ public class Trajectoir {
         double hypo1 = Math.sqrt(Math.pow(vecteur[0], 2) + Math.pow(vecteur[2], 2));
         double hypo2 = hypo1 * Math.cos(Math.toRadians(angleXYAjuster));
         return new double[]{hypo2 * Math.cos(Math.toRadians(angleXZ)),hypo1 * Math.sin(Math.toRadians(angleXYAjuster)),hypo2 * Math.sin(Math.toRadians(angleXZ))};
+    }
+
+    private static void resetBalle(Vecteur vecteur,int fnPosition,int fgPosition,Espace3D espace3D,List<Point3D> coordonne){
+        vecteur.setVecteurVitesseResultant(new double[]{0, 0, 0});
+        vecteur.setForceY(fnPosition, vecteur.getForceY().get(fgPosition) * -1.0D);
+        vecteur.setForceX(fnPosition, 0);
+        vecteur.setForceZ(fnPosition, 0);
+        vecteur.refreshVecteurAccelerationResultant();
+        espace3D.refreshPositionBalle(coordonne.get(0));
+        coordonne.add(coordonne.get(0));
+        coordonne.add(coordonne.get(0));
     }
 }
