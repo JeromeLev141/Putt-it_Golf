@@ -1,7 +1,7 @@
 package testUnitaires;
 
 import controleur.Jeux;
-import controleur.Trajectoir;
+import controleur.Trajectoire;
 import javafx.geometry.Point3D;
 import modele.*;
 import org.junit.Test;
@@ -75,7 +75,7 @@ public class Espace3DTest {
         Espace3D test1 = new Espace3D(positionBalle1,sol1,mur1);
         Vecteur vecteur1 = new Vecteur(positionBalle1);
         double []vitesse1 = new double[]{10.0,0,0};
-        Trajectoir.bougerBalleEspaceTemps(vitesse1,vecteur1,test1);
+        Trajectoire.bougerBalleEspaceTemps(vitesse1,vecteur1,test1);
 
         assertEquals(2.55,vecteur1.getPosition()[0],0.01);
         assertEquals(40.0,vecteur1.getPosition()[1], 0);
@@ -86,19 +86,19 @@ public class Espace3DTest {
         double []vitesse2 = new double[]{20.0,0,0};
         double []vitesse2_1 = new double[]{25,0,-15};
         double []vitesse2_2 = new double[]{0,0,20};
-        Trajectoir.bougerBalleEspaceTemps(vitesse2,vecteur2,test1);
+        Trajectoire.bougerBalleEspaceTemps(vitesse2,vecteur2,test1);
 
         assertEquals(10.2,vecteur2.getPosition()[0],0.01);
         assertEquals(40.0,vecteur2.getPosition()[1], 0);
         assertEquals(256.0,vecteur2.getPosition()[2], 0);
 
-        Trajectoir.bougerBalleEspaceTemps(vitesse2_1,vecteur2,test1);
+        Trajectoire.bougerBalleEspaceTemps(vitesse2_1,vecteur2,test1);
 
         assertEquals(28.8,vecteur2.getPosition()[0],0.01);
         assertEquals(40.0,vecteur2.getPosition()[1], 0);
         assertEquals(244.84,vecteur2.getPosition()[2],0.01);
 
-        Trajectoir.bougerBalleEspaceTemps(vitesse2_2,vecteur2,test1);
+        Trajectoire.bougerBalleEspaceTemps(vitesse2_2,vecteur2,test1);
 
         assertEquals(28.8,vecteur2.getPosition()[0],0.01);
         assertEquals(40.0,vecteur2.getPosition()[1], 0);
@@ -109,7 +109,7 @@ public class Espace3DTest {
         //test3 vitesse z
         Vecteur vecteur3 = new Vecteur(positionBalle1);
         double []vitesse3 = new double[]{0,0,20};
-        Trajectoir.bougerBalleEspaceTemps(vitesse3,vecteur3,test1);
+        Trajectoire.bougerBalleEspaceTemps(vitesse3,vecteur3,test1);
 
         assertEquals(0.0,vecteur3.getPosition()[0],0.01);
         assertEquals(40.0,vecteur3.getPosition()[1], 0);
@@ -120,7 +120,7 @@ public class Espace3DTest {
         Vecteur vecteur4 = new Vecteur(positionBalle2);
         double []vitesse4 = new double[]{0,0,0};
         test1.refreshPositionBalle(positionBalle2);
-        Trajectoir.bougerBalleEspaceTemps(vitesse4,vecteur4,test1);
+        Trajectoire.bougerBalleEspaceTemps(vitesse4,vecteur4,test1);
 
         assertEquals(0.0,vecteur4.getPosition()[0],0.01);
         assertEquals(40.0,vecteur4.getPosition()[1],1);
@@ -130,7 +130,7 @@ public class Espace3DTest {
         Vecteur vecteur5 = new Vecteur(positionBalle1);
         double []vitesse5 = new double[]{25,0,-15};
         test1.refreshPositionBalle(positionBalle1);
-        Trajectoir.bougerBalleEspaceTemps(vitesse5,vecteur5,test1);
+        Trajectoire.bougerBalleEspaceTemps(vitesse5,vecteur5,test1);
 
         assertEquals(18.6,vecteur5.getPosition()[0],0.01);
         assertEquals(40.0,vecteur5.getPosition()[1],0.1);
@@ -140,7 +140,7 @@ public class Espace3DTest {
         Vecteur vecteur6 = new Vecteur(positionBalle1);
         double []vitesse6 = new double[]{100,0,0};
         test1.refreshPositionBalle(positionBalle1);
-        Trajectoir.bougerBalleEspaceTemps(vitesse6,vecteur6,test1);
+        Trajectoire.bougerBalleEspaceTemps(vitesse6,vecteur6,test1);
 
         assertEquals(-32.1,vecteur6.getPosition()[0],2);
         assertEquals(40.0,vecteur6.getPosition()[1],0.1);
@@ -150,7 +150,7 @@ public class Espace3DTest {
         Vecteur vecteur7 = new Vecteur(positionBalle1);
         double []vitesse7 = new double[]{-1,0,22.6};
         test1.refreshPositionBalle(positionBalle1);
-        List<Point3D> liste = Trajectoir.bougerBalleEspaceTemps(vitesse7,vecteur7,test1);
+        List<Point3D> liste = Trajectoire.bougerBalleEspaceTemps(vitesse7,vecteur7,test1);
         System.out.println(liste.size());
         for (Point3D point: liste)
             System.out.println(point);

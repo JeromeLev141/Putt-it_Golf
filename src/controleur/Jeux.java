@@ -256,7 +256,7 @@ public class Jeux extends MapMaker{
 
     private void frapper(double x, double z) {
         vecteur = new Vecteur(new Point3D(balle.getTranslateX(), -balle.getTranslateY(), balle.getTranslateZ()));
-        positions = Trajectoir.bougerBalleEspaceTemps(new double[]{x, 0, z}, vecteur, espace3D);
+        positions = Trajectoire.bougerBalleEspaceTemps(new double[]{x, 0, z}, vecteur, espace3D);
         rotation = 0;
 
         coups++;

@@ -9,7 +9,7 @@ import modele.Vecteur;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Trajectoir {
+public class Trajectoire {
 
 
     public static List<Point3D> bougerBalleEspaceTemps(double[] vitesseinitial, Vecteur vecteur, Espace3D espace3D) {
