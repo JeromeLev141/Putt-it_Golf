@@ -46,17 +46,17 @@ public class FormuleTest {
 
         a.setVecteurVitesseResultant(vitesse2);
         assertEquals(135.0,a.getAngleXZ(),0.01);
-        Formule.rebondissement(a,6);
+        Formule.rebondissement(a,3);
         assertEquals(45.0,a.getAngleXZ(),0.01);
 
         a.setVecteurVitesseResultant(vitesse3);
         assertEquals(90.0,a.getAngleXZ(),0.01);
-        Formule.rebondissement(a,6);
+        Formule.rebondissement(a,3);
         assertEquals(270.0,a.getAngleXZ(),0.01);
 
         a.setVecteurVitesseResultant(vitesse4);
         assertEquals(0.0,a.getAngleXZ(),0.01);
-        Formule.rebondissement(a,6);
+        Formule.rebondissement(a,3);
         assertEquals(180.0,a.getAngleXZ(),0.01);
 
     }
@@ -106,7 +106,7 @@ public class FormuleTest {
 
         double[] force2 = Formule.forcegravitationnel(numero2);
         assertEquals(-0.3118,force2[1],0.0001);
-        assertEquals(-0.3118,force2[0],0.0001);
+        assertEquals(-1.0189,force2[0],0.0001);
         assertEquals(0.0,force2[2],0.0001);
 
         double[] force3 = Formule.forcegravitationnel(numero3);
@@ -116,13 +116,13 @@ public class FormuleTest {
 
         double[] force4 = Formule.forcegravitationnel(numero4);
         assertEquals(-0.3118,force4[1],0.0001);
-        assertEquals(0.3118,force4[0],0.0001);
+        assertEquals(1.0189,force4[0],0.0001);
         assertEquals(0.0,force4[2],0.0001);
 
         double[] force5 = Formule.forcegravitationnel(numero5);
         assertEquals(-0.3118,force5[1],0.0001);
         assertEquals(0.0,force5[0],0.0001);
-        assertEquals(-0.3118,force5[2],0.0001);
+        assertEquals(-1.0189,force5[2],0.0001);
 
         double[] force6 = Formule.forcegravitationnel(null);
         assertEquals(0.0,force6[0], 0);

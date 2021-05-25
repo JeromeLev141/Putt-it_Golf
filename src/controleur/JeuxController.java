@@ -51,7 +51,7 @@ public class JeuxController extends RetourController{
 
     //Utilisé lors du developement
     @FXML
-    private void suivant() throws IOException { /*jeux.niveauSuivant();*/ }
+    private void suivant() throws IOException { jeux.niveauSuivant(); }
 
     @FXML
     private void hover1() { hover(node1);}
