@@ -103,7 +103,7 @@ public class Plateforme {
             case 8 :
                 return  "xxxxx--xxxxxxx+xxxxx+xxx\n" +
                         "x3oo4ox--x3gg|g  +j4bbbb+j4bo4o\n" +
-                        "xovox-- |gt|g_b_b+j4bbbb+j4bbo4o\n" +
+                        "xovox--x|gt|g_b_b+j4bbbb+j4bbo4o\n" +
                         "xooox--x2gg|g  +j4bbbb+j4bbbo4ox\n" +
                         "xooox--xxxxxxx+xxxxx+xxxxxx\n" +
                         "xbbbx0---000000000000xbbbx+++\n" +

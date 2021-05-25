@@ -1,7 +1,7 @@
 package testUnitaires;
 
 import controleur.Jeux;
-import controleur.Trajectoire;
+import controleur.utilitaires.Trajectoire;
 import javafx.geometry.Point3D;
 import modele.*;
 import org.junit.Test;

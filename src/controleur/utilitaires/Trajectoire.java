@@ -1,4 +1,4 @@
-package controleur;
+package controleur.utilitaires;
 
 import controleur.utilitaires.Formule;
 import javafx.geometry.Point3D;

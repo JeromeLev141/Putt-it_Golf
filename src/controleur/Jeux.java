@@ -1,5 +1,6 @@
 package controleur;
 
+import controleur.utilitaires.Trajectoire;
 import javafx.animation.*;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
